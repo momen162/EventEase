@@ -100,3 +100,5 @@
 @section('extra-js')
   <script src="{{ asset('assets/js/contact.js') }}"></script>
 @endsection
+
+{{-- Commit: Add developer section comments --}}
