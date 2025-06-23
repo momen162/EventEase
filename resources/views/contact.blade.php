@@ -104,3 +104,5 @@
 {{-- Commit: Add developer section comments --}}
 
 {{-- Commit: Update contact form placeholders --}}
+
+{{-- Commit: Enhance social links section --}}
