@@ -150,3 +150,5 @@
 {{-- Commit 1: Add developer section comments --}}
 
 {{-- Commit 2: Update contact form placeholder notes --}}
+
+{{-- Commit 3: Enhance social links section with comment --}}
