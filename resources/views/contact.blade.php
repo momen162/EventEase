@@ -156,3 +156,5 @@
 {{-- Commit 4: Add comment for success message section --}}
 
 {{-- Commit 5: Add comment for validation errors section --}}
+
+{{-- Commit 6: Comment for Contact Form header --}}
