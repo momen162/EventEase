@@ -160,3 +160,5 @@
 {{-- Commit 6: Comment for Contact Form header --}}
 
 {{-- Commit 7: Add comment for CSRF token section --}}
+
+{{-- Commit 8: Add placeholder comment for name input --}}
