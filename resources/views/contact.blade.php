@@ -158,3 +158,5 @@
 {{-- Commit 5: Add comment for validation errors section --}}
 
 {{-- Commit 6: Comment for Contact Form header --}}
+
+{{-- Commit 7: Add comment for CSRF token section --}}
