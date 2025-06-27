@@ -164,3 +164,5 @@
 {{-- Commit 8: Add placeholder comment for name input --}}
 
 {{-- Commit 9: Add placeholder comment for email input --}}
+
+{{-- Commit 10: Add placeholder comment for message textarea --}}
