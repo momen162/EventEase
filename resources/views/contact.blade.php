@@ -162,3 +162,5 @@
 {{-- Commit 7: Add comment for CSRF token section --}}
 
 {{-- Commit 8: Add placeholder comment for name input --}}
+
+{{-- Commit 9: Add placeholder comment for email input --}}
