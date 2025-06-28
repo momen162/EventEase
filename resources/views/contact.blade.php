@@ -168,3 +168,5 @@
 {{-- Commit 10: Add placeholder comment for message textarea --}}
 
 {{-- Commit 11: Add comment for submit button --}}
+
+{{-- Commit 12: Add comment for end of contact form --}}
