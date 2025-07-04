@@ -1,0 +1,10 @@
+@media (max-width: 768px) {
+  nav, .login-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stats, .event-list, .gallery-grid, .blog-list {
+    flex-direction: column;
+  }
+}
