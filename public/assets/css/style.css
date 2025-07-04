@@ -48,6 +48,14 @@ nav a.active {
   border-radius: 6px;
   cursor: pointer;
 }
+.login-section button a {
+  color: white;
+  text-decoration: none;
+}
+.login-section button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
 
 .stats {
   display: flex;
