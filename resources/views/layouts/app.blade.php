@@ -23,14 +23,17 @@
       <button><a href="{{ url('/login') }}">Login</a></button>
     </div>
   </header>
-  
+
   <main>
     @yield('content')
   </main>
 
+
+
   <script src="{{ asset('assets/js/script.js') }}"></script>
   @yield('extra-js')
-
+  
+    {{-- ✅ Footer should be OUTSIDE the yield --}}
   <footer class="footer">
     <div class="footer-content">
       <p>© 2025 EventEase. All rights reserved.</p>
@@ -40,6 +43,7 @@
         <a href="https://instagram.com/eventease" target="_blank">Instagram</a>
       </p>
     </div>
-    
+  </footer>
 </body>
 </html>
+
