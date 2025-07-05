@@ -30,5 +30,16 @@
 
   <script src="{{ asset('assets/js/script.js') }}"></script>
   @yield('extra-js')
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>© 2025 EventEase. All rights reserved.</p>
+      <p>Follow us on:
+        <a href="https://facebook.com/eventease" target="_blank">Facebook</a> |
+        <a href="https://twitter.com/eventease" target="_blank">Twitter</a> |
+        <a href="https://instagram.com/eventease" target="_blank">Instagram</a>
+      </p>
+    </div>
+    
 </body>
 </html>

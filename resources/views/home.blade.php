@@ -86,7 +86,3 @@
 @section('extra-js')
   <script src="{{ asset('assets/js/home.js') }}"></script>
 @endsection
-<!-- 🔹 Footer Section -->
-<footer class="footer">
-  <div class="footer-content">
-    <p>© 2025 EventEase. All rights reserved.</p>
