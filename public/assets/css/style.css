@@ -156,7 +156,7 @@ nav a.active {
 /* Footer */
 
 .site-footer {
-  background-color: #1e1e2f;
+  background-color: #325676;
   color: #fff;
   padding: 40px 20px 10px;
   font-family: 'Segoe UI', sans-serif;
@@ -200,6 +200,7 @@ nav a.active {
 }
 
 .social-icons a img {
+  color: antiquewhite;
   width: 24px;
   height: 24px;
   margin-right: 12px;

@@ -49,26 +49,26 @@
   <h2>Explore Upcoming Events</h2>
   <div class="event-cards">
     <a href="https://eventease.com/tech-summit" class="event-card" target="_blank">
-      <img src="{{ asset('assets/images/tech.png') }}" alt="Tech Summit">
+      <img src="{{ asset('assets/images/card1.png') }}" alt="Tech Summit">
       <div class="card-info">
         <h3>Tech Summit 2025</h3>
-        <p>March 15 • Convention Center</p>
+        <p>August 21 • Convention Center</p>
       </div>
     </a>
 
     <a href="https://eventease.com/music-fest" class="event-card" target="_blank">
-      <img src="{{ asset('assets/images/music.png') }}" alt="Music Fest">
+      <img src="{{ asset('assets/images/card2.png') }}" alt="Music Fest">
       <div class="card-info">
         <h3>Music Fest Live</h3>
-        <p>April 10 • Open Air Arena</p>
+        <p>September 9 • DIU Auditorium</p>
       </div>
     </a>
 
     <a href="https://eventease.com/startup-fair" class="event-card" target="_blank">
-      <img src="{{ asset('assets/images/startup.png') }}" alt="Startup Fair">
+      <img src="{{ asset('assets/images/card3.png') }}" alt="Startup Fair">
       <div class="card-info">
         <h3>Startup Fair</h3>
-        <p>May 5 • Tech Hub Hall</p>
+        <p>September 25 • Knowledge Tower</p>
       </div>
     </a>
   </div>
@@ -81,37 +81,37 @@
   <p class="offer-subtitle">Explore the key features that make <b>EventEase</b> the perfect choice for event organizers!</p>
   <div class="offer-grid">
     <div class="offer-item">
-      <img src="{{ asset('assets/icons/image1.png') }}" alt="Easy Ticket Purchase" />
+      <img src="{{ asset('assets/icons/icon1.png') }}" alt="Easy Ticket Purchase" />
       <h3>Easy Ticket Purchase</h3>
       <p>Browse, and purchase tickets for a variety of events, from concerts to conferences, all from your device with ease and convenience.</p>
     </div>
 
     <div class="offer-item">
-      <img src="{{ asset('assets/icons/ticket-delivery.png') }}" alt="Instant Ticket Delivery" />
+      <img src="{{ asset('assets/icons/icon2.png') }}" alt="Instant Ticket Delivery" />
       <h3>Instant Ticket Delivery</h3>
       <p>Receive your tickets immediately upon purchase via email. If preferred, users can also opt to receive their tickets on WhatsApp.</p>
     </div>
 
     <div class="offer-item">
-      <img src="{{ asset('assets/icons/payment-methods.png') }}" alt="Multiple Payment Methods" />
+      <img src="{{ asset('assets/icons/icon3.png') }}" alt="Multiple Payment Methods" />
       <h3>Multiple Payment Methods</h3>
       <p>Enjoy flexible payment options with bKash, Nagad, Upay, Visa, Mastercard, and more, ensuring secure and smooth transactions.</p>
     </div>
 
     <div class="offer-item">
-      <img src="{{ asset('assets/icons/tickipass.png') }}" alt="Tickipass Feature" />
+      <img src="{{ asset('assets/icons/icon4.png') }}" alt="Tickipass Feature" />
       <h3>Tickipass Feature</h3>
       <p>Access purchased tickets instantly with Tickipass, displaying QR codes from your device, eliminating the need for printed e-ticket PDFs.</p>
     </div>
 
     <div class="offer-item">
-      <img src="{{ asset('assets/icons/dashboard.png') }}" alt="Comprehensive Dashboard" />
+      <img src="{{ asset('assets/icons/icon5.png') }}" alt="Comprehensive Dashboard" />
       <h3>Comprehensive Dashboard</h3>
       <p>Access real-time sales reports and attendance data through our user-friendly dashboard, providing valuable insights at your fingertips.</p>
     </div>
 
     <div class="offer-item">
-      <img src="{{ asset('assets/icons/scanning.png') }}" alt="Smooth Scanning" />
+      <img src="{{ asset('assets/icons/icon6.png') }}" alt="Smooth Scanning" />
       <h3>Smooth Scanning</h3>
       <p>Streamline the entry process with our efficient ticket scanning system, ensuring a hassle-free experience for attendees and organizers.</p>
     </div>
