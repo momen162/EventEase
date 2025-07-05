@@ -20,7 +20,7 @@
       <a href="{{ url('/contact') }}">Contact</a>
     </nav>
     <div class="login-section">
-      <span>👤 Guest</span>
+      <span>👲🏻 Guest</span>
       <button><a href="{{ url('/login') }}">Login</a></button>
     </div>
   </header>
