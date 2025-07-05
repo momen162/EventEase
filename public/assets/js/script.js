@@ -2,3 +2,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   console.log("EventEase ready");
 });
+
+

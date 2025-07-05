@@ -9,6 +9,7 @@
   @yield('extra-css')
 </head>
 <body>
+  
   <header>
     <div class="logo">📅 <span>EventEase</span></div>
     <nav>
@@ -23,6 +24,8 @@
       <button><a href="{{ url('/login') }}">Login</a></button>
     </div>
   </header>
+
+
   
   <main>
     @yield('content')
