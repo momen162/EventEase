@@ -13,13 +13,13 @@
   <div class="slider-container">
     <div class="slider" id="slider">
       <a href="https://eventease.com/event1" class="slide-link active" target="_blank">
-        <img src="{{ asset('assets/images/banner1.jpg') }}" class="slide-img" />
+        <img src="{{ asset('assets/images/banner1.png') }}" class="slide-img" />
       </a>
       <a href="https://eventease.com/event2" class="slide-link" target="_blank">
-        <img src="{{ asset('assets/images/banner2.jpg') }}" class="slide-img" />
+        <img src="{{ asset('assets/images/banner2.png') }}" class="slide-img" />
       </a>
       <a href="https://eventease.com/event3" class="slide-link" target="_blank">
-        <img src="{{ asset('assets/images/banner3.jpg') }}" class="slide-img" />
+        <img src="{{ asset('assets/images/banner3.png') }}" class="slide-img" />
       </a>
     </div>
     <button class="slider-btn prev" id="prevBtn">←</button>
