@@ -32,7 +32,7 @@
 
     {{-- Embedded YouTube Video --}}
     <div class="video-wrapper">
-      <iframe src="https://www.youtube.com/embed/1La4QzGeaaQ?rel=0&autoplay=0"
+      <iframe src="https://www.youtube.com/embed/VDpwq_77gvM"
         title="EventEase Promo"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -68,7 +68,7 @@
       <img src="{{ asset('assets/images/card3.png') }}" alt="Startup Fair">
       <div class="card-info">
         <h3>Startup Fair</h3>
-        <p>September 25 • Knowledge Tower</p>
+        <p>September 25 • Knowledge</p>
       </div>
     </a>
   </div>
