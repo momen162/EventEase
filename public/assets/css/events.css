@@ -1,9 +1,10 @@
 /* Banner */
+
 .event-banner {
   background-color: #00332e;
   border-radius: 10px;
   margin: 20px;
-  padding-bottom: 20px;
+  padding: 40px 20px 20px;
   text-align: center;
 }
 
@@ -16,40 +17,21 @@
 .event-banner p {
   font-size: 1rem;
   color: #cfcfcf;
+  max-width: 700px;
+  margin: 0 auto;
 }
 
+/* Responsive Design of banner */
+@media (max-width: 768px) {
+  .event-banner {
+    padding: 30px 15px 15px;
+  }
 
-/* Filter/Search Section */
-.filter-search-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  background: #f3f3f3;
-  border-radius: 10px;
-  margin: 0 20px;
-}
+  .event-banner h2 {
+    font-size: 1.5rem;
+  }
 
-.filter-options label {
-  margin-right: 10px;
-  font-size: 0.95rem;
-}
-
-.search-box {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.search-box input {
-  padding: 6px 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.search-icon {
-  color: #666;
-  font-size: 1rem;
+  .event-banner p {
+    font-size: 0.95rem;
+  }
 }
