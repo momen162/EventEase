@@ -16,6 +16,21 @@
 </section>
 
 
+<!-- Filter/Search -->
+<section class="filter-search-wrapper">
+  <div class="filter-options">
+    <label><input type="radio" name="eventStatus" checked> All</label>
+    <label><input type="radio" name="eventStatus"> Live</label>
+    <label><input type="radio" name="eventStatus"> Upcoming</label>
+  </div>
+  <div class="search-box">
+    <button><i class="bi bi-sliders"></i></button>
+    <input type="text" placeholder="Search Events..">
+    <i class="bi bi-search search-icon"></i>
+  </div>
+</section>
+
+
 @endsection
 
 @section('extra-js')
