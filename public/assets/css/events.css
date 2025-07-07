@@ -17,3 +17,39 @@
   font-size: 1rem;
   color: #cfcfcf;
 }
+
+
+/* Filter/Search Section */
+.filter-search-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: #f3f3f3;
+  border-radius: 10px;
+  margin: 0 20px;
+}
+
+.filter-options label {
+  margin-right: 10px;
+  font-size: 0.95rem;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.search-box input {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.search-icon {
+  color: #666;
+  font-size: 1rem;
+}
