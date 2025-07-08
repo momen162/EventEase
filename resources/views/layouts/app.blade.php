@@ -11,19 +11,24 @@
 <body>
   
   <header>
-    <div class="logo">📅 <span>EventEase</span></div>
-    <nav>
-      <a href="{{ url('/') }}">Home</a>
-      <a href="{{ url('/events') }}">Events</a>
-      <a href="{{ url('/gallery') }}">Gallery</a>
-      <a href="{{ url('/blog') }}">Blog</a>
-      <a href="{{ url('/contact') }}">Contact</a>
-    </nav>
-    <div class="login-section">
-      <span>👲🏻 Guest</span>
-      <button><a href="{{ url('/login') }}">Login</a></button>
-    </div>
-  </header>
+  <div class="logo">📅 <span>EventEase</span></div>
+
+  <div class="hamburger" onclick="toggleMenu()">☰</div>
+
+  <nav id="navMenu">
+    <a href="{{ url('/') }}">Home</a>
+    <a href="{{ url('/events') }}">Events</a>
+    <a href="{{ url('/gallery') }}">Gallery</a>
+    <a href="{{ url('/blog') }}">Blog</a>
+    <a href="{{ url('/contact') }}">Contact</a>
+  </nav>
+
+  <div class="login-section" id="loginSection">
+    <span>👲🏻 Guest</span>
+    <button><a href="{{ url('/login') }}">Login</a></button>
+  </div>
+</header>
+
 
 
   
