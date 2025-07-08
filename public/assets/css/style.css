@@ -62,6 +62,35 @@ nav a.active {
   color: white;
 }
 
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  nav, .login-section {
+    display: none;
+    width: 100%;
+    text-align: center;
+    flex-direction: column;
+    background-color: rgb(65, 65, 123);
+  }
+
+  nav.show, .login-section.show {
+    display: flex;
+  }
+
+  nav a {
+    padding: 10px 0;
+    margin: 0;
+    border-top: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .login-section {
+    padding-bottom: 10px;
+  }
+}
+
 .stats {
   display: flex;
   justify-content: space-around;
