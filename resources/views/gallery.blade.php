@@ -13,7 +13,7 @@
   <div class="gallery-grid">
     @php
       $events = [
-        ['id' => 1, 'title' => 'Music Festival', 'image' => 'event1.jpg', 'count' => 5],
+        ['id' => 1, 'title' => 'Book Fair 2025', 'image' => 'event1.png', 'count' => 5],
         ['id' => 2, 'title' => 'Art Exhibition', 'image' => 'event2.jpg', 'count' => 8],
         ['id' => 3, 'title' => 'Tech Conference', 'image' => 'event3.jpg', 'count' => 6],
         ['id' => 4, 'title' => 'Food Carnival', 'image' => 'event4.jpg', 'count' => 7],

@@ -26,7 +26,7 @@ Route::get('/login', function () {
 
 Route::get('/gallery/event-{id}', function ($id) {
     $events = [
-        1 => ['title' => 'Music Festival', 'images' => ['m1.jpg', 'm2.jpg', 'm3.jpg']],
+        1 => ['title' => 'Book Fair 2025', 'images' => ['a1.png', 'a2.png', 'a3.png', 'a4.png', 'a5.png']],
         2 => ['title' => 'Art Exhibition', 'images' => ['a1.jpg', 'a2.jpg', 'a3.jpg']],
         3 => ['title' => 'Tech Conference', 'images' => ['t1.jpg', 't2.jpg', 't3.jpg']],
         4 => ['title' => 'Food Carnival', 'images' => ['f1.jpg', 'f2.jpg', 'f3.jpg']],
