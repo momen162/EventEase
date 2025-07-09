@@ -46,23 +46,26 @@
 
 
 
-<!-- 🔹 Event Type Auto Slider -->
+<!-- 🔹 Event Type Infinite Slider -->
 <section class="event-type-slider">
   <div class="event-type-wrapper">
     <button class="arrow-btn left" id="eventTypePrev">←</button>
 
     <div class="event-type-scroll" id="eventTypeScroll">
-      @for ($i = 1; $i <= 15; $i++)
-        <div class="event-type-item">
-          <img src="{{ asset("assets/icons/event/event$i.png") }}" alt="Event {{ $i }}">
-          <p>Event {{ $i }}</p>
-        </div>
-      @endfor
+      <div class="event-type-track" id="eventTypeTrack">
+        @for ($i = 1; $i <= 15; $i++)
+          <div class="event-type-item">
+            <img src="{{ asset("assets/icons/event/event$i.png") }}" alt="Event {{ $i }}">
+            <p>Event {{ $i }}</p>
+          </div>
+        @endfor
+      </div>
     </div>
 
     <button class="arrow-btn right" id="eventTypeNext">→</button>
   </div>
 </section>
+
 
 
 
