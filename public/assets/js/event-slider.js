@@ -1,39 +1,95 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const scrollContainer = document.getElementById("eventTypeScroll");
-  const nextBtn = document.getElementById("eventTypeNext");
+  const track = document.getElementById("eventTypeTrack");
+  const scrollWrapper = document.getElementById("eventTypeScroll");
   const prevBtn = document.getElementById("eventTypePrev");
+  const nextBtn = document.getElementById("eventTypeNext");
 
-  let itemWidth = 120; // Adjust based on your item + gap size
   let autoScrollInterval;
+  let itemWidth;
+  let index = 0;
 
-  // Manual controls
-  nextBtn.addEventListener("click", () => {
-    scrollContainer.scrollBy({ left: itemWidth, behavior: "smooth" });
-  });
+  const items = track.children;
+  const totalItems = items.length;
 
-  prevBtn.addEventListener("click", () => {
-    scrollContainer.scrollBy({ left: -itemWidth, behavior: "smooth" });
-  });
+  // Clone first and last few items for infinite effect
+  function cloneItems() {
+    const clonesBefore = [];
+    const clonesAfter = [];
 
-  // Auto-scroll function
-  function autoScroll() {
+    for (let i = 0; i < 5; i++) {
+      clonesBefore.push(items[totalItems - 1 - i].cloneNode(true));
+      clonesAfter.push(items[i].cloneNode(true));
+    }
+
+    clonesBefore.reverse().forEach(clone => track.insertBefore(clone, track.firstChild));
+    clonesAfter.forEach(clone => track.appendChild(clone));
+  }
+
+  // Set item width and track transform
+  function updateDimensions() {
+    const item = track.querySelector(".event-type-item");
+    itemWidth = item.offsetWidth + 40; // item + gap
+    index = 5; // skip cloned items
+    track.style.transform = `translateX(-${itemWidth * index}px)`;
+  }
+
+  // Scroll handler
+  function scrollToIndex() {
+    track.style.transition = "transform 0.5s ease";
+    track.style.transform = `translateX(-${itemWidth * index}px)`;
+  }
+
+  // Reset transform if at clone boundary
+  function checkInfiniteLoop() {
+    if (index >= totalItems + 5) {
+      index = 5;
+      track.style.transition = "none";
+      track.style.transform = `translateX(-${itemWidth * index}px)`;
+    }
+    if (index < 5) {
+      index = totalItems + 4;
+      track.style.transition = "none";
+      track.style.transform = `translateX(-${itemWidth * index}px)`;
+    }
+  }
+
+  // Auto Scroll
+  function startAutoScroll() {
     autoScrollInterval = setInterval(() => {
-      scrollContainer.scrollBy({ left: itemWidth, behavior: "smooth" });
-
-      // Loop back if near the end
-      if (
-        scrollContainer.scrollLeft + scrollContainer.offsetWidth >=
-        scrollContainer.scrollWidth - itemWidth
-      ) {
-        scrollContainer.scrollTo({ left: 0, behavior: "smooth" });
-      }
+      index++;
+      scrollToIndex();
     }, 2000);
   }
 
-  // Start auto scroll
-  autoScroll();
+  function stopAutoScroll() {
+    clearInterval(autoScrollInterval);
+  }
 
-  // Optional: Pause auto-scroll on hover
-  scrollContainer.addEventListener("mouseover", () => clearInterval(autoScrollInterval));
-  scrollContainer.addEventListener("mouseleave", autoScroll);
+  // Init
+  cloneItems();
+  updateDimensions();
+  startAutoScroll();
+
+  // Resize support
+  window.addEventListener("resize", updateDimensions);
+
+  // Manual controls
+  nextBtn.addEventListener("click", () => {
+    stopAutoScroll();
+    index++;
+    scrollToIndex();
+  });
+
+  prevBtn.addEventListener("click", () => {
+    stopAutoScroll();
+    index--;
+    scrollToIndex();
+  });
+
+  // Infinite reset on transition end
+  track.addEventListener("transitionend", checkInfiniteLoop);
+
+  // Pause on hover
+  scrollWrapper.addEventListener("mouseover", stopAutoScroll);
+  scrollWrapper.addEventListener("mouseleave", startAutoScroll);
 });
