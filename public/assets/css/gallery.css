@@ -56,3 +56,17 @@
   color: #666;
   font-size: 0.9rem;
 }
+
+
+
+
+.gallery-item img.gallery-img {
+  width: 100%;
+  border-radius: 8px;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+.gallery-item img.gallery-img:hover {
+  transform: scale(1.05);
+}
