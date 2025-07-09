@@ -53,12 +53,66 @@
 
     <div class="event-type-scroll" id="eventTypeScroll">
       <div class="event-type-track" id="eventTypeTrack">
-        @for ($i = 1; $i <= 15; $i++)
-          <div class="event-type-item">
-            <img src="{{ asset("assets/icons/event/event$i.png") }}" alt="Event {{ $i }}">
-            <p>Event {{ $i }}</p>
-          </div>
-        @endfor
+        <div class="event-type-item">
+          <img src="{{ asset('assets/icons/event/competitions.png') }}" alt="Competitions">
+          <p>Competitions</p>
+        </div>
+        <div class="event-type-item">
+          <img src="{{ asset('assets/icons/event/fashion.png') }}" alt="Fashion Shows">
+          <p>Fashion<br>Shows</p>
+        </div>
+        <div class="event-type-item">
+          <img src="{{ asset('assets/icons/event/conference.png') }}" alt="Conferences">
+          <p>Conferences</p>
+        </div>
+        <div class="event-type-item">
+          <img src="{{ asset('assets/icons/event/seminar.png') }}" alt="Seminars">
+          <p>Seminars</p>
+        </div>
+        <div class="event-type-item">
+          <img src="{{ asset('assets/icons/event/reunion.png') }}" alt="Reunions">
+          <p>Reunions</p>
+        </div>
+        <div class="event-type-item">
+          <img src="{{ asset('assets/icons/event/exhibition.png') }}" alt="Exhibitions">
+          <p>Exhibitions</p>
+        </div>
+        <div class="event-type-item">
+          <img src="{{ asset('assets/icons/event/launch.png') }}" alt="Launching">
+          <p>Launching</p>
+        </div>
+        <div class="event-type-item">
+          <img src="{{ asset('assets/icons/event/standup.png') }}" alt="Stand-up">
+          <p>Stand-up</p>
+        </div>
+        <div class="event-type-item">
+          <img src="{{ asset('assets/icons/event/drama.png') }}" alt="Drama">
+          <p>Drama</p>
+        </div>
+        <div class="event-type-item">
+          <img src="{{ asset('assets/icons/event/party.png') }}" alt="Party">
+          <p>Party</p>
+        </div>
+        <div class="event-type-item">
+          <img src="{{ asset('assets/icons/event/award.png') }}" alt="Award">
+          <p>Award</p>
+        </div>
+        <div class="event-type-item">
+          <img src="{{ asset('assets/icons/event/festival.png') }}" alt="Festival">
+          <p>Festival</p>
+        </div>
+        <div class="event-type-item">
+          <img src="{{ asset('assets/icons/event/hackathon.png') }}" alt="Hackathon">
+          <p>Hackathon</p>
+        </div>
+        <div class="event-type-item">
+          <img src="{{ asset('assets/icons/event/sports.png') }}" alt="Sports">
+          <p>Sports</p>
+        </div>
+        <div class="event-type-item">
+          <img src="{{ asset('assets/icons/event/workshop.png') }}" alt="Workshop">
+          <p>Workshop</p>
+        </div>
       </div>
     </div>
 
