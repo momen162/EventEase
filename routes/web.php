@@ -24,6 +24,31 @@ Route::get('/login', function () {
 
 
 
+Route::get('/gallery/event-{id}', function ($id) {
+    $events = [
+        1 => ['title' => 'Music Festival', 'images' => ['m1.jpg', 'm2.jpg', 'm3.jpg']],
+        2 => ['title' => 'Art Exhibition', 'images' => ['a1.jpg', 'a2.jpg', 'a3.jpg']],
+        3 => ['title' => 'Tech Conference', 'images' => ['t1.jpg', 't2.jpg', 't3.jpg']],
+        4 => ['title' => 'Food Carnival', 'images' => ['f1.jpg', 'f2.jpg', 'f3.jpg']],
+        5 => ['title' => 'Film Night', 'images' => ['film1.jpg', 'film2.jpg']],
+        6 => ['title' => 'Startup Meetup', 'images' => ['startup1.jpg', 'startup2.jpg']],
+        7 => ['title' => 'Book Fair', 'images' => ['book1.jpg', 'book2.jpg']],
+        8 => ['title' => 'Dance Show', 'images' => ['dance1.jpg', 'dance2.jpg']],
+        9 => ['title' => 'Drama Performance', 'images' => ['drama1.jpg', 'drama2.jpg']],
+        10 => ['title' => 'Fashion Gala', 'images' => ['fashion1.jpg', 'fashion2.jpg']],
+        11 => ['title' => 'Science Fair', 'images' => ['science1.jpg', 'science2.jpg']],
+        12 => ['title' => 'Photography Expo', 'images' => ['photo1.jpg', 'photo2.jpg']],
+        13 => ['title' => 'Cultural Day', 'images' => ['cultural1.jpg', 'cultural2.jpg']],
+        14 => ['title' => 'Charity Concert', 'images' => ['charity1.jpg', 'charity2.jpg']],
+    ];
+
+    if (!array_key_exists($id, $events)) {
+        abort(404);
+    }
+
+    return view('gallery-details', $events[$id]);
+});
+
 
 
 
