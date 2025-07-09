@@ -94,8 +94,8 @@
           <p>Party</p>
         </div>
         <div class="event-type-item">
-          <img src="{{ asset('assets/icons/event/award.png') }}" alt="Award">
-          <p>Award</p>
+          <img src="{{ asset('assets/icons/event/concert.png') }}" alt="Award">
+          <p>Concerts</p>
         </div>
         <div class="event-type-item">
           <img src="{{ asset('assets/icons/event/festival.png') }}" alt="Festival">
