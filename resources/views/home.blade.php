@@ -4,6 +4,8 @@
 
 @section('extra-css')
   <link rel="stylesheet" href="{{ asset('assets/css/home.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/event-slider.css') }}">
+
 @endsection
 
 @section('content')
@@ -41,6 +43,30 @@
     </div>
   </div>
 </section>
+
+
+
+<!-- 🔹 Event Type Auto Slider -->
+<section class="event-type-slider">
+  <div class="event-type-wrapper">
+    <button class="arrow-btn left" id="eventTypePrev">←</button>
+
+    <div class="event-type-scroll" id="eventTypeScroll">
+      @for ($i = 1; $i <= 15; $i++)
+        <div class="event-type-item">
+          <img src="{{ asset("assets/icons/event/event$i.png") }}" alt="Event {{ $i }}">
+          <p>Event {{ $i }}</p>
+        </div>
+      @endfor
+    </div>
+
+    <button class="arrow-btn right" id="eventTypeNext">→</button>
+  </div>
+</section>
+
+
+
+
 
 
 
@@ -153,4 +179,6 @@
 
 @section('extra-js')
   <script src="{{ asset('assets/js/home.js') }}"></script>
+  <script src="{{ asset('assets/js/event-slider.js') }}"></script>
+
 @endsection
