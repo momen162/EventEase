@@ -44,7 +44,10 @@
       <p><i class="bi bi-people"></i> 42/50 &nbsp;&nbsp; <i class="bi bi-clock"></i> 4h</p>
       <p><i class="bi bi-currency-dollar"></i> 99.99</p>
       <p class="description">Hands-on workshop covering modern JavaScript frameworks and best practices.</p>
-      <button class="btn view"><i class="bi bi-eye"></i> View Details</button>
+      <div class="btn-group">
+        <button class="btn view"><i class="bi bi-eye"></i> View Details</button>
+        <button class="btn register"><i class="bi bi-box-arrow-in-right"></i> Register</button>
+      </div>
     </div>
   </div>
 
@@ -59,7 +62,10 @@
       <p><i class="bi bi-people"></i> 87/100 &nbsp;&nbsp; <i class="bi bi-clock"></i> 3h</p>
       <p><i class="bi bi-currency-dollar"></i> Free</p>
       <p class="description">Professional networking event for entrepreneurs and business leaders.</p>
-      <button class="btn view"><i class="bi bi-eye"></i> View Details</button>
+    <div class="btn-group">
+        <button class="btn view"><i class="bi bi-eye"></i> View Details</button>
+        <button class="btn register"><i class="bi bi-box-arrow-in-right"></i> Register</button>
+      </div>
     </div>
   </div>
 
