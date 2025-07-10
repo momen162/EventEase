@@ -43,7 +43,7 @@
   gap: 10px;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 40px;
   background: #f3f3f3;
   border-radius: 10px;
   margin: 0 20px;
@@ -51,7 +51,7 @@
 
 .filter-options label {
   margin-right: 10px;
-  font-size: 0.95rem;
+  font-size: 1.5rem;
 }
 
 .search-box {
@@ -61,14 +61,18 @@
 }
 
 .search-box input {
-  padding: 6px 10px;
+  padding: 10px 30px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  font-size: 20px;
+}
+#filter{
+  font-size: 1.3rem;
 }
 
 .search-icon {
   color: #666;
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 
 /* filter search responsive */

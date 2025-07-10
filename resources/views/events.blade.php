@@ -24,7 +24,7 @@
     <label><input type="radio" name="eventStatus"> Upcoming</label>
   </div>
   <div class="search-box">
-    <button><i class="bi bi-sliders"></i></button>
+    <button><i class="bi bi-sliders" id="filter"></i></button>
     <input type="text" placeholder="Search Events..">
     <i class="bi bi-search search-icon"></i>
   </div>
