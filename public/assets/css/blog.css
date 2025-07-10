@@ -1,40 +1,73 @@
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f9f9f9;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f5f6f8;
   margin: 0;
   padding: 0;
 }
 
-.blog-container {
-  padding: 40px 20px;
-  max-width: 1100px;
-  margin: auto;
+.blog-page {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 30px;
+  gap: 30px;
 }
 
-.blog-container h2 {
+.main-content {
+  flex: 3;
+  min-width: 600px;
+}
+
+.sidebar {
+  flex: 1;
+  min-width: 280px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+}
+
+.sidebar h3 {
+  font-size: 1.2em;
+  margin-bottom: 15px;
+}
+
+.most-read {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 25px;
+}
+
+.most-read li {
+  padding: 8px 0;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.calendar-box {
+  background: #f0f0f0;
+  padding: 15px;
+  border-radius: 8px;
   text-align: center;
-  margin-bottom: 40px;
-  font-size: 2.2em;
-  color: #333;
+  font-size: 1.1em;
+  font-weight: bold;
 }
 
 .blog-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 25px;
+  gap: 20px;
 }
 
 .blog-card {
   background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
 }
 
 .blog-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  transform: translateY(-6px);
 }
 
 .blog-card img {
@@ -50,33 +83,34 @@ body {
 .blog-content h3 {
   margin: 0 0 10px;
   font-size: 1.4em;
-  color: #333;
 }
 
 .blog-snippet {
-  font-size: 1em;
   color: #555;
-  height: 60px;
-  overflow: hidden;
-  transition: height 0.3s ease;
+  margin-bottom: 10px;
 }
 
-.blog-card.expanded .blog-snippet {
-  height: auto;
+.blog-full {
+  color: #444;
+  margin-top: 10px;
 }
 
 .read-more-btn {
-  margin-top: 10px;
-  padding: 8px 16px;
   background: #007bff;
-  border: none;
   color: white;
-  font-size: 0.9em;
+  padding: 8px 16px;
+  border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s;
 }
 
 .read-more-btn:hover {
   background: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .blog-page {
+    flex-direction: column;
+  }
 }
