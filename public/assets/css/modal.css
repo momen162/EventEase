@@ -1,0 +1,47 @@
+/* Modal Overlay */
+.terms-modal-overlay {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Modal Content */
+.terms-modal-content {
+  background-color: #fff;
+  margin: 5% auto;
+  padding: 30px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 700px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Close Button */
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 26px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Scrollable Content */
+.terms-text h4 {
+  margin-top: 15px;
+  font-size: 18px;
+  font-weight: 600;
+}
+.terms-text p {
+  margin: 8px 0;
+  line-height: 1.6;
+}
