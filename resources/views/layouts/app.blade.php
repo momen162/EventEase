@@ -119,5 +119,8 @@
   <script src="{{ asset('assets/js/modal.js') }}"></script> <!-- Modal JS -->
   @yield('extra-js')
 
+
+  @include('auth.modal')
+
 </body>
 </html>
