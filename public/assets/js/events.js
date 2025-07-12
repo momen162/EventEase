@@ -1,3 +1,5 @@
+// javascript for filter option
+
 document.addEventListener('DOMContentLoaded', () => {
   const filterRadios = document.querySelectorAll('input[name="eventStatus"]');
   const cards = document.querySelectorAll('.event-card');
@@ -18,3 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+
+
+
+
+
+

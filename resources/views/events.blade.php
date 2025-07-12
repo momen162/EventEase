@@ -22,11 +22,12 @@
     <label><input type="radio" name="eventStatus" value="ongoing"> Live</label>
     <label><input type="radio" name="eventStatus" value="upcoming"> Upcoming</label>
   </div>
-  <div class="search-box">
-    <button><i class="bi bi-sliders" id="filter"></i></button>
-    <input type="text" placeholder="Search Events..">
-    <i class="bi bi-search search-icon"></i>
-  </div>
+ <div class="search-box">
+  <button id="searchBtn"><i class="bi bi-sliders"></i></button>
+  <input type="text" id="searchInput" placeholder="Search Events..">
+  <i class="bi bi-search search-icon" id="triggerSearch" style="cursor:pointer;"></i>
+</div>
+
 </section>
 
 <!-- Event Cards -->
