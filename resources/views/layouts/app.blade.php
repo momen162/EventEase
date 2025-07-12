@@ -25,9 +25,21 @@
     </nav>
 
     <div class="login-section" id="loginSection">
-      <span>👲🏻 Guest</span>
-      <button><a href="{{ url('/login') }}">Login</a></button>
+  @auth
+    <div class="dropdown">
+      <button class="user-name">{{ Auth::user()->name }} ▼</button>
+      <div class="dropdown-content">
+        <a href="{{ route('dashboard') }}">Dashboard</a>
+        <form action="{{ route('logout') }}" method="POST">@csrf
+          <button type="submit">Logout</button>
+        </form>
+      </div>
     </div>
+  @else
+    <button onclick="openAuthModal()">Login</button>
+  @endauth
+</div>
+
   </header>
 
   <main>
