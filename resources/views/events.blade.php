@@ -48,6 +48,23 @@
       </div>
     </div>
   </div>
+  <div class="event-card" data-status="ongoing">
+    <div class="card-header purple-gradient">
+      <h3>JavaScript Workshop</h3>
+      <span class="badge ongoing">ongoing</span>
+    </div>
+    <div class="card-body">
+      <p><i class="bi bi-calendar"></i> 28/02/2024 at 14:00</p>
+      <p><i class="bi bi-geo-alt"></i> Learning Hub, Downtown</p>
+      <p><i class="bi bi-people"></i> 42/50 &nbsp;&nbsp; <i class="bi bi-clock"></i> 4h</p>
+      <p><i class="bi bi-currency-dollar"></i> 99.99</p>
+      <p class="description">Hands-on workshop covering modern JavaScript frameworks and best practices.</p>
+      <div class="btn-group">
+        <button class="btn view"><i class="bi bi-eye"></i> View Details</button>
+        <button class="btn register"><i class="bi bi-box-arrow-in-right"></i> Register</button>
+      </div>
+    </div>
+  </div>
 
   <div class="event-card" data-status="completed">
     <div class="card-header purple-gradient">
