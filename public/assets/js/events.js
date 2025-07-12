@@ -48,8 +48,18 @@ document.addEventListener('DOMContentLoaded', () => {
     radio.addEventListener('change', filterEvents);
   });
 
+// Search button click
+
   searchBtn.addEventListener('click', filterEvents);
 
+  // Trigger on pressing Enter key
+  
+  searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); 
+      filterEvents();
+    }
+  });
 });
 
 
