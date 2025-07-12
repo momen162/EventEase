@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
   searchBtn.addEventListener('click', filterEvents);
 
   // Trigger on pressing Enter key
-  
+
   searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
       e.preventDefault(); 
@@ -61,6 +61,64 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+
+
+
+
+
+
+// real time filtering by debounce function
+
+document.addEventListener('DOMContentLoaded', () => {
+  const filterRadios = document.querySelectorAll('input[name="eventStatus"]');
+  const cards = document.querySelectorAll('.event-card');
+  const searchBtn = document.getElementById('triggerSearch');
+  const searchInput = document.getElementById('searchInput');
+
+  // Debounce function
+  function debounce(fn, delay) {
+    let timeout;
+    return function () {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => fn.apply(this, arguments), delay);
+    };
+  }
+
+  function filterEvents() {
+    const selectedRadio = document.querySelector('input[name="eventStatus"]:checked');
+    const selectedStatus = selectedRadio ? selectedRadio.value : 'all';
+    const keyword = searchInput.value.trim().toLowerCase();
+
+    cards.forEach(card => {
+      const status = card.getAttribute('data-status');
+      const text = card.textContent.toLowerCase();
+      const matchStatus = selectedStatus === 'all' || selectedStatus === status;
+      const matchKeyword = text.includes(keyword);
+      card.style.display = (matchStatus && matchKeyword) ? 'block' : 'none';
+    });
+  }
+
+  // Use debounce for input typing
+  const debouncedFilter = debounce(filterEvents, 300);
+
+  // Event listeners
+  filterRadios.forEach(radio => {
+    radio.addEventListener('change', filterEvents);
+  });
+
+  searchBtn.addEventListener('click', filterEvents);
+
+  searchInput.addEventListener('input', debouncedFilter); // Real-time with debounce
+
+  searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      filterEvents();
+    }
+  });
+});
+
 
 
 
