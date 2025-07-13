@@ -30,7 +30,9 @@
   @guest
     <span>👲🏻 Guest</span>
     <button onclick="openAuthModal()">Login</button>
-  @else
+  @endguest
+
+  @auth
     <div class="dropdown">
       <button class="dropdown-toggle">{{ Auth::user()->name }}</button>
       <div class="dropdown-menu">
@@ -41,9 +43,8 @@
         </form>
       </div>
     </div>
-  @endguest
+  @endauth
 </div>
-
 
 
 
@@ -146,7 +147,6 @@
 </script>
 
   
-  @include('auth.modal')
 
 
 
