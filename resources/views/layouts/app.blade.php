@@ -119,6 +119,7 @@
 
   <script src="{{ asset('assets/js/script.js') }}"></script>
   <script src="{{ asset('assets/js/modal.js') }}"></script> <!-- Modal JS -->
+  <script src="{{ asset('assets/js/auth.js') }}"></script>
   @yield('extra-js')
 
 
@@ -126,3 +127,4 @@
 
 </body>
 </html>
+
