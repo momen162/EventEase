@@ -34,3 +34,33 @@ function switchAuthTab(tab) {
     registerForm.style.display = 'block';
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  const toggle = document.querySelector('.dropdown-toggle');
+  const menu = document.querySelector('.dropdown-menu');
+
+  if (toggle && menu) {
+    toggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      this.parentElement.classList.toggle('show');
+    });
+
+    window.addEventListener('click', function (e) {
+      if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+        toggle.parentElement.classList.remove('show');
+      }
+    });
+  }
+});

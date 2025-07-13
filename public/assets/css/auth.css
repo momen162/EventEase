@@ -34,3 +34,87 @@
   border: none;
   border-radius: 5px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Dropdown Wrapper */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Username Button */
+.dropdown-toggle {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 18px;
+  font-size: 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.dropdown-toggle:hover {
+  background-color: #0056b3;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  min-width: 180px;
+  padding: 8px 0;
+}
+
+/* Menu Items */
+.dropdown-menu a,
+.dropdown-menu form button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 20px;
+  font-size: 14px;
+  color: #333;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+  font-weight: 500;
+}
+
+/* Hover Effect */
+.dropdown-menu a:hover,
+.dropdown-menu form button:hover {
+  background-color: #f4f4f4;
+  color: #007bff;
+}
+
+/* Show Class */
+.dropdown.show .dropdown-menu {
+  display: block;
+}
