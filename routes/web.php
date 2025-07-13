@@ -55,18 +55,21 @@ Route::get('/auth/facebook/callback', [SocialController::class, 'handleFacebookC
 
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ProfileController;
+
 
 Route::post('/login', [AuthController::class, 'login'])->name('login.custom');
 Route::post('/register', [AuthController::class, 'register'])->name('register.custom');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+
+
+use App\Http\Controllers\ProfileController;
+
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [ProfileController::class, 'dashboard'])->name('dashboard');
-    Route::get('/edit-profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::post('/update-profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
-
 
 
 
