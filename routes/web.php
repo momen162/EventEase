@@ -51,19 +51,22 @@ Route::get('/auth/google/callback', [SocialController::class, 'handleGoogleCallb
 Route::get('/auth/facebook', [SocialController::class, 'redirectToFacebook']);
 Route::get('/auth/facebook/callback', [SocialController::class, 'handleFacebookCallback']);
 
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [ProfileController::class, 'dashboard'])->name('dashboard');
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/edit-profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/update-profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 
 
 
 
+use App\Http\Controllers\AuthController;
 
-
-
+Route::post('/register', [AuthController::class, 'register'])->name('register.custom');
+Route::post('/login', [AuthController::class, 'login'])->name('login.custom');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 

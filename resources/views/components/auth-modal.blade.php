@@ -8,7 +8,7 @@
     </div>
 
     <!-- Login Form -->
-    <form method="POST" action="{{ route('login') }}" class="auth-form" id="loginForm">
+    <form method="POST" action="{{ route('login.custom') }}" class="auth-form" id="loginForm">
       @csrf
       <label>Email</label>
       <input type="email" name="email" placeholder="Enter email" required>
@@ -27,7 +27,7 @@
     </form>
 
     <!-- Register Form -->
-    <form method="POST" action="{{ route('register') }}" class="auth-form" id="registerForm" style="display: none;">
+    <form method="POST" action="{{ route('register.custom') }}" class="auth-form" id="registerForm">
       @csrf
       <label>Full Name</label>
       <input type="text" name="name" placeholder="Enter full name" required>
