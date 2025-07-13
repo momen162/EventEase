@@ -30,3 +30,57 @@
   justify-content: space-around;
   margin-bottom: 20px;
 }
+.auth-tabs button {
+  flex: 1;
+  padding: 10px;
+  background: #eee;
+  border: none;
+  cursor: pointer;
+}
+.auth-tabs button.active {
+  background: #6c63ff;
+  color: white;
+}
+.auth-form {
+  display: none;
+}
+.auth-form.active {
+  display: block;
+}
+.auth-form input {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+.auth-form button {
+  width: 100%;
+  padding: 10px;
+  background: #6c63ff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.auth-divider {
+  text-align: center;
+  margin: 15px 0;
+}
+.social-buttons a {
+  display: block;
+  text-align: center;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+}
+.google-btn {
+  background: #dd4b39;
+}
+.facebook-btn {
+  background: #3b5998;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
