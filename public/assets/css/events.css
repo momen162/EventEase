@@ -1,40 +1,133 @@
-/* Banner */
+/* banner css */
 
-.event-banner {
-  background-color: #00332e;
-  border-radius: 10px;
-  margin: 20px;
-  padding: 40px 20px 20px;
-  text-align: center;
+.hero-banner {
+  background: #f8f9fa;
+  padding: 50px 20px;
 }
 
-.event-banner h2 {
-  font-weight: bold;
-  font-size: 2rem;
-  color: white;
-}
-
-.event-banner p {
-  font-size: 1rem;
-  color: #cfcfcf;
-  max-width: 700px;
+.hero-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
-/* Responsive Design of banner */
+.hero-slider {
+  flex: 1;
+  min-width: 300px;
+  max-width: 45%;
+  overflow: hidden;
+  border-radius: 12px;
+  position: relative;
+  height: 260px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.hero-slider .slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.hero-slider .slide.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.hero-text {
+  flex: 1;
+  min-width: 300px;
+  max-width: 50%;
+}
+
+.hero-text h1 {
+  font-size: 2.5rem;
+  color: #495252;
+  margin-bottom: 10px;
+}
+
+.hero-text .lead {
+  font-size: 1.2rem;
+  color: #6c757d;
+  margin-bottom: 20px;
+}
+
+
+/* ✅ Responsive Design for Hero Banner */
 @media (max-width: 768px) {
-  .event-banner {
-    padding: 30px 15px 15px;
+  .hero-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+    padding: 30px 15px;
   }
 
-  .event-banner h2 {
+  .hero-slider {
+    max-width: 100%;
+    height: 220px;
+    position: relative;
+  }
+
+  .hero-slider .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease-in-out, visibility 1s;
+  }
+
+  .hero-slider .slide.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+  }
+
+  .hero-text {
+    max-width: 100%;
+    margin-top: 10px;
+  }
+
+  .hero-text h1 {
+    font-size: 1.8rem;
+    line-height: 1.4;
+    color: #333;
+  }
+
+  .hero-text .lead {
+    font-size: 1rem;
+    color: #6c757d;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-slider {
+    height: 180px;
+  }
+
+  .hero-text h1 {
     font-size: 1.5rem;
   }
 
-  .event-banner p {
+  .hero-text .lead {
     font-size: 0.95rem;
   }
 }
+
+
+
 
 /* Filter/Search Section */
 .filter-search-wrapper {

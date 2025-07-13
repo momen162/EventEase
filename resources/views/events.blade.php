@@ -10,18 +10,36 @@
 @section('content')
 
 <!-- Banner Section -->
-<section class="event-banner text-white text-center py-4">
-  <h2>Explore Events</h2>
-  <p>Explore the Universe of Events at Your Fingertips.</p>
+
+<section class="hero-banner">
+  <div class="hero-container">
+    
+    <!-- Left: Image Slider -->
+    <div class="hero-slider">
+      <img src="{{ asset('assets/images/banner1.jpg') }}" class="slide active" alt="Event Banner 1">
+      <img src="{{ asset('assets/images/banner2.jpg') }}" class="slide" alt="Event Banner 2">
+      <img src="{{ asset('assets/images/banner3.jpg') }}" class="slide" alt="Event Banner 3">
+    </div>
+
+    <!-- Right: Text Content -->
+    <div class="hero-text">
+      <h1>Grow Your Network & Build Your Skills with Our<br> Events!</h1>
+     
+    </div>
+
+  </div>
 </section>
 
+
 <!-- Filter/Search -->
+
 <section class="filter-search-wrapper">
   <div class="filter-options">
     <label><input type="radio" name="eventStatus" value="all" checked> All</label>
     <label><input type="radio" name="eventStatus" value="ongoing"> Live</label>
     <label><input type="radio" name="eventStatus" value="upcoming"> Upcoming</label>
   </div>
+  
  <div class="search-box">
   <button id="searchBtn"><i class="bi bi-sliders"></i></button>
   <input type="text" id="searchInput" placeholder="Search Events..">
