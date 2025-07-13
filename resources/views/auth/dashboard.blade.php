@@ -4,7 +4,7 @@
 
 @section('content')
 <section class="dashboard">
-  <h2>Welcome, {{ $user->name }}</h2>
+  <h2>Hello, {{ $user->name }}</h2>
   <p><strong>Email:</strong> {{ $user->email }}</p>
   <a href="{{ route('profile.edit') }}" class="btn">Edit Profile</a>
 </section>

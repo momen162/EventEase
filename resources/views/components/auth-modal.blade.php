@@ -10,7 +10,7 @@
     <!-- Login Form -->
 
     <!-- Display Login Errors -->
-@if ($errors->any() && session()->get('_old_input') && request()->is('/'))
+@if ($errors->any() && !old('name'))
   <div class="auth-errors">
     <ul>
       @foreach ($errors->all() as $error)
@@ -19,17 +19,13 @@
     </ul>
   </div>
 @endif
-
-
-    <form method="POST" action="{{ route('login.custom') }}" class="auth-form" id="loginForm">
-      @csrf
-      <label>Email</label>
-      <input type="email" name="email" placeholder="Enter email" required>
-
-      <label>Password</label>
-      <input type="password" name="password" placeholder="Enter password" required>
-
-      <button type="submit">Login</button>
+<form method="POST" action="{{ route('login.custom') }}" id="loginForm" class="auth-form">
+  @csrf
+  <label>Email</label>
+  <input type="email" name="email" required>
+  <label>Password</label>
+  <input type="password" name="password" required>
+  <button type="submit">Login</button>
 
       <p class="auth-or">OR</p>
 
@@ -44,7 +40,7 @@
 
 
     <!-- Display Register Errors -->
-@if ($errors->any() && session()->get('_old_input') && request()->is('/'))
+@if ($errors->any() && old('name'))
   <div class="auth-errors">
     <ul>
       @foreach ($errors->all() as $error)
@@ -53,22 +49,17 @@
     </ul>
   </div>
 @endif
-
-    <form method="POST" action="{{ route('register.custom') }}" class="auth-form" id="registerForm">
-      @csrf
-      <label>Full Name</label>
-      <input type="text" name="name" placeholder="Enter full name" required>
-
-      <label>Email</label>
-      <input type="email" name="email" placeholder="Enter email" required>
-
-      <label>Password</label>
-      <input type="password" name="password" placeholder="Enter password" required>
-
-      <label>Confirm Password</label>
-      <input type="password" name="password_confirmation" placeholder="Confirm password" required>
-
-      <button type="submit">Register</button>
+<form method="POST" action="{{ route('register.custom') }}" id="registerForm" class="auth-form" style="display: none;">
+  @csrf
+  <label>Name</label>
+  <input type="text" name="name" required>
+  <label>Email</label>
+  <input type="email" name="email" required>
+  <label>Password</label>
+  <input type="password" name="password" required>
+  <label>Confirm Password</label>
+  <input type="password" name="password_confirmation" required>
+  <button type="submit">Register</button>
 
       <p class="auth-or">OR</p>
 

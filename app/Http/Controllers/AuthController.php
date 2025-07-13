@@ -15,16 +15,17 @@ class AuthController extends Controller
     $user = User::where('email', $request->email)->first();
 
     if (!$user) {
-        return back()->withErrors(['email' => 'No account found. Please register first.']);
+        return back()->withErrors(['email' => 'No account found. Please register first.'])->withInput();
     }
 
     if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-        return back()->withErrors(['email' => 'Email and password do not match.']);
+        return back()->withErrors(['email' => 'Email and password do not match.'])->withInput();
     }
 
     $request->session()->regenerate();
     return redirect('/');
 }
+
 
 
     // Handle user registration
