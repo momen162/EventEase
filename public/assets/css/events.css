@@ -1,4 +1,3 @@
-
 /* banner css */
 
 .hero-banner {
@@ -60,6 +59,73 @@
   color: #6c757d;
   margin-bottom: 20px;
 }
+
+
+/* ✅ Responsive Design for Hero Banner */
+@media (max-width: 768px) {
+  .hero-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+    padding: 30px 15px;
+  }
+
+  .hero-slider {
+    max-width: 100%;
+    height: 220px;
+    position: relative;
+  }
+
+  .hero-slider .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease-in-out, visibility 1s;
+  }
+
+  .hero-slider .slide.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+  }
+
+  .hero-text {
+    max-width: 100%;
+    margin-top: 10px;
+  }
+
+  .hero-text h1 {
+    font-size: 1.8rem;
+    line-height: 1.4;
+    color: #333;
+  }
+
+  .hero-text .lead {
+    font-size: 1rem;
+    color: #6c757d;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-slider {
+    height: 180px;
+  }
+
+  .hero-text h1 {
+    font-size: 1.5rem;
+  }
+
+  .hero-text .lead {
+    font-size: 0.95rem;
+  }
+}
+
 
 
 
