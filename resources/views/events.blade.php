@@ -9,19 +9,18 @@
 
 @section('content')
 
-<!-- Banner Section -->
-<section class="event-banner text-white text-center py-4">
-  <h2>Explore Events</h2>
-  <p>Explore the Universe of Events at Your Fingertips.</p>
-</section>
+
+
 
 <!-- Filter/Search -->
+
 <section class="filter-search-wrapper">
   <div class="filter-options">
     <label><input type="radio" name="eventStatus" value="all" checked> All</label>
     <label><input type="radio" name="eventStatus" value="ongoing"> Live</label>
     <label><input type="radio" name="eventStatus" value="upcoming"> Upcoming</label>
   </div>
+  
  <div class="search-box">
   <button id="searchBtn"><i class="bi bi-sliders"></i></button>
   <input type="text" id="searchInput" placeholder="Search Events..">

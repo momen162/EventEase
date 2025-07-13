@@ -1,40 +1,6 @@
-/* Banner */
 
-.event-banner {
-  background-color: #00332e;
-  border-radius: 10px;
-  margin: 20px;
-  padding: 40px 20px 20px;
-  text-align: center;
-}
 
-.event-banner h2 {
-  font-weight: bold;
-  font-size: 2rem;
-  color: white;
-}
 
-.event-banner p {
-  font-size: 1rem;
-  color: #cfcfcf;
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-/* Responsive Design of banner */
-@media (max-width: 768px) {
-  .event-banner {
-    padding: 30px 15px 15px;
-  }
-
-  .event-banner h2 {
-    font-size: 1.5rem;
-  }
-
-  .event-banner p {
-    font-size: 0.95rem;
-  }
-}
 
 /* Filter/Search Section */
 .filter-search-wrapper {
