@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/modal.css') }}"> <!-- Modal style -->
+  <link rel="stylesheet" href="{{ asset('assets/css/auth.css') }}">
+
   @yield('extra-css')
 </head>
 <body>
