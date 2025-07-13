@@ -81,7 +81,7 @@ Route::get('/gallery/event-{id}', function ($id) {
         2 => ['title' => 'Art Exhibition', 'images' => ['b1.png', 'b2.png', 'b3.png', 'b4.png' , 'b5.png']],
         3 => ['title' => 'Tech Conference', 'images' => ['c1.png', 'c2.png', 'c3.png', 'c4.png' , 'c5.png']],
         4 => ['title' => 'Food Carnival', 'images' => ['d1.png', 'd2.png', 'd3.png', 'd4.png']],
-        5 => ['title' => 'Film Night', 'images' => ['film1.jpg', 'film2.jpg']],
+        5 => ['title' => 'Film Night', 'images' => ['e1.png', 'e2.png', 'e3.png', 'e4.png']],
         6 => ['title' => 'Startup Meetup', 'images' => ['startup1.jpg', 'startup2.jpg']],
         7 => ['title' => 'Book Fair', 'images' => ['book1.jpg', 'book2.jpg']],
         8 => ['title' => 'Dance Show', 'images' => ['dance1.jpg', 'dance2.jpg']],
