@@ -8,6 +8,19 @@
     </div>
 
     <!-- Login Form -->
+
+    <!-- Display Login Errors -->
+@if ($errors->any() && session()->get('_old_input') && request()->is('/'))
+  <div class="auth-errors">
+    <ul>
+      @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+  </div>
+@endif
+
+
     <form method="POST" action="{{ route('login.custom') }}" class="auth-form" id="loginForm">
       @csrf
       <label>Email</label>
@@ -27,6 +40,20 @@
     </form>
 
     <!-- Register Form -->
+
+
+
+    <!-- Display Register Errors -->
+@if ($errors->any() && session()->get('_old_input') && request()->is('/'))
+  <div class="auth-errors">
+    <ul>
+      @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+  </div>
+@endif
+
     <form method="POST" action="{{ route('register.custom') }}" class="auth-form" id="registerForm">
       @csrf
       <label>Full Name</label>

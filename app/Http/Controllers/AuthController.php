@@ -10,19 +10,22 @@ use App\Models\User;
 class AuthController extends Controller
 {
     // Handle user login
-    public function login(Request $request)
-    {
-        $credentials = $request->only('email', 'password');
+   public function login(Request $request)
+{
+    $user = User::where('email', $request->email)->first();
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect('/');
-        }
-
-        return back()->withErrors([
-            'email' => 'Invalid credentials.',
-        ]);
+    if (!$user) {
+        return back()->withErrors(['email' => 'No account found. Please register first.']);
     }
+
+    if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        return back()->withErrors(['email' => 'Email and password do not match.']);
+    }
+
+    $request->session()->regenerate();
+    return redirect('/');
+}
+
 
     // Handle user registration
     public function register(Request $request)
