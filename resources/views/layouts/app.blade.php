@@ -27,25 +27,29 @@
     </nav>
 
     <div class="login-section" id="loginSection">
-  @auth
+  @guest
+    <span>👲🏻 Guest</span>
+    <button onclick="openAuthModal()">Login</button>
+  @else
     <div class="dropdown">
-      <button class="user-name">{{ Auth::user()->name }} ▼</button>
-      <div class="dropdown-content">
+      <button class="dropdown-toggle">{{ Auth::user()->name }}</button>
+      <div class="dropdown-menu">
         <a href="{{ route('dashboard') }}">Dashboard</a>
-        <form action="{{ route('logout') }}" method="POST">@csrf
+        <form method="POST" action="{{ route('logout') }}">
+          @csrf
           <button type="submit">Logout</button>
         </form>
       </div>
     </div>
-  @else
-    <button onclick="openAuthModal()">Login</button>
-  @endauth
+  @endguest
 </div>
 
   </header>
 
   <main>
     @yield('content')
+    @include('components.auth-modal')
+
   </main>
 
   <footer class="site-footer">
@@ -118,8 +122,9 @@
   </div>
 
   <script src="{{ asset('assets/js/script.js') }}"></script>
-  <script src="{{ asset('assets/js/modal.js') }}"></script> <!-- Modal JS -->
   <script src="{{ asset('assets/js/auth.js') }}"></script>
+  <script src="{{ asset('assets/js/modal.js') }}"></script>
+
   @yield('extra-js')
 
 

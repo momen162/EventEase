@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 
-
+// navbar pages routes
 
 Route::get('/', function () {
     return view('home');
@@ -25,7 +25,7 @@ Route::get('/contact', function () {
 
 
 
-
+// dashboard routes
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -34,6 +34,8 @@ Route::get('/dashboard', function () {
 
 
 require __DIR__.'/auth.php';
+
+
 
 
 
@@ -65,9 +67,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-
-
-// gallery details
+// gallery details routes
 
 Route::get('/gallery/event-{id}', function ($id) {
     $events = [

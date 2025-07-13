@@ -1,0 +1,26 @@
+.dashboard-wrapper {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+}
+.dashboard-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.info-card {
+  flex: 1;
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.05);
+}
+.edit-btn {
+  display: inline-block;
+  margin-top: 10px;
+  background: #6c63ff;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  text-decoration: none;
+}

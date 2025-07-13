@@ -45,3 +45,142 @@
   margin: 8px 0;
   line-height: 1.6;
 }
+
+
+
+
+
+
+
+
+
+
+
+/* Modal Overlay */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal Box */
+.modal-content {
+  background: #fff;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 12px;
+  padding: 30px;
+  position: relative;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Close Button */
+.close-modal {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #999;
+}
+.close-modal:hover {
+  color: #333;
+}
+
+/* Tabs */
+.auth-tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+.tab-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 12px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+.tab-btn.active {
+  border-color: #6c63ff;
+  color: #6c63ff;
+}
+
+/* Forms */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+}
+.auth-form label {
+  margin-top: 12px;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+.auth-form input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.auth-form button {
+  margin-top: 20px;
+  background: #6c63ff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.auth-form button:hover {
+  background: #574fff;
+}
+
+/* Social Login */
+.auth-or {
+  text-align: center;
+  margin: 15px 0 10px;
+  font-size: 13px;
+  color: #777;
+}
+.social-login {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.google-btn,
+.facebook-btn {
+  display: inline-block;
+  text-align: center;
+  padding: 10px;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}
+.google-btn {
+  background: #db4437;
+}
+.facebook-btn {
+  background: #3b5998;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .modal-content {
+    width: 90%;
+    padding: 20px;
+  }
+}
