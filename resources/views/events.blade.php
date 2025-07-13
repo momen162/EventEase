@@ -9,7 +9,26 @@
 
 @section('content')
 
+<!-- Banner Section -->
 
+<section class="hero-banner">
+  <div class="hero-container">
+    
+    <!-- Left: Image Slider -->
+    <div class="hero-slider">
+      <img src="{{ asset('assets/images/banner1.jpg') }}" class="slide active" alt="Event Banner 1">
+      <img src="{{ asset('assets/images/banner2.jpg') }}" class="slide" alt="Event Banner 2">
+      <img src="{{ asset('assets/images/banner3.jpg') }}" class="slide" alt="Event Banner 3">
+    </div>
+
+    <!-- Right: Text Content -->
+    <div class="hero-text">
+      <h1>Grow Your Network & Build Your Skills with Our<br> Events!</h1>
+     
+    </div>
+
+  </div>
+</section>
 
 
 <!-- Filter/Search -->
