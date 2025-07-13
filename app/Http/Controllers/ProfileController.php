@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -21,7 +22,8 @@ class ProfileController extends Controller
         return view('auth.edit-profile', compact('user'));
     }
 
-    public function update(Request $request)
+    
+        public function update(Request $request)
     {
         $user = Auth::user();
 
@@ -30,11 +32,19 @@ class ProfileController extends Controller
             'email' => 'required|email|unique:users,email,' . $user->id,
             'phone' => 'nullable|string|max:20',
             'password' => 'nullable|confirmed|min:6',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
+        $user->fill($request->only(['name', 'email', 'phone']));
+
+        if ($request->hasFile('profile_picture')) {
+            if ($user->profile_picture) {
+                Storage::delete('public/' . $user->profile_picture);
+            }
+
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+            $user->profile_picture = $path;
+        }
 
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
