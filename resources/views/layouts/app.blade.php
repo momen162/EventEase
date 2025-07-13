@@ -132,7 +132,25 @@
   @yield('extra-js')
 
 
+  
+  <script>
+  @if ($errors->any())
+    window.onload = function () {
+      openAuthModal();
+      @if (old('name'))
+        switchAuthTab('register');
+      @else
+        switchAuthTab('login');
+      @endif
+    }
+  @endif
+</script>
+
+  
   @include('auth.modal')
+
+
+
 
 </body>
 </html>
