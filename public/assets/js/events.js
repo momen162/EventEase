@@ -1,3 +1,17 @@
+// js for banner slider
+
+// Hero Slider Script
+let slideIndex = 0;
+const heroSlides = document.querySelectorAll('.hero-slider .slide');
+
+function rotateHeroSlides() {
+  heroSlides.forEach(slide => slide.classList.remove('active'));
+  heroSlides[slideIndex].classList.add('active');
+  slideIndex = (slideIndex + 1) % heroSlides.length;
+}
+
+setInterval(rotateHeroSlides, 3000); // Change every 3 seconds
+rotateHeroSlides(); // Show first slide
 
 // javascript for filter option
 
