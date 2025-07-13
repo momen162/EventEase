@@ -7,62 +7,64 @@
       <button class="tab-btn" onclick="switchAuthTab('register')">Register</button>
     </div>
 
-    <!-- Login Form -->
+    {{-- Login Errors --}}
+    @if ($errors->any() && !old('name'))
+      <div class="auth-errors">
+        <ul>
+          @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
 
-    <!-- Display Login Errors -->
-@if ($errors->any() && !old('name'))
-  <div class="auth-errors">
-    <ul>
-      @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-      @endforeach
-    </ul>
-  </div>
-@endif
-<form method="POST" action="{{ route('login.custom') }}" id="loginForm" class="auth-form">
-  @csrf
-  <label>Email</label>
-  <input type="email" name="email" required>
-  <label>Password</label>
-  <input type="password" name="password" required>
-  <button type="submit">Login</button>
+    <!-- Login Form -->
+    <form method="POST" action="{{ route('login.custom') }}" id="loginForm" class="auth-form">
+      @csrf
+      <label>Email</label>
+      <input type="email" name="email" placeholder="Enter your email" required>
+
+      <label>Password</label>
+      <input type="password" name="password" placeholder="Enter your password" required>
+
+      <button type="submit">Login</button>
 
       <p class="auth-or">OR</p>
-
       <div class="social-login">
         <a href="{{ url('/auth/google') }}" class="google-btn">Continue with Google</a>
         <a href="{{ url('/auth/facebook') }}" class="facebook-btn">Continue with Facebook</a>
       </div>
     </form>
 
+    {{-- Register Errors --}}
+    @if ($errors->any() && old('name'))
+      <div class="auth-errors">
+        <ul>
+          @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
+
     <!-- Register Form -->
+    <form method="POST" action="{{ route('register.custom') }}" id="registerForm" class="auth-form" style="display: none;">
+      @csrf
+      <label>Name</label>
+      <input type="text" name="name" placeholder="Enter your full name" required>
 
+      <label>Email</label>
+      <input type="email" name="email" placeholder="Enter your email" required>
 
+      <label>Password</label>
+      <input type="password" name="password" placeholder="Choose a password" required>
 
-    <!-- Display Register Errors -->
-@if ($errors->any() && old('name'))
-  <div class="auth-errors">
-    <ul>
-      @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-      @endforeach
-    </ul>
-  </div>
-@endif
-<form method="POST" action="{{ route('register.custom') }}" id="registerForm" class="auth-form" style="display: none;">
-  @csrf
-  <label>Name</label>
-  <input type="text" name="name" required>
-  <label>Email</label>
-  <input type="email" name="email" required>
-  <label>Password</label>
-  <input type="password" name="password" required>
-  <label>Confirm Password</label>
-  <input type="password" name="password_confirmation" required>
-  <button type="submit">Register</button>
+      <label>Confirm Password</label>
+      <input type="password" name="password_confirmation" placeholder="Confirm your password" required>
+
+      <button type="submit">Register</button>
 
       <p class="auth-or">OR</p>
-
       <div class="social-login">
         <a href="{{ url('/auth/google') }}" class="google-btn">Continue with Google</a>
         <a href="{{ url('/auth/facebook') }}" class="facebook-btn">Continue with Facebook</a>
