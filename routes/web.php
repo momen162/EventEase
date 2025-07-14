@@ -74,6 +74,14 @@ Route::middleware('auth')->group(function () {
 
 
 
+// Routes for blog pages
+use App\Http\Controllers\BlogController;
+
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/{id}', [BlogController::class, 'show'])->name('blog.show');
+
+
+
 
 
 // gallery details routes
