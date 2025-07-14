@@ -7,14 +7,17 @@
 @endsection
 
 @section('content')
-  <h2>Contact Us</h2>
-  <form action="#" method="POST">
-    @csrf
-    <input type="text" name="name" placeholder="Your Name" required>
-    <input type="email" name="email" placeholder="Email" required>
-    <textarea name="message" placeholder="Message..." required></textarea>
-    <button type="submit">Send Message</button>
-  </form>
+  <section class="contact-container">
+    <h2>Contact Us</h2>
+    <form action="#" method="POST" class="contact-form" id="contactForm">
+      @csrf
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <textarea name="message" placeholder="Message..." required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+    <p id="form-status" class="form-status"></p>
+  </section>
 @endsection
 
 @section('extra-js')
