@@ -68,3 +68,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+// View Details Toggle
+document.querySelectorAll('.toggle-details').forEach(button => {
+  button.addEventListener('click', function () {
+    const details = this.closest('.event-card').querySelector('.event-details');
+    if (details.style.display === 'block') {
+      details.style.display = 'none';
+      this.innerHTML = `<i class="bi bi-eye"></i> View Details`;
+    } else {
+      details.style.display = 'block';
+      this.innerHTML = `<i class="bi bi-eye-slash"></i> Hide Details`;
+    }
+  });
+});
+
