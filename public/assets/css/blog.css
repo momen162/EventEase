@@ -124,3 +124,165 @@
   font-size: 28px;
   letter-spacing: 1px;
 }
+
+
+
+
+
+
+
+
+
+
+.main-content-with-sidebar {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.sidebar {
+  width: 300px;
+}
+
+.clock-section,
+.calendar-section {
+  background-color: #f5f5f5;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.clock-section h3,
+.calendar-section h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #333;
+}
+
+.digital-clock {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1e90ff;
+  text-align: center;
+}
+
+.calendar-section table {
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+}
+
+.calendar-section th,
+.calendar-section td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+.calendar-section .today {
+  background-color: #1e90ff;
+  color: white;
+  font-weight: bold;
+  border-radius: 50%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Layout container */
+.blog-page {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+  box-sizing: border-box;
+}
+
+/* Flex layout for main content and sidebar */
+.main-content-with-sidebar {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+/* Main content area */
+.main-content {
+  flex: 1 1 100%;
+  min-width: 0;
+}
+
+/* Sidebar */
+.sidebar {
+  flex: 0 0 300px;
+  max-width: 100%;
+}
+
+/* Responsive behavior */
+@media (min-width: 768px) {
+  .main-content {
+    flex: 1 1 70%;
+  }
+
+  .sidebar {
+    flex: 1 1 28%;
+  }
+}
+
+@media (max-width: 767px) {
+  .main-content-with-sidebar {
+    flex-direction: column;
+  }
+
+  .sidebar,
+  .main-content {
+    width: 100%;
+  }
+}
+
+/* Clock and calendar box styling */
+.clock-section,
+.calendar-section {
+  background-color: #f5f5f5;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+/* Clock styling */
+.digital-clock {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1e90ff;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Calendar table */
+.calendar-section table {
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.calendar-section th,
+.calendar-section td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+.calendar-section .today {
+  background-color: #1e90ff;
+  color: white;
+  font-weight: bold;
+  border-radius: 50%;
+}

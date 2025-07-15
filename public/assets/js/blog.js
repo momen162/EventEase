@@ -25,3 +25,18 @@ document.addEventListener("DOMContentLoaded", function () {
   const today = new Date();
   todayDate.textContent = today.toDateString(); // e.g. Wed Jul 10 2025
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
