@@ -79,25 +79,13 @@
       <p><i class="bi bi-currency-dollar"></i> 99.99</p>
      <p class="description">Hands-on workshop covering modern JavaScript frameworks and best practices.</p>
 
-<div class="btn-group">
-  <button class="btn view toggle-details"><i class="bi bi-eye"></i> View Details</button>
-  <button class="btn register"><i class="bi bi-box-arrow-in-right"></i> Register</button>
-</div>
-
-<div class="event-details">
-  <h4>Event Agenda</h4>
-  <ul>
-    <li>Introduction to JavaScript & ES6</li>
-    <li>Frameworks: React vs Vue vs Angular</li>
-    <li>Live Hands-on Coding Session</li>
-    <li>Q&A with Experts</li>
-  </ul>
-  <h4>Speakers</h4>
-  <p>Jane Doe (Senior JS Engineer), John Smith (Frontend Lead at TechCorp)</p>
-</div>
-
+    <div class="btn-group">
+     <button class="btn view toggle-details"><i class="bi bi-eye"></i> View Details</button>
+     <button class="btn register"><i class="bi bi-box-arrow-in-right"></i> Register</button>
     </div>
+
   </div>
+ </div>
 
   <div class="event-card" data-status="completed">
     <div class="card-header purple-gradient">
