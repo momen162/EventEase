@@ -7,17 +7,34 @@
 @endsection
 
 @section('content')
-  <section class="contact-container">
-    <h2>Contact Us</h2>
-    <form action="#" method="POST" class="contact-form" id="contactForm">
-      @csrf
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Email" required>
-      <textarea name="message" placeholder="Message..." required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
-    <p id="form-status" class="form-status"></p>
-  </section>
+<section class="contact-container">
+  <h2>Contact Us</h2>
+
+  {{-- Success Message --}}
+  @if(session('success'))
+    <p class="form-status success">{{ session('success') }}</p>
+  @endif
+
+  {{-- Validation Errors --}}
+  @if ($errors->any())
+    <div class="form-status error">
+      <ul>
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+  @endif
+
+  <form action="{{ route('contact.store') }}" method="POST" class="contact-form" id="contactForm">
+
+    @csrf
+    <input type="text" name="name" placeholder="Your Name" value="{{ old('name') }}" required>
+    <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
+    <textarea name="message" placeholder="Message..." required>{{ old('message') }}</textarea>
+    <button type="submit">Send Message</button>
+  </form>
+</section>
 @endsection
 
 @section('extra-js')

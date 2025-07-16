@@ -9,16 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-        public function up()
-    {
-        Schema::create('contacts', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->text('message');
-            $table->timestamps();
-        });
-    }
+public function up()
+{
+    Schema::create('contacts', function (Blueprint $table) {
+        $table->id();
+        $table->string('name');
+        $table->string('email');
+        $table->text('message');
+        $table->timestamps();
+    });
+}
+
 
 
     /**

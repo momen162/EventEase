@@ -34,6 +34,7 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 
 
 
+
 // dashboard routes
 
 Route::get('/dashboard', function () {
