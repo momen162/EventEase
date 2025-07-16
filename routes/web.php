@@ -23,6 +23,15 @@ Route::get('/contact', function () {
 
 
 
+use App\Http\Controllers\ContactController;
+
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+
+
+
+
+
 
 
 // dashboard routes
