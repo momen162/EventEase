@@ -1,3 +1,7 @@
+
+<link rel="stylesheet" href="{{ asset('assets/css/auth.css') }}">
+
+
 <div id="authModal" class="modal-overlay" style="display: none;">
   <div class="modal-content">
     <span class="close-modal" onclick="closeAuthModal()">&times;</span>
@@ -18,14 +22,14 @@
       </div>
     @endif
 
-    <!-- Login Form -->
-    <form method="POST" action="{{ route('login.custom') }}" id="loginForm" class="auth-form">
+    {{-- Login Form --}}
+    <form method="POST" action="{{ route('login.custom') }}" class="auth-form" id="loginForm">
       @csrf
       <label>Email</label>
-      <input type="email" name="email" placeholder="Enter your email" required>
+      <input type="email" name="email" required>
 
       <label>Password</label>
-      <input type="password" name="password" placeholder="Enter your password" required>
+      <input type="password" name="password" required>
 
       <button type="submit">Login</button>
 
@@ -47,20 +51,20 @@
       </div>
     @endif
 
-    <!-- Register Form -->
-    <form method="POST" action="{{ route('register.custom') }}" id="registerForm" class="auth-form" style="display: none;">
+    {{-- Register Form --}}
+    <form method="POST" action="{{ route('register.custom') }}" class="auth-form" id="registerForm" style="display: none;">
       @csrf
       <label>Name</label>
-      <input type="text" name="name" placeholder="Enter your full name" required>
+      <input type="text" name="name" required>
 
       <label>Email</label>
-      <input type="email" name="email" placeholder="Enter your email" required>
+      <input type="email" name="email" required>
 
       <label>Password</label>
-      <input type="password" name="password" placeholder="Choose a password" required>
+      <input type="password" name="password" required>
 
       <label>Confirm Password</label>
-      <input type="password" name="password_confirmation" placeholder="Confirm your password" required>
+      <input type="password" name="password_confirmation" required>
 
       <button type="submit">Register</button>
 

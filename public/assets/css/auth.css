@@ -223,3 +223,33 @@
   font-weight: bold;
   color: #555;
 }
+
+
+
+
+
+
+
+
+
+
+
+.social-login a {
+  display: block;
+  text-align: center;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.google-btn {
+  background-color: #DB4437;
+  color: white;
+}
+
+.facebook-btn {
+  background-color: #4267B2;
+  color: white;
+}
