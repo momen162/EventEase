@@ -357,46 +357,6 @@ z-index: 2;
 
 
 
-
-
-
-/* Toggleable Event Details Section */
-.event-details {
-  display: none;
-  background: #f8f9ff;
-  padding: 15px;
-  border-radius: 8px;
-  border: 1px solid #dcddee;
-  margin-top: 12px;
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-.event-details h4 {
-  margin-top: 10px;
-  color: #444;
-  font-size: 1rem;
-}
-
-.event-details ul {
-  padding-left: 20px;
-  margin: 8px 0;
-}
-
-.event-details ul li {
-  list-style-type: disc;
-  margin-bottom: 6px;
-  font-size: 0.95rem;
-  color: #555;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.98); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-
-
-
 /* Responsive */
 @media (max-width: 768px) {
   .filter-search-wrapper {
