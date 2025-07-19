@@ -46,6 +46,16 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 
+## Admin Routes
+use App\Http\Controllers\EventController;
+
+Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::resource('events', EventController::class);
+});
+
+
+
+
 
 
 
