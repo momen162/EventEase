@@ -3,27 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
     public function index()
     {
-        $events = Event::where('status', 'approved')
-            ->orderByDesc('starts_at')
-            ->paginate(9);
+    }
 
-        return view('events.index', compact('events'));
+    public function create()
+    {
+    }
+
+    public function store(Request $request)
+    {
     }
 
     public function show(Event $event)
     {
-        if ($event->status !== 'approved') {
-            $user = Auth::user();
-            if (!$user || (!$user->isAdmin() && $user->id !== $event->created_by)) {
-                abort(404);
-            }
-        }
-        return view('events.show', compact('event'));
+    }
+
+    public function edit(Event $event)
+    {
+    }
+
+    public function update(Request $request, Event $event)
+    {
+    }
+
+    public function destroy(Event $event)
+    {
     }
 }
