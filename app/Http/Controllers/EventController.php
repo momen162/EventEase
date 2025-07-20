@@ -20,27 +20,21 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'location' => 'required',
-            'event_date' => 'required|date',
-            'banner' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'date' => 'required|date',
+            'location' => 'required|string',
+            'image' => 'nullable|image|max:2048', // 2MB max
         ]);
 
-        $bannerPath = null;
-        if ($request->hasFile('banner')) {
-            $bannerPath = $request->file('banner')->store('events', 'public');
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('event_images', 'public');
         }
 
-        Event::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'location' => $request->location,
-            'event_date' => $request->event_date,
-            'banner' => $bannerPath,
-        ]);
+        Event::create($validated);
 
-        return redirect()->route('admin.events.index')->with('success', 'Event created successfully.');
+        return redirect()->route('admin.events.index')->with('success', 'Event created successfully!');
     }
 
     public function edit(Event $event)
@@ -48,31 +42,28 @@ class EventController extends Controller
         return view('admin.events.edit', compact('event'));
     }
 
-    public function update(Request $request, Event $event)
+        public function update(Request $request, Event $event)
     {
-        $request->validate([
-            'title' => 'required',
-            'location' => 'required',
-            'event_date' => 'required|date',
-            'banner' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'date' => 'required|date',
+            'location' => 'required|string',
+            'image' => 'nullable|image|max:2048',
         ]);
 
-        if ($request->hasFile('banner')) {
-            $bannerPath = $request->file('banner')->store('events', 'public');
-            $event->banner = $bannerPath;
+        if ($request->hasFile('image')) {
+            // Delete old image
+            if ($event->image) {
+                Storage::disk('public')->delete($event->image);
+            }
+            $validated['image'] = $request->file('image')->store('event_images', 'public');
         }
 
-        $event->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'location' => $request->location,
-            'event_date' => $request->event_date,
-            'banner' => $event->banner,
-        ]);
+        $event->update($validated);
 
-        return redirect()->route('admin.events.index')->with('success', 'Event updated successfully.');
+        return redirect()->route('admin.events.index')->with('success', 'Event updated successfully!');
     }
-
     public function destroy(Event $event)
     {
         $event->delete();
