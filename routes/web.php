@@ -55,6 +55,31 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
 
 
 
+Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::resource('/events', EventController::class);
+});
+
+
+
+use App\Http\Controllers\Admin\AdminAuthController;
+
+Route::prefix('admin')->middleware('guest')->group(function () {
+    Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
+    Route::post('/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
+});
+
+Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
+    Route::post('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+    Route::get('/dashboard', [EventController::class, 'index'])->name('admin.events.index');
+    Route::resource('/events', EventController::class)->names('admin.events');
+});
+
+
+
+
+
+
 // Admin login form
 Route::get('/admin/login', [App\Http\Controllers\Admin\AdminAuthController::class, 'showLoginForm'])->name('admin.login');
 
