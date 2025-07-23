@@ -1,10 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\Auth\SocialController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\BlogController;
 
 // navbar pages routes
-
 Route::get('/', function () {
     return view('home');
 });
@@ -21,101 +26,26 @@ Route::get('/contact', function () {
     return view('contact');
 });
 
-
-
-use App\Http\Controllers\ContactController;
-
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
-
-
-
-
-
-
-
-
 // dashboard routes
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
-
 require __DIR__.'/auth.php';
 
 
-## Admin Routes
-use App\Http\Controllers\EventController;
-
-Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::resource('events', EventController::class);
-});
-
-
-
-Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    Route::resource('/events', EventController::class);
-});
-
-
-
-use App\Http\Controllers\Admin\AdminAuthController;
-
-Route::prefix('admin')->middleware('guest')->group(function () {
-    Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
-});
-
-Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
-    Route::post('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
-    Route::get('/dashboard', [EventController::class, 'index'])->name('admin.events.index');
-    Route::resource('/events', EventController::class)->names('admin.events');
-});
-
-
-
-
-
-
-// Admin login form
-Route::get('/admin/login', [App\Http\Controllers\Admin\AdminAuthController::class, 'showLoginForm'])->name('admin.login');
-
-// Handle login
-Route::post('/admin/login', [App\Http\Controllers\Admin\AdminAuthController::class, 'login'])->name('admin.login.submit');
-
-
-
-
-
-
-
 // Auth Routes
-
-use App\Http\Controllers\Auth\SocialController;
-
 Route::get('/auth/google', [SocialController::class, 'redirectToGoogle']);
 Route::get('/auth/google/callback', [SocialController::class, 'handleGoogleCallback']);
 
 Route::get('/auth/facebook', [SocialController::class, 'redirectToFacebook']);
 Route::get('/auth/facebook/callback', [SocialController::class, 'handleFacebookCallback']);
 
-
-
-
-
-use App\Http\Controllers\AuthController;
-
-
 Route::post('/login', [AuthController::class, 'login'])->name('login.custom');
 Route::post('/register', [AuthController::class, 'register'])->name('register.custom');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-
-
-use App\Http\Controllers\ProfileController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [ProfileController::class, 'dashboard'])->name('dashboard');
@@ -123,26 +53,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
 
-
-
-
 // Routes for blog pages
-use App\Http\Controllers\BlogController;
-
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{id}', [BlogController::class, 'show'])->name('blog.show');
 
-
-
-
-
 // gallery details routes
-
 Route::get('/gallery/event-{id}', function ($id) {
     $events = [
         1 => ['title' => 'Book Fair 2025', 'images' => ['a1.png', 'a2.png', 'a3.png', 'a4.png', 'a5.png']],
-        2 => ['title' => 'Art Exhibition', 'images' => ['b1.png', 'b2.png', 'b3.png', 'b4.png' , 'b5.png']],
-        3 => ['title' => 'Tech Conference', 'images' => ['c1.png', 'c2.png', 'c3.png', 'c4.png' , 'c5.png']],
+        2 => ['title' => 'Art Exhibition', 'images' => ['b1.png', 'b2.png', 'b3.png', 'b4.png', 'b5.png']],
+        3 => ['title' => 'Tech Conference', 'images' => ['c1.png', 'c2.png', 'c3.png', 'c4.png', 'c5.png']],
         4 => ['title' => 'Food Carnival', 'images' => ['d1.png', 'd2.png', 'd3.png', 'd4.png']],
         5 => ['title' => 'Film Night', 'images' => ['e1.png', 'e2.png', 'e3.png', 'e4.png']],
         6 => ['title' => 'Startup Meetup', 'images' => ['startup1.jpg', 'startup2.jpg']],
@@ -162,8 +82,3 @@ Route::get('/gallery/event-{id}', function ($id) {
 
     return view('gallery-details', $events[$id]);
 });
-
-
-
-
-
