@@ -6,15 +6,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+ use App\Models\Ticket;
 
 class ProfileController extends Controller
 {
+  
+   
+
     public function dashboard()
     {
         $user = auth()->user();
-        $tickets = $user->tickets()->with('event')->latest()->get();
-
-        return view('auth.dashboard', compact('user','tickets'));
+        $tickets = Ticket::with('event')->where('user_id', $user->id)->latest()->get();
+        return view('auth.dashboard', compact('user', 'tickets'));
     }
 
 

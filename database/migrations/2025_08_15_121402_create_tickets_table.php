@@ -13,13 +13,11 @@ return new class extends Migration {
             $table->unsignedInteger('quantity')->default(1);
             $table->decimal('total_amount', 10, 2)->default(0);
             $table->enum('payment_option', ['pay_now','pay_later'])->default('pay_later');
-            $table->enum('payment_status', ['paid','unpaid'])->default('unpaid');
-            $table->string('ticket_code')->unique();    // e.g. TKT-ABC123
-            $table->string('qr_path')->nullable();      // storage path (png) if you choose to save it
+            $table->enum('payment_status', ['unpaid','paid','cancelled'])->default('unpaid');
+            $table->string('ticket_code')->unique();
+            $table->string('qr_path')->nullable(); // where QR png will be saved
             $table->timestamps();
         });
     }
-    public function down(): void {
-        Schema::dropIfExists('tickets');
-    }
+    public function down(): void { Schema::dropIfExists('tickets'); }
 };

@@ -11,6 +11,6 @@ class Ticket extends Model
         'payment_option','payment_status','ticket_code','qr_path'
     ];
 
-    public function user(){ return $this->belongsTo(User::class); }
-    public function event(){ return $this->belongsTo(Event::class); }
+    public function user()  { return $this->belongsTo(User::class); }
+    public function event() { return $this->belongsTo(Event::class); }
 }

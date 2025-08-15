@@ -139,7 +139,7 @@
       </div>
     </a>
 
-    <a href="https://eventease.com/music-fest" class="event-card" target="_blank">
+    <a href="http://127.0.0.1:8000/events/2" class="event-card" target="_blank">
       <img src="{{ asset('assets/images/card2.png') }}" alt="Music Fest">
       <div class="card-info">
         <h3>Music Fest Live</h3>
