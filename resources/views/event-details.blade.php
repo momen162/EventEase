@@ -26,7 +26,7 @@
   @endif
 
   <div style="margin-top:16px;">
-    <a class="btn register" href="{{ route('events.buy', $event) }}">Buy Ticket</a>
+    <a class="btn register" href="{{ route('tickets.start', $event) }}">Buy Ticket</a>
   </div>
 </div>
 @endsection
