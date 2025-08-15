@@ -1,1 +1,1 @@
-<?php require DIR.'/_config.php'; session_destroy(); header('Location: /admin/login.php');
+<?php require __DIR__.'/_config.php'; session_destroy(); header('Location: /admin/login.php');

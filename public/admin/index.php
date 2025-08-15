@@ -1,4 +1,4 @@
-<?php require DIR.'/_config.php'; require_login(); ?>
+<?php require __DIR__.'/_config.php'; require_login(); ?>
 <!doctype html><html><body>
 <h2>Admin Dashboard</h2>
 <p>Welcome, <?= htmlspecialchars($_SESSION['admin_name'] ?? 'Admin') ?></p>

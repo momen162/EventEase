@@ -1,5 +1,5 @@
 <?php
-require DIR.'/_config.php'; require_login();
+require __DIR__.'/_config.php'; require_login();
 if($_SERVER['REQUEST_METHOD']==='POST'){
   $pdo->prepare("INSERT INTO events (title,description,location,starts_at,ends_at,capacity,created_by,created_at,updated_at)
                  VALUES (:t,:d,:l,:sa,:ea,:c,:cb,NOW(),NOW())")

@@ -1,4 +1,5 @@
-<?php require DIR.'/_auth.php'; ?>
+<?php require __DIR__.'/_auth.php'; ?>
+
 <!doctype html><html><body>
 <h2>Admin Login</h2>
 <?php if(!empty($error)) echo "<p style='color:red'>".htmlspecialchars($error)."</p>"; ?>

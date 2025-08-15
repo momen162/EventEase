@@ -1,5 +1,5 @@
 <?php
-require DIR.'/_config.php'; require_login();
+require __DIR__.'/_config.php'; require_login();
 $id = (int)($_GET['id'] ?? 0);
 if($id <= 0){ header('Location: /admin/events.php'); exit; }
 

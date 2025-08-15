@@ -1,5 +1,5 @@
 <?php
-require DIR.'/_config.php'; require_login();
+require __DIR__.'/_config.php'; require_login();
 $events = $pdo->query("SELECT id,title,location,starts_at,ends_at,capacity FROM events ORDER BY starts_at DESC")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!doctype html><html><body>

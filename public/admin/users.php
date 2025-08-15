@@ -1,5 +1,5 @@
 <?php
-require DIR.'/_config.php'; require_login();
+require __DIR__.'/_config.php'; require_login();
 
 if(isset($_GET['delete'])){
   $id = (int)$_GET['delete'];
