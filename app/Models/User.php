@@ -23,10 +23,8 @@ protected $fillable = ['name', 'email', 'password', 'phone', 'profile_picture'];
 
 
 // inside the class User extends Authenticatable
-public function isAdmin(): bool
-{
-    return $this->role === 'admin';
-}
+public function tickets(){ return $this->hasMany(\App\Models\Ticket::class); }
+public function isAdmin(): bool { return $this->role === 'admin'; }
 
 
 
