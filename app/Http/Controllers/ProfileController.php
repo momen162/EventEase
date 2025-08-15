@@ -11,10 +11,12 @@ class ProfileController extends Controller
 {
     public function dashboard()
     {
-        $user = Auth::user();
-        $tickets = $user->tickets ?? []; // Optional: requires Ticket relationship
-        return view('auth.dashboard', compact('user', 'tickets'));
+        $user = auth()->user();
+        $tickets = $user->tickets()->with('event')->latest()->get();
+
+        return view('auth.dashboard', compact('user','tickets'));
     }
+
 
     public function edit()
     {

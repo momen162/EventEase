@@ -50,95 +50,35 @@
 
 <!-- Event Cards -->
 <section class="event-cards">
-  <div class="event-card" data-status="ongoing">
-    <div class="card-header purple-gradient">
-      <h3>JavaScript Workshop</h3>
-      <span class="badge ongoing">ongoing</span>
-    </div>
-    <div class="card-body">
-      <p><i class="bi bi-calendar"></i> 28/02/2024 at 14:00</p>
-      <p><i class="bi bi-geo-alt"></i> Learning Hub, Downtown</p>
-      <p><i class="bi bi-people"></i> 42/50 &nbsp;&nbsp; <i class="bi bi-clock"></i> 4h</p>
-      <p><i class="bi bi-currency-dollar"></i> 99.99</p>
-      <p class="description">Hands-on workshop covering modern JavaScript frameworks and best practices.</p>
-      <div class="btn-group">
-        <button class="btn view"><i class="bi bi-eye"></i> View Details</button>
-        <button class="btn register"><i class="bi bi-box-arrow-in-right"></i> Register</button>
+  @forelse($events as $event)
+    <div class="event-card" data-status="upcoming">
+      <div class="card-header purple-gradient">
+        <h3>{{ $event->title }}</h3>
+        <span class="badge upcoming">{{ now()->lt($event->starts_at) ? 'upcoming' : 'ongoing' }}</span>
+      </div>
+      <div class="card-body">
+        <p><i class="bi bi-calendar"></i>
+           {{ optional($event->starts_at)->format('d/m/Y \a\t H:i') }}
+        </p>
+        <p><i class="bi bi-geo-alt"></i> {{ $event->location }}</p>
+        <p><i class="bi bi-people"></i> {{ $event->capacity ?? '—' }}</p>
+        <p><i class="bi bi-currency-dollar"></i> {{ number_format($event->price,2) }}</p>
+        @if($event->description)
+          <p class="description">{{ \Illuminate\Support\Str::limit(strip_tags($event->description), 140) }}</p>
+        @endif
+
+        <div class="btn-group">
+          <a class="btn view" href="{{ route('events.show', $event) }}"><i class="bi bi-eye"></i> View Details</a>
+          <a class="btn register" href="{{ route('events.buy', $event) }}"><i class="bi bi-box-arrow-in-right"></i> Buy</a>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="event-card" data-status="ongoing">
-    <div class="card-header purple-gradient">
-      <h3>JavaScript Workshop</h3>
-      <span class="badge ongoing">ongoing</span>
-    </div>
-    <div class="card-body">
-      <p><i class="bi bi-calendar"></i> 28/02/2024 at 14:00</p>
-      <p><i class="bi bi-geo-alt"></i> Learning Hub, Downtown</p>
-      <p><i class="bi bi-people"></i> 42/50 &nbsp;&nbsp; <i class="bi bi-clock"></i> 4h</p>
-      <p><i class="bi bi-currency-dollar"></i> 99.99</p>
-     <p class="description">Hands-on workshop covering modern JavaScript frameworks and best practices.</p>
+  @empty
+    <p>No events yet.</p>
+  @endforelse
 
-    <div class="btn-group">
-     <button class="btn view toggle-details"><i class="bi bi-eye"></i> View Details</button>
-     <button class="btn register"><i class="bi bi-box-arrow-in-right"></i> Register</button>
-    </div>
-
-  </div>
- </div>
-
-  <div class="event-card" data-status="completed">
-    <div class="card-header purple-gradient">
-      <h3>Networking Mixer</h3>
-      <span class="badge completed">completed</span>
-    </div>
-    <div class="card-body">
-      <p><i class="bi bi-calendar"></i> 10/02/2024 at 18:00</p>
-      <p><i class="bi bi-geo-alt"></i> Rooftop Lounge, Business District</p>
-      <p><i class="bi bi-people"></i> 87/100 &nbsp;&nbsp; <i class="bi bi-clock"></i> 3h</p>
-      <p><i class="bi bi-currency-dollar"></i> Free</p>
-      <p class="description">Professional networking event for entrepreneurs and business leaders.</p>
-      <div class="btn-group">
-        <button class="btn view"><i class="bi bi-eye"></i> View Details</button>
-        <button class="btn register"><i class="bi bi-box-arrow-in-right"></i> Register</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="event-card" data-status="upcoming">
-    <div class="card-header purple-gradient">
-      <h3>Tech Conference 2024</h3>
-      <span class="badge upcoming">upcoming</span>
-    </div>
-    <div class="card-body">
-      <p><i class="bi bi-calendar"></i> 15/03/2024 at 09:00</p>
-      <p><i class="bi bi-geo-alt"></i> Convention Center, Tech City</p>
-      <p><i class="bi bi-people"></i> 245/500 &nbsp;&nbsp; <i class="bi bi-clock"></i> 8h</p>
-      <p><i class="bi bi-currency-dollar"></i> 199.99</p>
-      <p class="description">Annual tech conference with sessions on AI, cloud computing, and more.</p>
-      <div class="btn-group">
-        <button class="btn view"><i class="bi bi-eye"></i> View Details</button>
-        <button class="btn register"><i class="bi bi-box-arrow-in-right"></i> Register</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="event-card" data-status="upcoming">
-    <div class="card-header purple-gradient">
-      <h3>Python Bootcamp</h3>
-      <span class="badge upcoming">upcoming</span>
-    </div>
-    <div class="card-body">
-      <p><i class="bi bi-calendar"></i> 20/03/2024 at 10:00</p>
-      <p><i class="bi bi-geo-alt"></i> Innovation Lab, New Town</p>
-      <p><i class="bi bi-people"></i> 90/100 &nbsp;&nbsp; <i class="bi bi-clock"></i> 6h</p>
-      <p><i class="bi bi-currency-dollar"></i> 149.99</p>
-      <p class="description">Bootcamp to master Python fundamentals and data science tools.</p>
-      <div class="btn-group">
-        <button class="btn view"><i class="bi bi-eye"></i> View Details</button>
-        <button class="btn register"><i class="bi bi-box-arrow-in-right"></i> Register</button>
-      </div>
-    </div>
+  <div style="margin-top:16px;">
+    {{ $events->links() }}
   </div>
 </section>
 

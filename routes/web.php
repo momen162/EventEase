@@ -36,6 +36,26 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 
+
+
+use App\Http\Controllers\TicketController;
+
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
+Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
+
+
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/events/{event}/buy', [TicketController::class, 'buy'])->name('events.buy');
+    Route::post('/events/{event}/checkout', [TicketController::class, 'checkout'])->name('events.checkout');
+
+    Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
+});
+
+
+
+
 // Auth Routes
 Route::get('/auth/google', [SocialController::class, 'redirectToGoogle']);
 Route::get('/auth/google/callback', [SocialController::class, 'handleGoogleCallback']);

@@ -27,7 +27,7 @@
   <ul class="ticket-list">
     @forelse ($tickets as $ticket)
       <li class="ticket-item">
-        <p>🎉 <strong>Event:</strong> {{ $ticket->event_name ?? 'Unknown' }}</p>
+        <p>🎉 <strong>Event:</strong> {{ $ticket->event->title ?? 'Unknown' }}</p>
         <p>📅 <strong>Date:</strong> {{ $ticket->created_at->format('M d, Y') }}</p>
         <p>✅ <strong>Status:</strong> {{ $ticket->status ?? 'Confirmed' }}</p>
       </li>
