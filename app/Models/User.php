@@ -22,6 +22,11 @@ class User extends Authenticatable
 protected $fillable = ['name', 'email', 'password', 'phone', 'profile_picture'];
 
 
+// inside the class User extends Authenticatable
+public function isAdmin(): bool
+{
+    return $this->role === 'admin';
+}
 
 
 
