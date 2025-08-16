@@ -21,7 +21,6 @@ if (!isset($pageTitle)) { $pageTitle = 'Admin'; }
       <a href="/admin/users.php">Users</a>
       <a href="/admin/events.php">Events</a>
       <a href="/admin/logout.php" class="btn btn-ghost">Logout</a>
-      <h1>This is me</h1>
     </nav>
   </div>
 </header>

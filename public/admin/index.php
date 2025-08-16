@@ -1,10 +1,18 @@
 <?php require __DIR__.'/_config.php'; require_login(); ?>
-<!doctype html><html><body>
-<h2>Admin Dashboard</h2>
-<p>Welcome, <?= htmlspecialchars($_SESSION['admin_name'] ?? 'Admin') ?></p>
-<ul>
-  <li><a href="/admin/users.php">Manage Users</a></li>
-  <li><a href="/admin/events.php">Manage Events</a></li>
-  <li><a href="/admin/logout.php">Logout</a></li>
-</ul>
-</body></html>
+<?php $pageTitle = 'Dashboard'; require __DIR__.'/_layout_top.php'; ?>
+
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <h2>Welcome, <?= htmlspecialchars($_SESSION['admin_name'] ?? 'Admin') ?></h2>
+      <p class="help">Quick links to common tasks.</p>
+      <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:10px">
+        <a class="btn btn-primary" href="/admin/users.php">Manage Users</a>
+        <a class="btn btn-primary" href="/admin/events.php">Manage Events</a>
+        <a class="btn btn-ghost" href="/admin/logout.php">Logout</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<?php require __DIR__.'/_layout_bottom.php'; ?>

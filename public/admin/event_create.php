@@ -2,7 +2,6 @@
 require __DIR__.'/_config.php'; require_login();
 
 if($_SERVER['REQUEST_METHOD']==='POST'){
-  // upload banner to /public/uploads/events
   $bannerPath = null;
   if(!empty($_FILES['banner']['name'])){
     $dir = __DIR__.'/../uploads/events';
@@ -10,7 +9,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     $ext = pathinfo($_FILES['banner']['name'], PATHINFO_EXTENSION);
     $file = 'ev_'.time().'_'.mt_rand(1000,9999).'.'.$ext;
     move_uploaded_file($_FILES['banner']['tmp_name'], $dir.'/'.$file);
-    $bannerPath = '/uploads/events/'.$file; // URL path
+    $bannerPath = '/uploads/events/'.$file;
   }
 
   $stmt = $pdo->prepare("
@@ -32,27 +31,51 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
   ]);
   header('Location: /admin/events.php'); exit;
 }
+
+$pageTitle = 'Create Event';
+require __DIR__.'/_layout_top.php';
 ?>
-<!doctype html><html><body>
-<h2>Create Event</h2>
-<form method="post" enctype="multipart/form-data">
-  <label>Title <input name="title" required></label><br>
-  <label>Description <textarea name="description"></textarea></label><br>
-  <label>Location <input name="location"></label><br>
-  <label>Venue <input name="venue"></label><br>
-  <label>Starts at <input type="datetime-local" name="starts_at" required></label><br>
-  <label>Ends at <input type="datetime-local" name="ends_at"></label><br>
-  <label>Capacity <input type="number" name="capacity" min="0"></label><br>
-  <label>Price <input type="number" step="0.01" name="price" min="0"></label><br>
-  <label>Purchase option
-    <select name="purchase_option">
-      <option value="both">Both</option>
-      <option value="pay_now">Pay now</option>
-      <option value="pay_later">Pay later</option>
-    </select>
-  </label><br>
-  <label>Banner <input type="file" name="banner" accept="image/*"></label><br>
-  <button type="submit">Save</button>
-</form>
-<p><a href="/admin/events.php">Back</a></p>
-</body></html>
+
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <h2>Create Event</h2>
+      <form method="post" enctype="multipart/form-data" style="margin-top:10px">
+        <label>Title <input name="title" required class="input"></label>
+        <label>Description <textarea name="description" rows="6" class="input"></textarea></label>
+
+        <div class="form-row">
+          <label>Location <input name="location" class="input"></label>
+          <label>Venue <input name="venue" class="input"></label>
+        </div>
+
+        <div class="form-row">
+          <label>Starts at <input type="datetime-local" name="starts_at" required class="input"></label>
+          <label>Ends at <input type="datetime-local" name="ends_at" class="input"></label>
+        </div>
+
+        <div class="form-row">
+          <label>Capacity <input type="number" name="capacity" min="0" class="input"></label>
+          <label>Price <input type="number" step="0.01" name="price" min="0" class="input"></label>
+        </div>
+
+        <label>Purchase option
+          <select name="purchase_option" class="input">
+            <option value="both">Both</option>
+            <option value="pay_now">Pay now</option>
+            <option value="pay_later">Pay later</option>
+          </select>
+        </label>
+
+        <label>Banner <input type="file" name="banner" accept="image/*" class="input"></label>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap">
+          <button type="submit" class="btn btn-primary">Save</button>
+          <a href="/admin/events.php" class="btn btn-ghost">Back</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<?php require __DIR__.'/_layout_bottom.php'; ?>
