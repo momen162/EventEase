@@ -19,6 +19,7 @@ if (!isset($pageTitle)) { $pageTitle = 'Admin'; }
       <?php if (is_admin_logged_in()): ?>
         <a href="/admin/users.php">Users</a>
         <a href="/admin/events.php">Events</a>
+        <a href="/admin/blogs.php">Blogs</a>
         <a href="/admin/stats.php">Stats</a>
         <a href="/admin/messages.php">Messages</a>
         <a href="/admin/logout.php" class="btn btn-ghost">Logout</a>
