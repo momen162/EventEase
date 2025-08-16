@@ -26,12 +26,26 @@
   </script>
 
   {{-- Minimal base in case both CDNs are blocked --}}
-  <style>body{background:#f8f9fc;color:#111827}</style>
+  <style>
+    body{background:#f8f9fc;color:#111827;margin:0}
+    /* Fixed header with dark indigo bg */
+    header.site-header{
+      position:fixed;
+      top:0;left:0;right:0;
+      z-index:50;
+      background:#3f3f7a; /* updated color */
+      color:#fff;         /* text white */
+      border-bottom:1px solid #2c2c54;
+    }
+    header.site-header a{color:#fff;text-decoration:none}
+    header.site-header a:hover{color:#e5e7eb}
+    .header-spacer{height:64px} /* matches ~h-16 */
+  </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
 
-  <header>
-    <div class="logo">📅 <span>EventEase</span></div>
+  <header class="site-header">
+    <a href="{{ url('/') }}" class="logo">📅 <span>EventEase</span></a>
 
     <div class="hamburger" onclick="toggleMenu()">☰</div>
 
@@ -63,6 +77,9 @@
       @endauth
     </div>
   </header>
+
+  <!-- Spacer so content isn't hidden behind the fixed navbar -->
+  <div class="header-spacer h-16"></div>
 
   <main>
     @yield('content')
