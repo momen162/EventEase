@@ -11,8 +11,14 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <!-- Styles (no Vite) -->
+        <!-- If you already have a global CSS in public/assets/css, keep this line.
+             If the filename is different, change it accordingly, or remove the line. -->
+        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+
+        <!-- Tailwind (CDN) so your existing Tailwind classes render without a build step) -->
+        <!-- If you already include Tailwind in style.css, you can remove this script. -->
+        <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body class="font-sans text-gray-900 antialiased">
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
@@ -26,5 +32,8 @@
                 {{ $slot }}
             </div>
         </div>
+
+        <!-- Scripts (optional; remove if you don't have these files) -->
+        <script src="{{ asset('assets/js/app.js') }}"></script>
     </body>
 </html>
