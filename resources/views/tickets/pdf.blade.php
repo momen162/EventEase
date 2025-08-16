@@ -4,34 +4,134 @@
   <meta charset="utf-8">
   <title>{{ $ticket->ticket_code }}</title>
   <style>
-    body { font-family: DejaVu Sans, sans-serif; }
-    .wrap { border:1px solid #ddd; padding:16px; }
-    .banner { width:100%; height:180px; object-fit:cover; border-radius:8px; }
-    .row { margin-top:8px; }
+    /* Use a PDF-safe font with good glyph coverage */
+    @font-face {
+      font-family: 'DejaVu Sans';
+      font-style: normal;
+      font-weight: normal;
+      src: url("{{ public_path('fonts/DejaVuSans.ttf') }}") format('truetype');
+    }
+    body { font-family: "DejaVu Sans", sans-serif; color:#111; font-size:12px; line-height:1.45; }
+    .wrap   { border:1px solid #e5e7eb; border-radius:10px; overflow:hidden; }
+    .header { padding:16px 18px; background:#f3f4f6; border-bottom:1px solid #e5e7eb; }
+    .title  { margin:0; font-size:20px; }
+    .meta   { margin-top:4px; color:#374151; }
+
+    .banner { width:100%; height:210px; object-fit:cover; display:block; }
+    .section{ padding:16px 18px; }
+    .grid   { display:table; width:100%; table-layout:fixed; }
+    .col    { display:table-cell; vertical-align:top; padding-right:12px; }
+    .col:last-child{ padding-right:0; }
+
+    .block  { border:1px solid #e5e7eb; border-radius:8px; padding:12px; margin-top:10px; }
+    .label  { font-size:11px; color:#6b7280; text-transform:uppercase; letter-spacing:.04em; margin:0 0 4px 0; }
+    .value  { margin:0; font-weight:600; color:#111827; }
+    .muted  { color:#6b7280; }
+
+    .qrwrap { text-align:center; padding:12px; border:1px dashed #d1d5db; border-radius:8px; }
+    .qr     { width:200px; height:200px; display:inline-block; }
+    .code   { margin-top:6px; font-weight:700; letter-spacing:.03em; }
+
+    .footer { margin-top:14px; padding:10px 18px; text-align:center; font-size:10px; color:#6b7280; border-top:1px solid #e5e7eb; }
+    .row    { margin-top:6px; }
+    .desc   { white-space:pre-wrap; }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <h2>{{ $ticket->event->title }}</h2>
-    @if($ticket->event->banner)
-      <img class="banner" src="{{ public_path(ltrim($ticket->event->banner,'/')) }}" alt="banner">
-    @endif
-
-    <div class="row"><strong>When:</strong>
-      {{ optional($ticket->event->starts_at)->format('M d, Y g:i A') }}
-      @if($ticket->event->ends_at) – {{ $ticket->event->ends_at->format('M d, Y g:i A') }} @endif
-    </div>
-    <div class="row"><strong>Venue:</strong> {{ $ticket->event->venue ?? $ticket->event->location }}</div>
-    <div class="row"><strong>Quantity:</strong> {{ $ticket->quantity }}</div>
-    <div class="row"><strong>Status:</strong> {{ ucfirst($ticket->payment_status) }} ({{ str_replace('_',' ', $ticket->payment_option) }})</div>
-    <div class="row"><strong>Code:</strong> {{ $ticket->ticket_code }}</div>
-
-        <div class="row" style="margin-top:10px">
-    @if($ticket->qr_path)
-        {!! file_get_contents(storage_path('app/public/'.$ticket->qr_path)) !!}
-    @endif
+    {{-- Header --}}
+    <div class="header">
+      <h1 class="title">{{ $ticket->event->title }}</h1>
+      <div class="meta">Official Ticket · {{ $ticket->created_at?->format('M d, Y') }}</div>
     </div>
 
+    {{-- Banner --}}
+    @php
+      // Prefer local public file; if not available and remote is enabled, allow external URL
+      $bannerPath = null;
+      $banner = $ticket->event->banner ?? $ticket->event->banner_path ?? null;
+      if ($banner) {
+          $candidate = ltrim($banner, '/');
+          $local = public_path($candidate);
+          if (is_file($local)) { $bannerPath = $local; }
+      }
+    @endphp
+    @if($bannerPath)
+      <img class="banner" src="{{ $bannerPath }}" alt="Event Banner">
+    @elseif(!empty($banner))
+      {{-- If dompdf 'isRemoteEnabled' is true, this will render from URL --}}
+      <img class="banner" src="{{ $banner }}" alt="Event Banner">
+    @endif
+
+    {{-- Main sections --}}
+    <div class="section">
+      <div class="grid">
+        <div class="col" style="width:60%;">
+          <div class="block">
+            <p class="label">When</p>
+            <p class="value">
+              {{ optional($ticket->event->starts_at)->format('l, M d, Y g:i A') }}
+              @if($ticket->event->ends_at)
+                <span class="muted"><br>until</span> {{ $ticket->event->ends_at->format('l, M d, Y g:i A') }}
+              @endif
+            </p>
+          </div>
+
+          <div class="block">
+            <p class="label">Where</p>
+            <p class="value">{{ $ticket->event->venue ?? $ticket->event->location }}</p>
+          </div>
+
+          <div class="block">
+            <p class="label">Purchaser</p>
+            <p class="value">
+              {{ $ticket->user->name ?? 'Guest' }}
+              <span class="muted">&nbsp;·&nbsp;{{ $ticket->user->email ?? '' }}</span>
+            </p>
+            <div class="row muted">Purchased: {{ $ticket->created_at?->format('M d, Y g:i A') }}</div>
+          </div>
+
+          <div class="block">
+            <p class="label">Ticket Details</p>
+            <p class="value">Quantity: {{ $ticket->quantity }}</p>
+            <div class="row">Price per ticket: ${{ number_format($ticket->event->price, 2) }}</div>
+            <div class="row">Payment: {{ str_replace('_',' ', $ticket->payment_option) }} ({{ $ticket->payment_status }})</div>
+            <div class="row" style="font-weight:700;">Total Paid: ${{ number_format($ticket->total_amount, 2) }}</div>
+          </div>
+
+          @if(!empty($ticket->event->description))
+            <div class="block">
+              <p class="label">About this event</p>
+              <div class="desc">{{ strip_tags($ticket->event->description) }}</div>
+            </div>
+          @endif
+        </div>
+
+        <div class="col" style="width:40%;">
+          <div class="qrwrap">
+            {{-- QR (SVG) from storage/app/public/... --}}
+            @if($ticket->qr_path && is_file(storage_path('app/public/'.$ticket->qr_path)))
+              {!! file_get_contents(storage_path('app/public/'.$ticket->qr_path)) !!}
+            @endif
+            <div class="code">{{ $ticket->ticket_code }}</div>
+          </div>
+
+          <div class="block">
+            <p class="label">Event</p>
+            <p class="value">{{ $ticket->event->title }}</p>
+          </div>
+
+          <div class="block">
+            <p class="label">Ticket #</p>
+            <p class="value">{{ $ticket->ticket_code }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{-- Footer --}}
+    <div class="footer">
+      This is an Auto-Generated Ticket.<br>
     </div>
   </div>
 </body>
