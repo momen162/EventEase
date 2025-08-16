@@ -35,11 +35,13 @@
         <div class="btn-group">
           <a class="btn view" href="{{ route('events.show', $e) }}"><i class="bi bi-eye"></i> Details</a>
 
-          {{-- direct buy (posts to tickets.start) --}}
-          <form method="POST" action="{{ route('tickets.start', $e) }}" style="display:inline-block">
+          {{-- Direct buy (POST -> tickets.start) with inline quantity --}}
+          <form method="POST" action="{{ route('tickets.start', $e) }}" style="display:inline-flex; align-items:center; gap:8px">
             @csrf
-            <input type="hidden" name="quantity" value="1">
-            <button class="btn register" type="submit"><i class="bi bi-box-arrow-in-right"></i> Buy</button>
+            <input type="number" name="quantity" value="1" min="1" class="w-16" />
+            <button class="btn register" type="submit">
+              <i class="bi bi-box-arrow-in-right"></i> Buy
+            </button>
           </form>
         </div>
       </div>
