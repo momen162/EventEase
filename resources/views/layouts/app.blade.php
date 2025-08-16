@@ -64,16 +64,19 @@
       @endguest
 
       @auth
-        <div class="dropdown">
-          <button class="dropdown-toggle">{{ Auth::user()->name }}</button>
-          <div class="dropdown-menu">
-            <a href="{{ route('dashboard') }}">Dashboard</a>
-            <form method="POST" action="{{ route('logout') }}">
-              @csrf
-              <button type="submit">Logout</button>
-            </form>
-          </div>
-        </div>
+<div class="dropdown">
+  <button class="dropdown-toggle">{{ Auth::user()->name }}</button>
+  <div class="dropdown-menu">
+    <a href="{{ route('dashboard') }}" style="color: black;">Dashboard</a>
+    <form method="POST" action="{{ route('logout') }}">
+      @csrf
+      <button type="submit" style="color: black; background: none; border: none; cursor: pointer;">
+        Logout
+      </button>
+    </form>
+  </div>
+</div>
+
       @endauth
     </div>
   </header>
