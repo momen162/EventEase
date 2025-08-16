@@ -6,38 +6,74 @@
 @endsection
 
 @section('content')
-<section class="dashboard-wrapper">
-  <h2 class="dashboard-title">Welcome, <span class="highlight">{{ $user->name }}</span></h2>
-
-  @if ($user->profile_picture)
-    <div class="profile-picture">
-      <img src="{{ asset('storage/' . $user->profile_picture) }}" alt="Profile Picture">
-    </div>
-  @endif
-
-  <div class="user-info">
-    <p>📧 <strong>Email:</strong> {{ $user->email }}</p>
-    <p>📞 <strong>Phone:</strong> {{ $user->phone ?? 'N/A' }}</p>
+<section class="dash-shell">
+  <!-- Top bar -->
+  <div class="dash-topbar">
+    <h2 class="dash-welcome">Welcome, <span class="brand-accent">{{ $user->name }}</span></h2>
   </div>
 
-  <a href="{{ route('profile.edit') }}" class="edit-profile-btn">Edit Profile</a>
-
-  <h3 class="ticket-title">Your Tickets 🎫</h3>
-  <ul class="ticket-list">
-    @forelse ($tickets as $ticket)
-      <li class="ticket-item">
-        <p>🎉 <strong>Event:</strong> {{ $ticket->event->title ?? 'Unknown' }}</p>
-        <p>📅 <strong>Date:</strong> {{ $ticket->created_at->format('M d, Y') }}</p>
-        <p>💳 <strong>Payment:</strong> {{ str_replace('_',' ', $ticket->payment_option) }} — <strong>{{ ucfirst($ticket->payment_status) }}</strong></p>
-
-        <div class="mt-2" style="display:flex; gap:8px; flex-wrap:wrap">
-          <a class="edit-profile-btn" href="{{ route('tickets.show', $ticket) }}">View Ticket</a>
-          <a class="edit-profile-btn" href="{{ route('tickets.download', $ticket) }}">Download PDF</a>
+  <div class="dash-grid">
+    <!-- Left: Profile Card -->
+    <aside class="profile-card">
+      @if ($user->profile_picture)
+        <div class="avatar">
+          <img src="{{ asset('storage/' . $user->profile_picture) }}" alt="Profile Picture">
         </div>
-      </li>
-    @empty
-      <li class="no-ticket">No tickets found.</li>
-    @endforelse
-  </ul>
+      @else
+        <div class="avatar avatar-fallback" aria-hidden="true">{{ strtoupper(substr($user->name,0,1)) }}</div>
+      @endif
+
+      <div class="profile-meta">
+        <p class="meta-line">
+          <span class="meta-label">Email</span>
+          <span class="meta-value">{{ $user->email }}</span>
+        </p>
+        <p class="meta-line">
+          <span class="meta-label">Phone</span>
+          <span class="meta-value">{{ $user->phone ?? 'N/A' }}</span>
+        </p>
+      </div>
+
+      <a href="{{ route('profile.edit') }}" class="profile-btn">Manage Profile</a>
+    </aside>
+
+    <!-- Right: Tickets -->
+    <main class="tickets-panel">
+      <div class="tickets-head">
+        <h3 class="tickets-title">Your Tickets 🎫</h3>
+      </div>
+
+      <ul class="tickets-list">
+        @forelse ($tickets as $ticket)
+          <li class="ticket-card">
+            <div class="ticket-main">
+              <div class="t-line">
+                <span class="t-label">Event</span>
+                <span class="t-value">{{ $ticket->event->title ?? 'Unknown' }}</span>
+              </div>
+              <div class="t-line">
+                <span class="t-label">Date</span>
+                <span class="t-value">{{ $ticket->created_at->format('M d, Y') }}</span>
+              </div>
+              <div class="t-line">
+                <span class="t-label">Payment</span>
+                <span class="t-value">
+                  {{ str_replace('_',' ', $ticket->payment_option) }}
+                  — <strong class="t-status">{{ ucfirst($ticket->payment_status) }}</strong>
+                </span>
+              </div>
+            </div>
+
+            <div class="ticket-actions">
+              <a class="btn ghost" href="{{ route('tickets.show', $ticket) }}">View Ticket</a>
+              <a class="btn solid" href="{{ route('tickets.download', $ticket) }}">Download PDF</a>
+            </div>
+          </li>
+        @empty
+          <li class="tickets-empty">No tickets found.</li>
+        @endforelse
+      </ul>
+    </main>
+  </div>
 </section>
 @endsection
