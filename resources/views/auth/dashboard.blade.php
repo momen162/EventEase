@@ -1,12 +1,11 @@
 @extends('layouts.app')
-
 @section('title', 'Dashboard')
-
-@section('content')
 
 @section('extra-css')
   <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
 @endsection
+
+@section('content')
 <section class="dashboard-wrapper">
   <h2 class="dashboard-title">Welcome, <span class="highlight">{{ $user->name }}</span></h2>
 
@@ -29,7 +28,12 @@
       <li class="ticket-item">
         <p>🎉 <strong>Event:</strong> {{ $ticket->event->title ?? 'Unknown' }}</p>
         <p>📅 <strong>Date:</strong> {{ $ticket->created_at->format('M d, Y') }}</p>
-        <p>✅ <strong>Status:</strong> {{ $ticket->status ?? 'Confirmed' }}</p>
+        <p>💳 <strong>Payment:</strong> {{ str_replace('_',' ', $ticket->payment_option) }} — <strong>{{ ucfirst($ticket->payment_status) }}</strong></p>
+
+        <div class="mt-2" style="display:flex; gap:8px; flex-wrap:wrap">
+          <a class="edit-profile-btn" href="{{ route('tickets.show', $ticket) }}">View Ticket</a>
+          <a class="edit-profile-btn" href="{{ route('tickets.download', $ticket) }}">Download PDF</a>
+        </div>
       </li>
     @empty
       <li class="no-ticket">No tickets found.</li>

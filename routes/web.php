@@ -36,7 +36,35 @@ require __DIR__.'/auth.php';
 
 
 
+
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\PaymentController;
+
+Route::middleware('auth')->group(function () {
+    Route::get('/checkout', [TicketController::class, 'checkout'])->name('tickets.checkout');
+    Route::post('/checkout/confirm', [TicketController::class, 'confirm'])->name('tickets.confirm');
+
+    // Payment flow for "pay now"
+    Route::get('/payments/redirect', [PaymentController::class, 'redirect'])->name('payments.redirect'); // sends user to gateway
+    Route::get('/payments/callback/success', [PaymentController::class, 'success'])->name('payments.success'); // gateway success return
+    Route::get('/payments/callback/cancel', [PaymentController::class, 'cancel'])->name('payments.cancel');   // gateway cancel/failed
+
+    Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
+    Route::get('/tickets/{ticket}/download', [TicketController::class, 'download'])->name('tickets.download');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
