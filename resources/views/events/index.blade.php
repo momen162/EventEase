@@ -25,20 +25,27 @@
     <div class="event-card" data-status="upcoming">
       <div class="card-header purple-gradient">
         <h3>{{ $e->title }}</h3>
-        <span class="badge upcoming">upcoming</span>
+        <span class="badge upcoming">Upcoming</span>
       </div>
+
       <div class="card-body">
         <p><i class="bi bi-calendar"></i> {{ optional($e->starts_at)->format('d/m/Y H:i') }}</p>
         <p><i class="bi bi-geo-alt"></i> {{ $e->venue ?? $e->location }}</p>
         <p><i class="bi bi-currency-dollar"></i> {{ number_format($e->price,2) }}</p>
-        <p class="description">{{ \Illuminate\Support\Str::limit(strip_tags($e->description), 120) }}</p>
-        <div class="btn-group">
-          <a class="btn view" href="{{ route('events.show', $e) }}"><i class="bi bi-eye"></i> Details</a>
 
-          {{-- Direct buy (POST -> tickets.start) with inline quantity --}}
-          <form method="POST" action="{{ route('tickets.start', $e) }}" style="display:inline-flex; align-items:center; gap:8px">
+        <p class="description">
+          {{ \Illuminate\Support\Str::limit(strip_tags($e->description), 120) }}
+        </p>
+
+        <div class="btn-group">
+          <a class="btn view" href="{{ route('events.show', $e) }}">
+            <i class="bi bi-eye"></i> Details
+          </a>
+
+          {{-- Buy → POST to tickets.start with qty=1, redirected to Checkout --}}
+          <form method="POST" action="{{ route('tickets.start', $e) }}" style="display:inline-block">
             @csrf
-            <input type="number" name="quantity" value="1" min="1" class="w-16" />
+            <input type="hidden" name="quantity" value="1">
             <button class="btn register" type="submit">
               <i class="bi bi-box-arrow-in-right"></i> Buy
             </button>
