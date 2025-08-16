@@ -20,7 +20,7 @@ if (!isset($pageTitle)) { $pageTitle = 'Admin'; }
     <nav class="nav">
       <a href="/admin/users.php">Users</a>
       <a href="/admin/events.php">Events</a>
-      <a href="/admin/logout.php" class="btn btn-ghost">Logout</a>
+      <a href="/admin/logout.php" class="btn btn-ghost">Logout right now</a>
     </nav>
   </div>
 </header>
