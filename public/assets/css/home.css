@@ -468,3 +468,21 @@ html, body {
 .faq-item.active .faq-question .icon {
   transform: rotate(45deg); /* Turns + into x */
 }
+
+
+
+
+.offer-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* centers horizontally */
+  text-align: center;    /* centers text under the icon */
+}
+
+.offer-item img {
+  display: block;
+  margin: 0 auto 12px auto;  /* centers horizontally + space below */
+  width: 60px;               /* set consistent size */
+  height: 60px;              /* keeps them equal */
+  object-fit: contain;
+}
