@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>EventEase - @yield('title')</title>
+  <link rel="icon" type="image/png" href="{{ asset('assets/images/logo.png') }}">
+<title>EventEase - @yield('title')</title>
+
 
   {{-- Global site CSS (yours) --}}
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
@@ -45,7 +47,7 @@
 <body class="bg-gray-50 text-gray-900">
 
   <header class="site-header">
-    <a href="{{ url('/') }}" class="logo">📅 <span>EventEase</span></a>
+    <a href="{{ url('/') }}" class="logo"><span>EventEase</span></a>
 
     <div class="hamburger" onclick="toggleMenu()">☰</div>
 
