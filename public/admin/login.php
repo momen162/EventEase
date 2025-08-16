@@ -8,12 +8,13 @@
       <p class="help">Use your admin credentials to access the dashboard.</p>
 
       <?php if(!empty($error)): ?>
-        <div class="card" style="background:rgba(248,113,113,.12); border-color: rgba(248,113,113,.35); margin-top:14px">
-          <strong style="color:#fecaca">Error:</strong> <?= htmlspecialchars($error) ?>
+        <div class="card" style="background:#fee2e2;border:1px solid #fecaca;margin-top:14px">
+          <strong style="color:#b91c1c">Error:</strong> <?= htmlspecialchars($error) ?>
         </div>
       <?php endif; ?>
 
       <form method="post" style="margin-top:14px">
+        <?php csrf_field(); ?>
         <label>Email
           <input type="email" name="email" required value="test@example.com" class="input" autocomplete="username">
         </label>
@@ -22,7 +23,7 @@
         </label>
         <div style="display:flex; gap:10px; align-items:center; margin-top:6px">
           <button type="submit" class="btn btn-primary">Sign in</button>
-          <span class="help">Tip: press <span class="kbd">Enter</span> to submit</span>
+          <span class="help">Tip: press <span style="border:1px solid #ddd;padding:0 6px;border-radius:6px">Enter</span></span>
         </div>
       </form>
     </div>

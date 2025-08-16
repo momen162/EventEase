@@ -1,15 +1,21 @@
 <?php
-require __DIR__.'/_config.php'; require_login();
+require __DIR__.'/_config.php';  // DB + admin session helpers
+require_admin();                 // 🔒 only logged-in admins can access
 
 $id = (int)($_GET['id'] ?? 0);
 if ($id <= 0) { header('Location: /admin/events.php'); exit; }
 
+// Load existing event
 $st = $pdo->prepare("SELECT * FROM events WHERE id = ?");
 $st->execute([$id]);
-$event = $st->fetch(PDO::FETCH_ASSOC);
+$event = $st->fetch();
 if (!$event) { header('Location: /admin/events.php'); exit; }
 
+// Handle update
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // If you want CSRF on admin forms, uncomment this:
+    // csrf_check();
+
     $title   = trim($_POST['title'] ?? '');
     $desc    = $_POST['description'] ?? null;
     $loc     = $_POST['location'] ?? null;
@@ -21,34 +27,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $option  = $_POST['purchase_option'] ?? 'both';
     $removeBanner = isset($_POST['remove_banner']);
 
+    // Keep current banner by default
     $bannerPath = $event['banner'];
 
+    // --- Banner upload handling ---
     if (!empty($_FILES['banner']['name']) && is_uploaded_file($_FILES['banner']['tmp_name'])) {
         $dir = __DIR__ . '/../uploads/events';
         if (!is_dir($dir)) { mkdir($dir, 0775, true); }
+
         $ext = strtolower(pathinfo($_FILES['banner']['name'], PATHINFO_EXTENSION));
         $allowed = ['jpg','jpeg','png','webp','gif'];
-        if (in_array($ext, $allowed)) {
+        if (!in_array($ext, $allowed)) {
+            $error = 'Banner must be an image (jpg, jpeg, png, webp, gif).';
+        } else {
             $file = 'ev_' . time() . '_' . mt_rand(1000, 9999) . '.' . $ext;
             $dest = $dir . '/' . $file;
             if (move_uploaded_file($_FILES['banner']['tmp_name'], $dest)) {
+                // Delete old file if existed
                 if (!empty($event['banner'])) {
                     $oldFs = realpath(__DIR__ . '/..' . $event['banner']);
                     if ($oldFs && is_file($oldFs)) { @unlink($oldFs); }
                 }
-                $bannerPath = '/uploads/events/' . $file;
+                $bannerPath = '/uploads/events/' . $file; // URL path stored in DB
             } else {
                 $error = 'Failed to upload banner.';
             }
-        } else {
-            $error = 'Banner must be an image (jpg, jpeg, png, webp, gif).';
         }
     } elseif ($removeBanner) {
+        // Remove existing banner if checkbox ticked
         if (!empty($event['banner'])) {
             $oldFs = realpath(__DIR__ . '/..' . $event['banner']);
             if ($oldFs && is_file($oldFs)) { @unlink($oldFs); }
         }
         $bannerPath = null;
+    }
+
+    if (empty($title)) {
+        $error = 'Title is required.';
     }
 
     if (empty($error)) {
@@ -84,7 +99,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-function dtval(?string $dt): string { return $dt ? str_replace(' ', 'T', substr($dt, 0, 16)) : ''; }
+// Helper to prefill datetime-local
+function dtval(?string $dt): string {
+    return $dt ? str_replace(' ', 'T', substr($dt, 0, 16)) : '';
+}
 
 $pageTitle = "Edit Event #$id";
 require __DIR__.'/_layout_top.php';
@@ -96,12 +114,14 @@ require __DIR__.'/_layout_top.php';
       <h2>Edit Event #<?= (int)$id ?></h2>
 
       <?php if (!empty($error)): ?>
-        <div class="card" style="background:rgba(248,113,113,.12); border-color: rgba(248,113,113,.35); margin-top:14px">
-          <strong style="color:#fecaca">Error:</strong> <?= htmlspecialchars($error) ?>
+        <div class="card" style="background:#fee2e2;border:1px solid #fecaca;margin-top:14px">
+          <strong style="color:#b91c1c">Error:</strong> <?= htmlspecialchars($error) ?>
         </div>
       <?php endif; ?>
 
       <form method="post" enctype="multipart/form-data" style="margin-top:10px">
+        <?php csrf_field(); ?>
+
         <label>Title
           <input name="title" value="<?= htmlspecialchars($event['title'] ?? '') ?>" required class="input">
         </label>
@@ -143,8 +163,8 @@ require __DIR__.'/_layout_top.php';
               $opt = $event['purchase_option'] ?? 'both';
               $opts = ['both' => 'Both', 'pay_now' => 'Pay now', 'pay_later' => 'Pay later'];
               foreach ($opts as $val => $label) {
-                $sel = $opt === $val ? 'selected' : '';
-                echo "<option value=\"$val\" $sel>$label</option>";
+                  $sel = $opt === $val ? 'selected' : '';
+                  echo "<option value=\"$val\" $sel>$label</option>";
               }
             ?>
           </select>

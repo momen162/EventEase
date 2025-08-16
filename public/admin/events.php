@@ -1,6 +1,6 @@
 <?php
-require __DIR__.'/_config.php'; require_login();
-$events = $pdo->query("SELECT id,title,location,starts_at,ends_at,capacity FROM events ORDER BY starts_at DESC")->fetchAll(PDO::FETCH_ASSOC);
+require __DIR__.'/_config.php'; require_admin();
+$events = $pdo->query("SELECT id,title,location,starts_at,ends_at,capacity FROM events ORDER BY starts_at DESC")->fetchAll();
 $pageTitle = 'Events';
 require __DIR__.'/_layout_top.php';
 ?>
@@ -19,7 +19,7 @@ require __DIR__.'/_layout_top.php';
       <?php if(!$events): ?>
         <div class="empty">No events yet. Click <strong>+ New Event</strong> to create one.</div>
       <?php else: ?>
-        <div class="table-wrap" style="margin-top:14px">
+        <div class="table-wrap">
           <table>
             <thead>
               <tr><th>ID</th><th>Title</th><th>When</th><th>Location</th><th>Cap.</th><th>Actions</th></tr>

@@ -1,15 +1,20 @@
 <?php
-require __DIR__.'/_config.php'; require_login();
+require __DIR__.'/_config.php'; require_admin();
 
 if($_SERVER['REQUEST_METHOD']==='POST'){
+  // csrf optional here; enable if you like
+  // csrf_check();
+
   $bannerPath = null;
   if(!empty($_FILES['banner']['name'])){
     $dir = __DIR__.'/../uploads/events';
     if(!is_dir($dir)) mkdir($dir, 0775, true);
     $ext = pathinfo($_FILES['banner']['name'], PATHINFO_EXTENSION);
     $file = 'ev_'.time().'_'.mt_rand(1000,9999).'.'.$ext;
-    move_uploaded_file($_FILES['banner']['tmp_name'], $dir.'/'.$file);
-    $bannerPath = '/uploads/events/'.$file;
+    if (is_uploaded_file($_FILES['banner']['tmp_name'])) {
+      move_uploaded_file($_FILES['banner']['tmp_name'], $dir.'/'.$file);
+      $bannerPath = '/uploads/events/'.$file;
+    }
   }
 
   $stmt = $pdo->prepare("
@@ -41,6 +46,7 @@ require __DIR__.'/_layout_top.php';
     <div class="card">
       <h2>Create Event</h2>
       <form method="post" enctype="multipart/form-data" style="margin-top:10px">
+        <?php csrf_field(); ?>
         <label>Title <input name="title" required class="input"></label>
         <label>Description <textarea name="description" rows="6" class="input"></textarea></label>
 

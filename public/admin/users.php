@@ -1,5 +1,5 @@
 <?php
-require __DIR__.'/_config.php'; require_login();
+require __DIR__.'/_config.php'; require_admin();
 
 if(isset($_GET['delete'])){
   $id = (int)$_GET['delete'];
@@ -9,7 +9,7 @@ if(isset($_GET['delete'])){
   header('Location: /admin/users.php'); exit;
 }
 
-$rows = $pdo->query("SELECT id,name,email,role,created_at FROM users ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC);
+$rows = $pdo->query("SELECT id,name,email,role,created_at FROM users ORDER BY id DESC")->fetchAll();
 $pageTitle = 'Users';
 require __DIR__.'/_layout_top.php';
 ?>
@@ -28,7 +28,7 @@ require __DIR__.'/_layout_top.php';
       <?php if(!$rows): ?>
         <div class="empty">No users found.</div>
       <?php else: ?>
-        <div class="table-wrap" style="margin-top:14px">
+        <div class="table-wrap">
           <table>
             <thead>
               <tr>
