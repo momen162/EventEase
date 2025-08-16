@@ -13,9 +13,10 @@
     }
     body { font-family: "DejaVu Sans", sans-serif; color:#111; font-size:12px; line-height:1.45; }
     .wrap   { border:1px solid #e5e7eb; border-radius:10px; overflow:hidden; }
-    .header { padding:16px 18px; background:#f3f4f6; border-bottom:1px solid #e5e7eb; }
-    .title  { margin:0; font-size:20px; }
-    .meta   { margin-top:4px; color:#374151; }
+    .header { padding:16px 18px; background:#f3f4f6; border-bottom:1px solid #e5e7eb; text-align:center; }
+    .ticket-code { margin:0; font-size:16px; color:#374151; font-weight:700; }
+    .title  { margin:4px 0 0 0; font-size:20px; }
+    .meta   { margin-top:4px; color:#6b7280; }
 
     .banner { width:100%; height:210px; object-fit:cover; display:block; }
     .section{ padding:16px 18px; }
@@ -41,6 +42,7 @@
   <div class="wrap">
     {{-- Header --}}
     <div class="header">
+      <h2 class="ticket-code">{{ $ticket->ticket_code }}</h2>
       <h1 class="title">{{ $ticket->event->title }}</h1>
       <div class="meta">Official Ticket · {{ $ticket->created_at?->format('M d, Y') }}</div>
     </div>
@@ -131,7 +133,8 @@
 
     {{-- Footer --}}
     <div class="footer">
-      This is an Auto-Generated Ticket.<br>
+      This Event Hosted by EventEase.<br>
+      <strong>Terms &amp; Conditions:</strong> No refund · Late attend not allowed
     </div>
   </div>
 </body>
