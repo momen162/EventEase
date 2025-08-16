@@ -4,14 +4,31 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>EventEase - @yield('title')</title>
+
+  {{-- Global site CSS (yours) --}}
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/css/modal.css') }}"> <!-- Modal style -->
+  <link rel="stylesheet" href="{{ asset('assets/css/modal.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/auth.css') }}">
 
+  {{-- Page-level CSS (per-view) --}}
   @yield('extra-css')
+
+  {{-- ✅ Tailwind CDN so utility classes work without Vite --}}
+  <script src="https://cdn.tailwindcss.com"></script>
+  {{-- Fallback if the CDN above is blocked --}}
+  <script>
+    if (!window.tailwind) {
+      var s = document.createElement('script');
+      s.src = 'https://unpkg.com/tailwindcss-cdn@3.4.0/tailwindcss.js';
+      document.head.appendChild(s);
+    }
+  </script>
+
+  {{-- Minimal base in case both CDNs are blocked --}}
+  <style>body{background:#f8f9fc;color:#111827}</style>
 </head>
-<body>
+<body class="bg-gray-50 text-gray-900">
 
   <header>
     <div class="logo">📅 <span>EventEase</span></div>
@@ -26,34 +43,30 @@
       <a href="{{ url('/contact') }}">Contact</a>
     </nav>
 
-<div class="login-section" id="loginSection">
-  @guest
-    <span>👲🏻 Guest</span>
-    <button onclick="openAuthModal()">Login</button>
-  @endguest
+    <div class="login-section" id="loginSection">
+      @guest
+        <span>👲🏻 Guest</span>
+        <button onclick="openAuthModal()">Login</button>
+      @endguest
 
-  @auth
-    <div class="dropdown">
-      <button class="dropdown-toggle">{{ Auth::user()->name }}</button>
-      <div class="dropdown-menu">
-        <a href="{{ route('dashboard') }}">Dashboard</a>
-        <form method="POST" action="{{ route('logout') }}">
-          @csrf
-          <button type="submit">Logout</button>
-        </form>
-      </div>
+      @auth
+        <div class="dropdown">
+          <button class="dropdown-toggle">{{ Auth::user()->name }}</button>
+          <div class="dropdown-menu">
+            <a href="{{ route('dashboard') }}">Dashboard</a>
+            <form method="POST" action="{{ route('logout') }}">
+              @csrf
+              <button type="submit">Logout</button>
+            </form>
+          </div>
+        </div>
+      @endauth
     </div>
-  @endauth
-</div>
-
-
-
   </header>
 
   <main>
     @yield('content')
     @include('components.auth-modal')
-
   </main>
 
   <footer class="site-footer">
@@ -71,7 +84,7 @@
           <li><a href="{{ url('/gallery') }}">Gallery</a></li>
           <li><a href="{{ url('/blog') }}">Blog</a></li>
           <li><a href="{{ url('/contact') }}">Contact</a></li>
-          <li><a href="#" id="openTermsModal">Terms & Conditions</a></li> <!-- Open modal -->
+          <li><a href="#" id="openTermsModal">Terms & Conditions</a></li>
         </ul>
       </div>
 
@@ -94,12 +107,13 @@
         </form>
       </div>
     </div>
+
     <div class="footer-bottom">
       <p>&copy; {{ date('Y') }} EventEase. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- Terms Modal -->
+  {{-- Terms Modal --}}
   <div id="termsModal" class="terms-modal-overlay">
     <div class="terms-modal-content">
       <span class="close-modal" id="closeTermsModal">&times;</span>
@@ -125,32 +139,25 @@
     </div>
   </div>
 
+  {{-- Global JS --}}
   <script src="{{ asset('assets/js/script.js') }}"></script>
   <script src="{{ asset('assets/js/auth.js') }}"></script>
   <script src="{{ asset('assets/js/modal.js') }}"></script>
 
+  {{-- Page-level JS --}}
   @yield('extra-js')
 
-
-  
   <script>
-  @if ($errors->any())
-    window.onload = function () {
-      openAuthModal();
-      @if (old('name'))
-        switchAuthTab('register');
-      @else
-        switchAuthTab('login');
-      @endif
-    }
-  @endif
-</script>
-
-  
-
-
-
-
+    @if ($errors->any())
+      window.onload = function () {
+        openAuthModal();
+        @if (old('name'))
+          switchAuthTab('register');
+        @else
+          switchAuthTab('login');
+        @endif
+      }
+    @endif
+  </script>
 </body>
 </html>
-
