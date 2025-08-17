@@ -22,6 +22,9 @@ if (!isset($pageTitle)) { $pageTitle = 'Admin'; }
         <a href="/admin/event_requests.php">Pending Requests</a>
         <a href="/admin/blogs.php">Blogs</a>
         <a href="/admin/stats.php">Stats</a>
+        <a href="/admin/sales.php">Sales</a>
+        <a href="/admin/sales_events.php">Sales by Event</a>
+
         <a href="/admin/messages.php">Messages</a>
         <a href="/admin/logout.php" class="btn btn-ghost">Logout</a>
       <?php endif; ?>

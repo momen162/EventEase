@@ -62,3 +62,5 @@ include __DIR__ . '/_layout_top.php';
     </tbody>
   </table>
 <?php endif; ?>
+
+<?php include __DIR__ . '/_layout_bottom.php'; ?>
