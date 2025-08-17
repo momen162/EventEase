@@ -1,105 +1,81 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventRequestController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Auth\SocialController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BlogController;
-
-// navbar pages routes
-Route::get('/', function () {
-    return view('home');
-});
-Route::get('/gallery', function () {
-    return view('gallery');
-});
-Route::get('/blog', function () {
-    return view('blog');
-});
-Route::get('/contact', function () {
-    return view('contact');
-});
-
-Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
-
-// dashboard routes
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-require __DIR__.'/auth.php';
-
-
-
-
-
-
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\PaymentController;
 
+// Navbar/static pages
+Route::get('/', fn () => view('home'));
+Route::get('/gallery', fn () => view('gallery'));
+Route::get('/blog', fn () => view('blog'));
+Route::get('/contact', fn () => view('contact'));
+
+// Contact form
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+// Auth scaffolding (keep)
+require __DIR__ . '/auth.php';
+
+// Dashboard + profile (single source of truth)
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [ProfileController::class, 'dashboard'])->name('dashboard');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+});
+
+// Events (public list shows only approved in controller)
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
+Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
+
+// User-submitted event requests
 Route::middleware('auth')->group(function () {
+    Route::get('/events/request/create', [EventRequestController::class, 'create'])->name('events.request.create');
+    Route::post('/events/request', [EventRequestController::class, 'store'])->name('events.request.store');
+});
+
+// Ticket purchase flow (auth required)
+Route::middleware('auth')->group(function () {
+    Route::post('/events/{event}/buy', [TicketController::class, 'start'])->name('tickets.start');
+
     Route::get('/checkout', [TicketController::class, 'checkout'])->name('tickets.checkout');
     Route::post('/checkout/confirm', [TicketController::class, 'confirm'])->name('tickets.confirm');
 
     // Payment flow for "pay now"
-    Route::get('/payments/redirect', [PaymentController::class, 'redirect'])->name('payments.redirect'); // sends user to gateway
-    Route::get('/payments/callback/success', [PaymentController::class, 'success'])->name('payments.success'); // gateway success return
-    Route::get('/payments/callback/cancel', [PaymentController::class, 'cancel'])->name('payments.cancel');   // gateway cancel/failed
+    Route::get('/payments/redirect', [PaymentController::class, 'redirect'])->name('payments.redirect'); // to gateway
+    Route::get('/payments/callback/success', [PaymentController::class, 'success'])->name('payments.success');
+    Route::get('/payments/callback/cancel', [PaymentController::class, 'cancel'])->name('payments.cancel');
 
+    // Ticket pages
     Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
     Route::get('/tickets/{ticket}/download', [TicketController::class, 'download'])->name('tickets.download');
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-Route::get('/events', [EventController::class, 'index'])->name('events.index');
-Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
-
-Route::post('/events/{event}/buy', [TicketController::class, 'start'])->name('tickets.start');
-Route::get('/checkout', [TicketController::class, 'checkout'])->name('tickets.checkout')->middleware('auth');
-Route::post('/checkout/confirm', [TicketController::class, 'confirm'])->name('tickets.confirm')->middleware('auth');
-Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show')->middleware('auth');
-Route::get('/tickets/{ticket}/download', [TicketController::class, 'download'])->name('tickets.download')->middleware('auth');
-
-
-
-
-// Auth Routes
+// Social auth
 Route::get('/auth/google', [SocialController::class, 'redirectToGoogle']);
 Route::get('/auth/google/callback', [SocialController::class, 'handleGoogleCallback']);
 
 Route::get('/auth/facebook', [SocialController::class, 'redirectToFacebook']);
 Route::get('/auth/facebook/callback', [SocialController::class, 'handleFacebookCallback']);
 
+// Username/password auth
 Route::post('/login', [AuthController::class, 'login'])->name('login.custom');
 Route::post('/register', [AuthController::class, 'register'])->name('register.custom');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [ProfileController::class, 'dashboard'])->name('dashboard');
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-});
-
-// Routes for blog pages
+// Blog
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{id}', [BlogController::class, 'show'])->name('blog.show');
 
-// gallery details routes
+// Gallery details
 Route::get('/gallery/event-{id}', function ($id) {
     $events = [
         1 => ['title' => 'Book Fair 2025', 'images' => ['a1.png', 'a2.png', 'a3.png', 'a4.png', 'a5.png']],

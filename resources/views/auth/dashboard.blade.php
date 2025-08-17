@@ -10,6 +10,7 @@
   <!-- Top bar -->
   <div class="dash-topbar">
     <h2 class="dash-welcome">Welcome, <span class="brand-accent">{{ $user->name }}</span></h2>
+    <a href="{{ route('events.request.create') }}" class="btn solid">Request a New Event</a>
   </div>
 
   <div class="dash-grid">
@@ -75,5 +76,28 @@
       </ul>
     </main>
   </div>
+
+  <!-- Your Event Requests -->
+  <aside class="profile-card" style="margin-top: 1.5rem;">
+    <h3>Your Event Requests</h3>
+    @php
+      $myEvents = \App\Models\Event::where('created_by', $user->id)->latest()->limit(5)->get();
+    @endphp
+    <ul class="tickets-list">
+      @forelse($myEvents as $ev)
+        <li class="ticket-card">
+          <div class="ticket-main">
+            <div class="t-line"><span class="t-label">Title</span><span class="t-value">{{ $ev->title }}</span></div>
+            <div class="t-line"><span class="t-label">Starts</span><span class="t-value">{{ $ev->starts_at?->format('M d, Y H:i') }}</span></div>
+            <div class="t-line"><span class="t-label">Status</span>
+              <span class="t-value"><strong class="t-status">{{ ucfirst($ev->status) }}</strong></span>
+            </div>
+          </div>
+        </li>
+      @empty
+        <li class="tickets-empty">No event requests yet.</li>
+      @endforelse
+    </ul>
+  </aside>
 </section>
 @endsection
