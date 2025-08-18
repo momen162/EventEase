@@ -144,16 +144,7 @@
         </a>
       </div>
 
-      <!-- Optional UI helpers (no logic change) -->
-      <div class="toolbar" role="group" aria-label="Table tools (UI only)">
-        <input class="input" type="search" placeholder="Search events…" aria-label="Search events (UI only)">
-        <select class="input" aria-label="Filter by month (UI only)">
-          <option value="">All dates</option>
-          <option>Next 7 days</option>
-          <option>This month</option>
-          <option>Next month</option>
-        </select>
-      </div>
+              <!-- Optional UI helpers (no logic change) -->
 
       @if($events->isEmpty())
         <div class="empty">
