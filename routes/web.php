@@ -213,3 +213,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','admin'])->group(func
     // Statistics
     Route::get('/stats', [AdminStatsController::class, 'index'])->name('stats.index');
 });
+
+
+
+
+// Manual payment flow
+Route::get('/payments/manual',  [\App\Http\Controllers\PaymentController::class, 'manual'])->name('payments.manual');
+Route::post('/payments/manual/confirm', [\App\Http\Controllers\PaymentController::class, 'manualConfirm'])->name('payments.manual.confirm');
+

@@ -7,63 +7,38 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    /**
-     * GET /payments/redirect
-     * Create a payment session with your provider and redirect there.
-     * Replace the stub with your gateway integration (SSLCommerz/bKash/Stripe/etc).
-     */
-    public function redirect(Request $request)
+    // GET /payments/manual
+    public function manual(Request $request)
     {
         $checkout = session('checkout');
         abort_unless($checkout && auth()->id() === $checkout['user_id'], 403);
-
-        // TODO: Implement your payment provider redirect here.
-        // Example:
-        // $session = $gateway->createCheckout([...]);
-        // return redirect()->away($session->url);
-
-        // DEV STUB: simulate success immediately
-        return redirect()->route('payments.success');
-    }
-
-    /**
-     * GET /payments/callback/success
-     * Verify payment and create the ticket as PAID.
-     */
-    public function success(Request $request)
-    {
-        $checkout = session('checkout');
-        abort_unless($checkout && auth()->id() === $checkout['user_id'], 403);
-
-        // TODO: Verify transaction with your gateway before proceeding.
 
         $event = Event::findOrFail($checkout['event_id']);
-        /** @var \App\Http\Controllers\TicketController $ticketController */
-        $ticketController = app(\App\Http\Controllers\TicketController::class);
 
-        // Create ticket as PAID after successful payment
-        $ticket = $ticketController->createTicketAndQr($event, (int)$checkout['qty'], 'pay_now', 'paid');
+        // Put your real numbers in .env (see below)
+        $bkash  = env('PAY_BKASH',  '017XXXXXXXX');
+        $nagad  = env('PAY_NAGAD',  '018XXXXXXXX');
+        $rocket = env('PAY_ROCKET', '01XXXXXXXXX');
 
-        session()->forget('checkout');
-
-        return redirect()->route('tickets.show', $ticket)
-            ->with('success', 'Payment successful. Your ticket is ready!');
+        return view('payments.manual', compact('event', 'checkout', 'bkash', 'nagad', 'rocket'));
     }
 
-    /**
-     * GET /payments/callback/cancel
-     */
-    public function cancel(Request $request)
+    // POST /payments/manual/confirm
+    public function manualConfirm(Request $request)
     {
-        $eventId = optional(session('checkout'))['event_id'];
-        $qty     = optional(session('checkout'))['qty'];
+        $checkout = session('checkout');
+        abort_unless($checkout && auth()->id() === $checkout['user_id'], 403);
+
+        $event = Event::findOrFail($checkout['event_id']);
+
+        // If you prefer to verify payment first, change 'paid' -> 'unpaid'
+        $ticket = app(\App\Http\Controllers\TicketController::class)
+            ->createTicketAndQr($event, (int)$checkout['qty'], 'pay_now', 'paid');
+
         session()->forget('checkout');
 
-        if ($eventId) {
-            return redirect()->route('tickets.checkout', ['event_id' => $eventId, 'qty' => $qty])
-                ->with('error', 'Payment was cancelled.');
-        }
-
-        return redirect()->route('events.index')->with('error', 'Payment was cancelled.');
+        return redirect()
+            ->route('tickets.show', $ticket)
+            ->with('success', 'Thanks! Your ticket is ready.');
     }
 }

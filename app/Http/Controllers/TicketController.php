@@ -43,7 +43,7 @@ class TicketController extends Controller
     /**
      * POST /checkout/confirm
      * - pay_later: create ticket immediately (as before)
-     * - pay_now:   DO NOT create ticket; store checkout in session & redirect to payment redirector
+     * - pay_now:   DO NOT create ticket; store checkout in session & show manual payment page
      */
     public function confirm(Request $request)
     {
@@ -63,8 +63,7 @@ class TicketController extends Controller
             return redirect()->route('tickets.show', $ticket);
         }
 
-        // PAY NOW: defer ticket creation until gateway success.
-        // Stash minimal checkout info in session (or create a Payment record if you prefer).
+        // PAY NOW → manual page (no ticket yet)
         session()->put('checkout', [
             'event_id' => $event->id,
             'qty'      => $qty,
@@ -72,8 +71,7 @@ class TicketController extends Controller
             'total'    => $event->price * $qty,
         ]);
 
-        // Hand off to gateway redirector
-        return redirect()->route('payments.redirect');
+        return redirect()->route('payments.manual');
     }
 
     public function show(Ticket $ticket)
@@ -92,8 +90,9 @@ class TicketController extends Controller
 
     /**
      * Helper: creates ticket, generates SVG QR into storage/app/public/tickets/
+     * (made PUBLIC so PaymentController can reuse it)
      */
-    private function createTicketAndQr(Event $event, int $qty, string $paymentOption, string $paymentStatus): Ticket
+    public function createTicketAndQr(Event $event, int $qty, string $paymentOption, string $paymentStatus): Ticket
     {
         $total = $event->price * $qty;
 
