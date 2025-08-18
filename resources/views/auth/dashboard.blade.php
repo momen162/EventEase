@@ -5,20 +5,30 @@
   <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
   <!-- Inline design tokens + components (scoped) -->
   <style>
-    :root{
-      --bg: #0b1020;
-      --card: rgba(18, 24, 45, 0.7);
-      --border: rgba(255,255,255,0.08);
-      --muted: #97a3b6;
-      --text: #e8ecf3;
-      --accent: #7c5cff;
-      --accent-2: #34d399; /* green */
-      --accent-3: #f59e0b; /* amber */
-      --danger: #ef4444;
-      --radius: 16px;
-      --shadow: 0 10px 30px rgba(0,0,0,0.35);
-      --glass: blur(10px) saturate(120%);
-    }
+:root {
+  /* Backgrounds */
+  --bg: #ffffff;                /* pure white background */
+  --card: #f9fafb;              /* card surface (neutral light gray) */
+  --surface: #f3f4f6;           /* subtle section background */
+  
+  /* Borders / shadows */
+  --border: #e5e7eb;            /* soft gray border (tailwind gray-200) */
+  --shadow: 0 4px 16px rgba(0,0,0,0.06);
+  --radius: 12px;
+  --glass: blur(8px) saturate(120%);
+
+  /* Text */
+  --text: #111827;              /* strong dark gray (almost black) */
+  --muted: #6b7280;             /* medium gray for muted text */
+
+  /* Standard brand accents */
+  --accent: #2563eb;            /* blue-600 */
+  --accent-hover: #1d4ed8;      /* darker blue */
+  --accent-2: #16a34a;          /* green-600 */
+  --accent-3: #d97706;          /* amber-600 */
+  --danger: #dc2626;            /* red-600 */
+}
+
     .dash-shell{
       --gap: 1.25rem;
       padding: clamp(16px, 2.2vw, 28px);
@@ -259,7 +269,7 @@
           </li>
         @empty
           <li class="tickets-empty">
-            No tickets yet. <a class="btn ghost" style="margin-left:.5rem" href="{{ route('events.request.create') }}">Book your first event</a>
+            No tickets yet
           </li>
         @endforelse
       </ul>
