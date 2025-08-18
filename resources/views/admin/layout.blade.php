@@ -147,6 +147,9 @@
 
       <a href="{{ route('admin.blogs.index') }}"
          class="nav-link {{ request()->routeIs('admin.blogs.*') ? 'is-active' : '' }}">Blogs</a>
+        
+         <a href="{{ route('admin.messages.index') }}"
+         class="nav-link {{ request()->routeIs('admin.messages.*') ? 'is-active' : '' }}">Messages</a>
 
       <a href="{{ route('admin.stats.index') }}"
          class="nav-link {{ request()->routeIs('admin.stats.*') ? 'is-active' : '' }}">Stats</a>
