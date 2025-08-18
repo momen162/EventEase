@@ -4,194 +4,169 @@
 @push('head')
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"
         integrity="sha256-+i2m6w6s3pX8r0P9pQJwTNC3aSjcUjL/O0mH9M9m+eI=" crossorigin="anonymous"></script>
-
-<style>
-  :root {
-    --bg: #b1badeff;
-    --bg-soft: #12162a;
-    --card: #161a31;
-    --muted: #131415ff;
-    --text: #4372b4ff;
-    --accent: #141e32ff;
-    --accent-2: #03020cff;
-    --ring: rgba(108,156,255,.35);
-    --success: #4d5d59ff;
-    --danger: #ff7a7a;
-    --table-border: rgba(231,236,243,.06);
-  }
-  @media (prefers-color-scheme: light) {
-    :root {
-      --bg: #326bdcff;
-      --bg-soft: #c4e2e2ff;
-      --card: #575050ff;
-      --muted: #5b6876;
-      --text: #14171eff;
-      --accent: #3b82f6;
-      --accent-2: #4d455aff;
-      --ring: rgba(59,130,246,.25);
-      --success: #10b981;
-      --danger: #ef4444;
-      --table-border: rgba(13,19,32,.08);
-    }
-  }
-
-  /* Page wrapper tweaks (works with your admin layout) */
-  body { background: radial-gradient(1200px 600px at 10% -10%, rgba(108,156,255,.12), transparent 40%) ,
-                      radial-gradient(900px 500px at 100% 10%, rgba(138,125,255,.10), transparent 45%),
-                      var(--bg); }
-
-  .grid {
-    display: grid;
-    gap: 18px;
-  }
-
-  .card {
-    background: linear-gradient(160deg, var(--card), var(--bg-soft));
-    border: 1px solid rgba(255,255,255,.06);
-    border-radius: 16px;
-    padding: 18px;
-    color: var(--text);
-    box-shadow: 0 6px 20px rgba(0,0,0,.25);
-    position: relative;
-    overflow: hidden;
-  }
-  .card::after{
-    content:"";
-    position:absolute; inset:auto -20% -60% auto;
-    width:60%; height:120%;
-    background: radial-gradient(300px 180px at right bottom, rgba(108,156,255,.12), transparent 40%);
-    pointer-events:none;
-  }
-
-  h2 {
-    margin: 0 0 6px;
-    font-weight: 700;
-    letter-spacing:.2px;
-  }
-  .help {
-    color: var(--muted);
-    margin: 6px 0 0;
-    font-size: .95rem;
-  }
-
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    border-radius: 999px;
-    font-size: .92rem;
-    color: var(--text);
-    background:
-      linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)),
-      linear-gradient(90deg, rgba(108,156,255,.20), rgba(138,125,255,.18));
-    border: 1px solid rgba(255,255,255,.10);
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,.03), 0 4px 14px rgba(0,0,0,.18);
-  }
-  .badge strong { color: #fff; letter-spacing:.3px; }
-
-  .empty {
-    background: linear-gradient(160deg, var(--bg-soft), var(--card));
-    border: 1px dashed var(--table-border);
-    color: var(--muted);
-    padding: 18px;
-    border-radius: 14px;
-    text-align: center;
-  }
-
-  /* 2-column area below charts */
-  .two-col {
-    display: grid;
-    grid-template-columns: 1.2fr .8fr;
-    gap: 18px;
-  }
-  @media (max-width: 1100px) {
-    .two-col { grid-template-columns: 1fr; }
-  }
-
-  /* Table */
-  .table-wrap { overflow: auto; border-radius: 12px; border: 1px solid var(--table-border); }
-  table { width: 100%; border-collapse: separate; border-spacing: 0; }
-  thead th {
-    text-align: left; font-weight: 600; font-size: .9rem; color: var(--muted);
-    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0));
-    position: sticky; top: 0; z-index: 1;
-    padding: 12px 14px; border-bottom: 1px solid var(--table-border);
-  }
-  tbody td {
-    padding: 12px 14px; color: var(--text); border-bottom: 1px solid var(--table-border);
-  }
-  tbody tr:hover { background: rgba(108,156,255,.06); }
-
-  /* Canvas ring & spacing */
-  canvas { background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
-           border-radius: 14px; border: 1px solid rgba(255,255,255,.05); }
-  .canvas-pad { padding: 8px; border-radius: 16px; background: radial-gradient(400px 180px at 20% -10%, rgba(108,156,255,.08), transparent 50%); }
-
-  /* Small buttons/legend feel */
-  .subcard {
-    border-radius: 16px;
-    padding: 16px;
-    background: linear-gradient(160deg, var(--card), var(--bg-soft));
-    border: 1px solid rgba(255,255,255,.06);
-  }
-</style>
 @endpush
 
 @section('content')
-<div class="grid">
-  <div class="col-12">
-    <div class="card">
-      <h2>Event Statistics</h2>
-      <p class="help">Overview of tickets created vs. sold for each event.</p>
+<div class="admin-stats"><!-- SCOPE WRAPPER -->
+  <style>
+    /* Page-scoped tokens */
+    .admin-stats{
+      --bg:#ffffff;
+      --surface:#ffffff;
+      --surface-2:#f9fafb;
+      --text:#111827;
+      --muted:#6b7280;
+      --border:#e5e7eb;
+      --ring: rgba(37,99,235,.35);
 
-      <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:12px">
-        <div class="badge">Total Created: <strong style="margin-left:4px">{{ array_sum($created->toArray()) }}</strong></div>
-        <div class="badge">Total Sold: <strong style="margin-left:4px">{{ array_sum($sold->toArray()) }}</strong></div>
-        <div class="badge">Events: <strong style="margin-left:4px">{{ $events->count() }}</strong></div>
+      --primary:#2563eb;      /* blue-600 */
+      --primary-600:#1d4ed8;  /* blue-700 */
+      --green:#22c55e;        /* green-500 */
+      --green-200:#bbf7d0;    /* green-200 */
+      --blue:#3b82f6;         /* blue-500 */
+      --blue-200:#bfdbfe;     /* blue-200 */
+      --amber:#f59e0b;        /* amber-500 */
+      --purple:#8b5cf6;       /* violet-500 */
+      --rose:#f43f5e;         /* rose-500 */
+      --cyan:#06b6d4;         /* cyan-500 */
+
+      --radius:14px;
+      --shadow:0 10px 30px rgba(0,0,0,.06);
+      --shadow-sm:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .admin-stats .as-wrap{ padding: clamp(12px,1.8vw,20px); background:var(--bg); color:var(--text); }
+
+    /* Page head */
+    .admin-stats .as-head{ margin-bottom: 10px; }
+    .admin-stats .as-title{ margin:0; font-weight:800; letter-spacing:.2px; }
+    .admin-stats .as-help{ margin:.25rem 0 0; color:var(--muted); }
+
+    /* Card */
+    .admin-stats .as-card{
+      background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+      box-shadow:var(--shadow); padding: clamp(16px,2vw,22px);
+    }
+    .admin-stats .as-card + .as-card{ margin-top: 16px; }
+
+    /* Badges row */
+    .admin-stats .as-badges{ display:flex; gap:12px; flex-wrap:wrap; margin-top:10px; }
+    .admin-stats .as-badge{
+      display:inline-flex; align-items:center; gap:6px; padding:8px 12px; border-radius:999px;
+      background:#eef2ff; color:#3730a3; border:1px solid #e0e7ff; font-weight:700;
+      box-shadow:var(--shadow-sm);
+    }
+
+    /* Pills + actions */
+    .admin-stats .as-header{
+      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      margin-top: 6px;
+    }
+    .admin-stats .as-actions{ display:flex; gap:8px; flex-wrap:wrap; }
+    .admin-stats .as-btn{
+      appearance:none; border:1px solid var(--border); border-radius:999px;
+      padding:10px 14px; font-weight:700; text-decoration:none; cursor:pointer;
+      display:inline-flex; align-items:center; gap:.5rem; transition:.18s ease;
+      background:#fff; color:var(--text); box-shadow:var(--shadow-sm);
+    }
+    .admin-stats .as-btn:hover{ transform: translateY(-1px); box-shadow:var(--shadow); }
+    .admin-stats .as-btn:focus-visible{ outline:3px solid var(--ring); outline-offset:2px; }
+    .admin-stats .as-btn-primary{ background:var(--primary); color:#fff; border-color:transparent; }
+    .admin-stats .as-btn-primary:hover{ background:var(--primary-600); }
+
+    .admin-stats .as-pills{ display:flex; gap:.5rem; flex-wrap:wrap; }
+    .admin-stats .as-pill{
+      text-decoration:none; padding:.55rem .85rem; border-radius:999px;
+      border:1px solid var(--border); background:#fff; color:var(--text); font-weight:700;
+      transition:.15s ease;
+    }
+    .admin-stats .as-pill:hover{ transform:translateY(-1px); box-shadow:var(--shadow-sm); }
+    .admin-stats .as-pill.active{ background:#e0ecff; border-color:#c7d2fe; color:#1d4ed8; }
+
+    /* Grid for charts + table */
+    .admin-stats .as-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:18px; margin-top: 18px; }
+    @media (max-width: 1000px){ .admin-stats .as-grid{ grid-template-columns: 1fr; } }
+
+    /* Table */
+    .admin-stats .as-table-wrap{
+      margin-top:8px; border:1px solid var(--border); border-radius:12px; overflow:hidden;
+      background:var(--surface); box-shadow:var(--shadow);
+    }
+    .admin-stats .as-table{ width:100%; border-collapse: separate; border-spacing:0; font-size:.96rem; }
+    .admin-stats .as-table thead th{
+      text-align:left; padding:12px 14px; background:#fff; border-bottom:1px solid var(--border);
+      color:var(--muted); font-weight:800;
+    }
+    .admin-stats .as-table tbody td{
+      padding:12px 14px; border-bottom:1px solid var(--border); vertical-align: top;
+    }
+    .admin-stats .as-table tbody tr:nth-child(even){ background:var(--surface-2); }
+    .admin-stats .as-table tbody tr:hover{ background:#fff; }
+    .admin-stats .num{ text-align:right; font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
+
+    /* Empty */
+    .admin-stats .as-empty{
+      border:1px dashed var(--border); border-radius:12px; background:var(--surface-2);
+      padding:22px; color:var(--muted); text-align:center; box-shadow:var(--shadow-sm);
+      margin-top:16px;
+    }
+  </style>
+
+  <div class="as-wrap">
+    <div class="as-card">
+      <div class="as-head">
+        <h2 class="as-title">Event Statistics</h2>
+        <p class="as-help">Overview of tickets created vs. sold for each event.</p>
+      </div>
+
+      <div class="as-badges">
+        <span class="as-badge">Total Created: <strong>{{ array_sum($created->toArray()) }}</strong></span>
+        <span class="as-badge">Total Sold: <strong>{{ array_sum($sold->toArray()) }}</strong></span>
+        <span class="as-badge">Events: <strong>{{ $events->count() }}</strong></span>
       </div>
 
       @if (!$events->count())
-        <div class="empty" style="margin-top:16px">No events found.</div>
+        <div class="as-empty">No events found.</div>
       @else
-        <div class="canvas-pad" style="margin-top:16px">
+        <div class="as-header">
+          <h3 class="as-title" style="margin:0;">Tickets Created vs. Sold</h3>
+          <div class="as-actions">
+            <a class="as-btn as-btn-primary" href="{{ route('admin.sales.export', ['group'=>'event','status'=>request('status','paid')]) }}">Export CSV</a>
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
           <canvas id="barChart" height="120" aria-label="Tickets created vs sold per event" role="img"></canvas>
         </div>
 
-        <div class="two-col" style="margin-top:20px">
-          <div class="subcard">
-            <h3 style="margin:0 0 8px">Top Selling (Pie)</h3>
-            <p class="help">Distribution of sold tickets among top events.</p>
-            <div class="canvas-pad" style="margin-top:10px">
-              <canvas id="pieChart" height="220" aria-label="Top selling events pie chart" role="img"></canvas>
-            </div>
+        <div class="as-grid">
+          <div class="as-card">
+            <h3 style="margin:0 0 6px">Top Selling (Pie)</h3>
+            <p class="as-help">Distribution of sold tickets among top events.</p>
+            <canvas id="pieChart" height="220" aria-label="Top selling events pie chart" role="img"></canvas>
           </div>
 
-          <div class="subcard">
-            <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px">
-              <h3 style="margin:0">Top Selling Events</h3>
-              <span class="help">Sorted by sold tickets</span>
-            </div>
-            <div class="table-wrap" style="margin-top:10px">
-              <table>
+          <div class="as-card">
+            <h3 style="margin:0 0 6px">Top Selling Events</h3>
+            <div class="as-table-wrap">
+              <table class="as-table">
                 <thead>
-                  <tr><th>#</th><th>Event</th><th>Sold</th><th>Created</th><th>Buyers</th></tr>
+                  <tr><th>#</th><th>Event</th><th class="num">Sold</th><th class="num">Created</th><th class="num">Buyers</th></tr>
                 </thead>
                 <tbody>
                   @foreach ($top as $i => $r)
                     <tr>
-                      <td>{{ $i+1 }}</td>
-                      <td style="max-width:380px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">{{ $r->title }}</td>
-                      <td>{{ (int)$r->tickets_sold }}</td>
-                      <td>{{ (int)$r->tickets_created }}</td>
-                      <td>{{ (int)$r->unique_buyers }}</td>
+                      <td data-label="#" class="num">{{ $i+1 }}</td>
+                      <td data-label="Event"><strong>{{ $r->title }}</strong></td>
+                      <td data-label="Sold" class="num">{{ (int)$r->tickets_sold }}</td>
+                      <td data-label="Created" class="num">{{ (int)$r->tickets_created }}</td>
+                      <td data-label="Buyers" class="num">{{ (int)$r->unique_buyers }}</td>
                     </tr>
                   @endforeach
                 </tbody>
               </table>
             </div>
           </div>
-
         </div>
       @endif
     </div>
@@ -202,9 +177,26 @@
 <script>
   (function () {
     const hasData = {{ (bool) $events->count() ? 'true': 'false' }};
-    if (!hasData) return;
+    if (!hasData || !window.Chart) return;
 
-    // -------- Data (unchanged) --------
+    // Palette (mirrors scoped CSS tokens)
+    const COLORS = {
+      blue:    getVar('--blue',    '#3b82f6'),
+      blue200: getVar('--blue-200','#bfdbfe'),
+      green:   getVar('--green',   '#22c55e'),
+      green200:getVar('--green-200','#bbf7d0'),
+      amber:   getVar('--amber',   '#f59e0b'),
+      purple:  getVar('--purple',  '#8b5cf6'),
+      rose:    getVar('--rose',    '#f43f5e'),
+      cyan:    getVar('--cyan',    '#06b6d4'),
+      border:  getVar('--border',  '#e5e7eb'),
+      text:    getVar('--text',    '#111827')
+    };
+
+    function getVar(name, fallback){ 
+      return getComputedStyle(document.querySelector('.admin-stats')).getPropertyValue(name).trim() || fallback; 
+    }
+
     const labels  = @json($labels, JSON_UNESCAPED_UNICODE);
     const created = @json($created);
     const sold    = @json($sold);
@@ -212,137 +204,75 @@
     const short = (s) => (s && s.length > 22) ? s.slice(0, 21) + '…' : s;
     const barLabels = labels.map(short);
 
-    // -------- Visual helpers (styling-only) --------
-    const withAlpha = (hex, a=0.3) => {
-      const c = hex.replace('#','');
-      const r = parseInt(c.substring(0,2),16);
-      const g = parseInt(c.substring(2,4),16);
-      const b = parseInt(c.substring(4,6),16);
-      return `rgba(${r},${g},${b},${a})`;
-    };
-
-    // Light/Dark friendly palette
-    const light = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-    const cBlue  = light ? '#3b82f6' : '#6c9cff';
-    const cVio   = light ? '#7c3aed' : '#8a7dff';
-    const cGreen = light ? '#10b981' : '#3dd9b2';
-    const cRed   = light ? '#ef4444' : '#ff7a7a';
-
-    const mkBarGradient = (ctx, hex) => {
-      const g = ctx.createLinearGradient(0, 0, 0, 220);
-      g.addColorStop(0, withAlpha(hex, .55));
-      g.addColorStop(1, withAlpha(hex, .12));
-      return g;
-    };
-
-    // -------- Bar Chart --------
+    // BAR CHART
     const barCtx = document.getElementById('barChart').getContext('2d');
-    const createdGrad = mkBarGradient(barCtx, cBlue);
-    const soldGrad    = mkBarGradient(barCtx, cGreen);
-
     new Chart(barCtx, {
       type: 'bar',
       data: {
         labels: barLabels,
         datasets: [
-          {
-            label: 'Created',
+          { label: 'Created',
             data: created,
-            backgroundColor: createdGrad,
-            borderColor: cBlue,
+            backgroundColor: COLORS.blue200,
+            borderColor: COLORS.blue,
             borderWidth: 1.5,
-            borderRadius: 8,
-            maxBarThickness: 46
+            borderRadius: 6,
+            maxBarThickness: 42
           },
-          {
-            label: 'Sold',
+          { label: 'Sold',
             data: sold,
-            backgroundColor: soldGrad,
-            borderColor: cGreen,
+            backgroundColor: COLORS.green200,
+            borderColor: COLORS.green,
             borderWidth: 1.5,
-            borderRadius: 8,
-            maxBarThickness: 46
+            borderRadius: 6,
+            maxBarThickness: 42
           },
         ]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        aspectRatio: 2.2,
         scales: {
           x: {
-            grid: { display: false },
-            ticks: { color: getCss('--muted'), maxRotation: 0, minRotation: 0 }
+            grid: { display:false, borderColor: COLORS.border },
+            ticks: { color: COLORS.text }
           },
           y: {
             beginAtZero: true,
-            ticks: { precision: 0, color: getCss('--muted') },
-            grid: { color: withAlpha('#9aa4b2', .12) }
+            ticks: { precision: 0, color: COLORS.text },
+            grid: { color: COLORS.border, borderColor: COLORS.border }
           }
         },
         plugins: {
-          legend: {
-            position: 'top',
-            labels: { color: getCss('--text'), usePointStyle: true, pointStyle: 'round' }
-          },
+          legend: { position: 'top', labels: { color: COLORS.text } },
           tooltip: {
-            backgroundColor: '#111827',
-            titleColor: '#e5e7eb',
-            bodyColor: '#e5e7eb',
-            borderColor: withAlpha('#6c9cff', .35),
-            borderWidth: 1,
-            padding: 10,
             callbacks: { title(items){ return labels[items[0].dataIndex] || ''; } }
           }
-        },
-        animation: { duration: 600, easing: 'easeOutQuart' }
+        }
       }
     });
 
-    // -------- Pie Chart (Top Selling) --------
+    // PIE CHART
     const topData   = @json($top->pluck('tickets_sold')->map(fn($v)=>(int)$v));
     const topLabels = @json($top->pluck('title'), JSON_UNESCAPED_UNICODE);
-    const pieCtx = document.getElementById('pieChart').getContext('2d');
 
+    const pieCtx = document.getElementById('pieChart').getContext('2d');
     const pieColors = [
-      cBlue, cVio, cGreen, cRed, '#f59e0b', '#14b8a6', '#a855f7', '#60a5fa', '#f43f5e', '#22c55e'
+      COLORS.blue, COLORS.green, COLORS.amber, COLORS.purple, COLORS.rose, COLORS.cyan
     ];
-    const bgColors = pieColors.map(hex => withAlpha(hex, .65));
-    const borderColors = pieColors;
 
     new Chart(pieCtx, {
       type: 'pie',
       data: {
         labels: topLabels.map(short),
-        datasets: [{
-          data: topData,
-          backgroundColor: bgColors,
-          borderColor: borderColors,
-          borderWidth: 1.5
-        }]
+        datasets: [{ data: topData, backgroundColor: pieColors, borderColor: '#ffffff', borderWidth: 2 }]
       },
       options: {
         responsive: true,
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: { color: getCss('--text'), boxWidth: 12, boxHeight: 12, usePointStyle: true, pointStyle: 'circle' }
-          },
-          tooltip: {
-            backgroundColor: '#111827',
-            titleColor: '#e5e7eb',
-            bodyColor: '#e5e7eb',
-            borderColor: withAlpha('#8a7dff', .35),
-            borderWidth: 1,
-            padding: 10
-          }
-        },
-        animation: { animateScale: true, duration: 700, easing: 'easeOutQuint' }
+        plugins: { legend: { position: 'bottom', labels: { color: COLORS.text } } }
       }
     });
-
-    function getCss(varName) {
-      return getComputedStyle(document.documentElement).getPropertyValue(varName).trim() || '#e7ecf3';
-    }
   })();
 </script>
 @endpush
