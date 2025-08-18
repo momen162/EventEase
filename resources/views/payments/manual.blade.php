@@ -67,7 +67,7 @@
           <ul class="list-disc ml-5 space-y-1">
             <li>Send exactly <strong>{{ number_format((float)$checkout['total'], 2) }} USDT Equal BDT</strong>.</li>
             <li>Use <strong>reference: {{ 'EVT'.$event->id }}</strong> if available in your app.</li>
-            <li>Keep a screenshot for your records.</li>
+            <li>Keep a screenshot for your records!</li>
           </ul>
         </div>
       </div>
