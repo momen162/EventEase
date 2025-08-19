@@ -143,12 +143,12 @@ Route::get('/gallery/event-{id}', function ($id) {
         6 => ['title' => 'Startup Meetup', 'images' => ['f1.png', 'f2.png', 'f3.png', 'f4.png', 'f5.png']],
         7 => ['title' => 'Book Fair', 'images' => ['g1.png', 'g2.png', 'g3.png', 'g4.png', 'g5.png']],
         8 => ['title' => 'Dance Show', 'images' => ['h1.png', 'h2.png', 'h3.png', 'h4.png', 'h5.png']],
-        9 => ['title' => 'Drama Performance', 'images' => ['i1.png', 'i2.png', 'i3.png', 'i4.png', 'i5.png']],
-        10 => ['title' => 'Fashion Gala', 'images' => ['fashion1.png', 'fashion2.png']],
-        11 => ['title' => 'Science Fair', 'images' => ['science1.png', 'science2.png']],
-        12 => ['title' => 'Photography Expo', 'images' => ['photo1.png', 'photo2.png']],
-        13 => ['title' => 'Cultural Day', 'images' => ['cultural1.png', 'cultural2.png']],
-        14 => ['title' => 'Charity Concert', 'images' => ['charity1.jpg', 'charity2.jpg']],
+        9 => ['title' => 'Drama Performance', 'images' => ['i1.png', 'i2.png', 'i3.png', 'i4.png', 'i5.png', 'i6.png']],
+        10 => ['title' => 'Fashion Gala', 'images' => ['j1.png', 'j2.png' , 'j3.png' , 'j4.png', 'j5.png']],
+        11 => ['title' => 'Science Fair', 'images' => ['h1.png', 'h2.png' , 'h3.png', 'h4.png', 'h5.png']],
+        12 => ['title' => 'Photography Expo', 'images' => ['i1.png', 'i2.png' , 'i3.png', 'i4.png', 'i5.png']],
+        13 => ['title' => 'Cultural Day', 'images' => ['j1.png', 'j2.png' , 'j3.png', 'j4.png', 'j5.png']],
+        14 => ['title' => 'Charity Concert', 'images' => ['k1.jpg', 'k2.jpg' , 'k3.jpg' , 'k4.jpg', 'k5.jpg']],
     ];
 
     abort_unless(array_key_exists($id, $events), 404);
