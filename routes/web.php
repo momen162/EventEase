@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\SalesExportController;
 use App\Http\Controllers\Admin\SalesByEventController;
 use App\Http\Controllers\Admin\MessageAdminController;
 use App\Http\Controllers\Admin\StatsController as AdminStatsController;
+use App\Http\Controllers\Admin\PaymentReceivedController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,10 +91,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout', [TicketController::class, 'checkout'])->name('tickets.checkout'); // expects ?event_id=&qty=
     Route::post('/checkout/confirm', [TicketController::class, 'confirm'])->name('tickets.confirm');
 
-    // Payment flow for "pay now"
-    Route::get('/payments/redirect', [PaymentController::class, 'redirect'])->name('payments.redirect');
-    Route::get('/payments/callback/success', [PaymentController::class, 'success'])->name('payments.success');
-    Route::get('/payments/callback/cancel',  [PaymentController::class, 'cancel'])->name('payments.cancel');
+    // Manual payment flow (Pay now → show instructions → user clicks "Yes, I Paid")
+    Route::get('/payments/manual',  [PaymentController::class, 'manual'])->name('payments.manual');
+    Route::post('/payments/manual/confirm', [PaymentController::class, 'manualConfirm'])->name('payments.manual.confirm');
 
     // Ticket views & download
     Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
@@ -125,8 +125,8 @@ Route::post('/logout',   [AuthController::class, 'logout'])->name('logout');
 | Blog (public)
 |--------------------------------------------------------------------------
 */
-Route::get('/blog',     [BlogController::class, 'index'])->name('blog.index');
-Route::get('/blog/{id}',[BlogController::class, 'show'])->name('blog.show');
+Route::get('/blog',      [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/{id}', [BlogController::class, 'show'])->name('blog.show');
 
 /*
 |--------------------------------------------------------------------------
@@ -160,13 +160,7 @@ Route::get('/gallery/event-{id}', function ($id) {
 |--------------------------------------------------------------------------
 | Admin Area (inside Laravel)
 |--------------------------------------------------------------------------
-| Make sure you have the 'admin' middleware alias registered.
-| On Laravel 11, add in bootstrap/app.php:
-|
-|   ->withMiddleware(function (Middleware $middleware) {
-|       $middleware->alias(['admin' => \App\Http\Middleware\AdminMiddleware::class]);
-|   })
-|
+| Make sure you have the 'admin' middleware alias registered (bootstrap/app.php).
 */
 Route::prefix('admin')->name('admin.')->middleware(['auth','admin'])->group(function () {
 
@@ -201,6 +195,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','admin'])->group(func
     // Sales (tickets) + export
     Route::get('/sales', [AdminSalesController::class, 'index'])->name('sales.index');
     Route::get('/sales/export', [SalesExportController::class, 'export'])->name('sales.export');
+    Route::post('/sales/{ticket}/verify', [AdminSalesController::class, 'verify'])->name('sales.verify'); // ← added
 
     // Sales by event
     Route::get('/sales-events', [SalesByEventController::class, 'index'])->name('sales.events');
@@ -212,12 +207,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','admin'])->group(func
 
     // Statistics
     Route::get('/stats', [AdminStatsController::class, 'index'])->name('stats.index');
+
+    // Payment Received (manual payments awaiting verification)
+Route::get('/payments-received', [PaymentReceivedController::class, 'index'])->name('payments.index');
+Route::post('/payments-received/{ticket}/verify', [PaymentReceivedController::class, 'verify'])->name('payments.verify');
 });
 
 
 
 
-// Manual payment flow
-Route::get('/payments/manual',  [\App\Http\Controllers\PaymentController::class, 'manual'])->name('payments.manual');
-Route::post('/payments/manual/confirm', [\App\Http\Controllers\PaymentController::class, 'manualConfirm'])->name('payments.manual.confirm');
 

@@ -15,11 +15,10 @@ class SalesController extends Controller
         $opt     = $r->string('payment_option')->toString();
         $eventId = (int) $r->input('event_id', 0);
         $q       = trim((string) $r->input('q', ''));
-        $from    = $r->input('from', '');
-        $to      = $r->input('to', '');
+        $from    = $r->input('from');
+        $to      = $r->input('to');
         $limit   = min(max((int) $r->input('limit', 200), 10), 2000);
 
-        // Base (filters only) – used for BOTH queries so conditions stay in sync.
         $base = Ticket::query()
             ->join('users',  'users.id',  '=', 'tickets.user_id')
             ->join('events', 'events.id', '=', 'tickets.event_id');
@@ -40,16 +39,14 @@ class SalesController extends Controller
                   ->orWhere('users.email',        'like', "%$q%");
             });
         }
-        $from = $r->input('from');
-        $to   = $r->input('to');
-
         if (is_string($from) && trim($from) !== '') {
             $base->whereDate('tickets.created_at', '>=', $from);
         }
         if (is_string($to) && trim($to) !== '') {
             $base->whereDate('tickets.created_at', '<=', $to);
         }
-        // 1) ROWS (NO aggregates here)
+
+        // ROWS (no aggregates)
         $rows = (clone $base)
             ->select([
                 'tickets.id',
@@ -58,6 +55,9 @@ class SalesController extends Controller
                 'tickets.total_amount',
                 'tickets.payment_option',
                 'tickets.payment_status',
+                'tickets.payment_txn_id',     // new
+                'tickets.payer_number',       // new
+                'tickets.payment_proof_path', // new
                 'tickets.created_at',
                 'events.id   as event_id',
                 'events.title as event_title',
@@ -70,7 +70,7 @@ class SalesController extends Controller
             ->limit($limit)
             ->get();
 
-        // 2) TOTALS (ONLY aggregates here — no non-aggregated columns)
+        // TOTALS (aggregates only)
         $tot = (clone $base)
             ->selectRaw("
                 COUNT(*)                                         as tickets_count,
@@ -82,7 +82,6 @@ class SalesController extends Controller
 
         $events = Event::select('id', 'title')->orderByDesc('starts_at')->get();
 
-        // Make sure $tot is an array-like structure for the Blade
         $tot = [
             'tickets_count' => (int) ($tot->tickets_count ?? 0),
             'qty_sum'       => (int) ($tot->qty_sum ?? 0),
@@ -92,4 +91,26 @@ class SalesController extends Controller
 
         return view('admin.sales.index', compact('rows', 'tot', 'events'));
     }
+
+public function verify(\App\Models\Ticket $ticket)
+{
+    // Only allow verifying unpaid pay_now tickets
+    if ($ticket->payment_status !== 'unpaid' || $ticket->payment_option !== 'pay_now') {
+        return back()->with('error', 'Ticket is not eligible for verification.');
+    }
+
+    // Update required fields; set verifier/timestamp if columns exist
+    $updates = ['payment_status' => 'paid'];
+    if (\Illuminate\Support\Facades\Schema::hasColumn('tickets', 'payment_verified_at')) {
+        $updates['payment_verified_at'] = now();
+    }
+    if (\Illuminate\Support\Facades\Schema::hasColumn('tickets', 'payment_verified_by')) {
+        $updates['payment_verified_by'] = auth()->id();
+    }
+
+    $ticket->update($updates);
+
+    return back()->with('success', "Ticket #{$ticket->id} marked as paid.");
+}
+
 }

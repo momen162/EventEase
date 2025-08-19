@@ -72,8 +72,34 @@
         </div>
       </div>
 
-      <form method="POST" action="{{ route('payments.manual.confirm') }}" class="space-y-3">
+      {{-- NEW: payment details form --}}
+      <form method="POST" action="{{ route('payments.manual.confirm') }}" class="space-y-4" enctype="multipart/form-data">
         @csrf
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <label class="block">
+            <span class="text-sm text-gray-700">Transaction Number <span class="text-red-500">*</span></span>
+            <input type="text" name="txn_id" value="{{ old('txn_id') }}"
+                   class="mt-1 block w-full rounded-lg border px-3 py-2" required maxlength="100">
+            @error('txn_id') <div class="text-sm text-red-600 mt-1">{{ $message }}</div> @enderror
+          </label>
+
+          <label class="block">
+            <span class="text-sm text-gray-700">Paid From Number (bKash/Nagad/Rocket) <span class="text-red-500">*</span></span>
+            <input type="text" name="payer_number" value="{{ old('payer_number') }}"
+                   class="mt-1 block w-full rounded-lg border px-3 py-2" required maxlength="30">
+            @error('payer_number') <div class="text-sm text-red-600 mt-1">{{ $message }}</div> @enderror
+          </label>
+        </div>
+
+        <label class="block">
+          <span class="text-sm text-gray-700">Upload Screenshot <span class="text-red-500">*</span></span>
+          <input type="file" name="proof" accept=".jpg,.jpeg,.png,.webp"
+                 class="mt-1 block w-full rounded-lg border px-3 py-2 bg-white" required>
+          <p class="text-xs text-gray-500 mt-1">JPEG/PNG/WEBP, max 2MB.</p>
+          @error('proof') <div class="text-sm text-red-600 mt-1">{{ $message }}</div> @enderror
+        </label>
+
         <button type="submit"
           class="w-full inline-flex items-center justify-center rounded-xl bg-indigo-600 px-4 py-3 text-white font-semibold shadow hover:bg-indigo-700">
           Yes, I Paid — Generate My Ticket

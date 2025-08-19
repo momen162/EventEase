@@ -15,7 +15,6 @@ class PaymentController extends Controller
 
         $event = Event::findOrFail($checkout['event_id']);
 
-        // Put your real numbers in .env (see below)
         $bkash  = env('PAY_BKASH',  '017XXXXXXXX');
         $nagad  = env('PAY_NAGAD',  '018XXXXXXXX');
         $rocket = env('PAY_ROCKET', '01XXXXXXXXX');
@@ -29,16 +28,32 @@ class PaymentController extends Controller
         $checkout = session('checkout');
         abort_unless($checkout && auth()->id() === $checkout['user_id'], 403);
 
-        $event = Event::findOrFail($checkout['event_id']);
+        $data = $request->validate([
+            'txn_id'       => 'required|string|max:100',
+            'payer_number' => 'required|string|max:30',
+            'proof'        => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
 
-        // If you prefer to verify payment first, change 'paid' -> 'unpaid'
+        $event = \App\Models\Event::findOrFail($checkout['event_id']);
+
+        // Store screenshot
+        $proofPath = $request->file('proof')->store('payment_proofs', 'public');
+
+        // Create ticket as UNPAID (pending admin verification)
         $ticket = app(\App\Http\Controllers\TicketController::class)
-            ->createTicketAndQr($event, (int)$checkout['qty'], 'pay_now', 'paid');
+            ->createTicketAndQr($event, (int) $checkout['qty'], 'pay_now', 'unpaid');
+
+        // Attach payer info + proof
+        $ticket->update([
+            'payment_txn_id'     => $data['txn_id'],
+            'payer_number'       => $data['payer_number'],
+            'payment_proof_path' => $proofPath,
+        ]);
 
         session()->forget('checkout');
 
         return redirect()
             ->route('tickets.show', $ticket)
-            ->with('success', 'Thanks! Your ticket is ready.');
+            ->with('success', 'Thanks! Your payment is submitted and pending verification.');
     }
 }

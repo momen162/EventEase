@@ -1,188 +1,227 @@
 @extends('admin.layout')
-@section('title','Pending Event Requests')
-
+@section('title','Sales (Tickets)')
 @section('content')
-<div class="admin-requests"><!-- SCOPE WRAPPER -->
+
+@php
+  $tot = $tot ?? ['tickets_count'=>0,'qty_sum'=>0,'amount_sum'=>0,'amount_paid'=>0];
+@endphp
+
+<div class="admin-sales-tickets"><!-- SCOPE WRAPPER -->
   <style>
-    /* Page-scoped tokens (avoid :root to prevent leaks) */
-    .admin-requests{
-      --bg:#ffffff;
-      --surface:#ffffff;
-      --surface-2:#f9fafb;
-      --text:#111827;
-      --muted:#6b7280;
-      --border:#e5e7eb;
-      --ring: rgba(37,99,235,.35);
-
-      --primary:#2563eb;
-      --primary-600:#1d4ed8;
-      --danger:#dc2626;
-
-      --radius:14px;
-      --shadow:0 10px 30px rgba(0,0,0,.06);
-      --shadow-sm:0 2px 10px rgba(0,0,0,.05);
+    .admin-sales-tickets{
+      --bg:#ffffff; --surface:#ffffff; --surface-2:#f9fafb; --text:#111827; --muted:#6b7280;
+      --border:#e5e7eb; --ring: rgba(37,99,235,.35); --primary:#2563eb; --primary-600:#1d4ed8;
+      --radius:16px; --shadow:0 10px 25px -18px rgba(0,0,0,.25); --shadow-sm:0 3px 10px rgba(0,0,0,.06);
     }
-
-    .admin-requests .ar-wrap{ padding: clamp(12px,1.8vw,20px); background: var(--bg); color: var(--text); }
-    .admin-requests .ar-head{
-      display:flex; align-items:flex-end; justify-content:space-between; gap: 12px; flex-wrap: wrap;
-      margin-bottom: 12px;
-    }
-    .admin-requests .ar-title{ margin:0; font-weight:800; letter-spacing:.2px; }
-    .admin-requests .ar-subtitle{ margin:0; color:var(--muted); }
-
-    .admin-requests .ar-empty{
-      border:1px dashed var(--border); border-radius:12px; background:var(--surface-2);
-      padding:22px; color:var(--muted); text-align:center; box-shadow: var(--shadow-sm);
-    }
-
-    .admin-requests .ar-table-wrap{
-      margin-top: 12px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
-      background: var(--surface);
-      box-shadow: var(--shadow);
-    }
-    .admin-requests .ar-table{ width:100%; border-collapse: separate; border-spacing:0; font-size:.96rem; }
-    .admin-requests .ar-table thead th{
-      text-align:left; padding:12px 14px; background:#fff; border-bottom:1px solid var(--border);
-      color:var(--muted); font-weight:800;
-    }
-    .admin-requests .ar-table tbody td{ padding:12px 14px; border-bottom:1px solid var(--border); vertical-align: top; }
-    .admin-requests .ar-table tbody tr:nth-child(even){ background: var(--surface-2); }
-    .admin-requests .ar-table tbody tr:hover{ background: #fff; }
-
-    .admin-requests .ar-col-id{ width:72px; color:var(--muted); }
-    .admin-requests .ar-col-actions{ width:260px; text-align:right; white-space: nowrap; }
-
-    /* Pills / badges */
-    .admin-requests .ar-chip{
-      display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px;
-      font-weight:700; font-size:.85rem; border:1px solid;
-    }
-    .admin-requests .ar-chip-when{ background:#ecfeff; color:#155e75; border-color:#cffafe; }
-    .admin-requests .ar-chip-loc{ background:#fef9c3; color:#854d0e; border-color:#fde68a; }
-    .admin-requests .ar-chip-cap{ background:#eef2ff; color:#3730a3; border-color:#e0e7ff; }
-
-    .admin-requests .ar-creator{ display:grid; gap:2px; }
-    .admin-requests .ar-creator small{ color: var(--muted); }
-
-    /* Buttons (scoped) */
-    .admin-requests .ar-btn{
-      appearance:none; border:1px solid var(--border); border-radius: 999px;
-      padding: 10px 14px; font-weight:700; text-decoration:none; cursor:pointer;
-      display:inline-flex; align-items:center; gap:.5rem; transition:.18s ease;
-      background:#fff; color:var(--text); box-shadow: var(--shadow-sm);
-    }
-    .admin-requests .ar-btn:hover{ transform: translateY(-1px); box-shadow: var(--shadow); }
-    .admin-requests .ar-btn:focus-visible{ outline:3px solid var(--ring); outline-offset:2px; }
-    .admin-requests .ar-btn-primary{ background: var(--primary); color:#fff; border-color: transparent; }
-    .admin-requests .ar-btn-primary:hover{ background: var(--primary-600); }
-    .admin-requests .ar-btn-ghost{ background: var(--surface-2); }
-
-    /* Icons */
-    .admin-requests .ar-ico{ display:inline-flex; }
-
-    /* Responsive stack */
-    @media (max-width: 960px){
-      .admin-requests .ar-table-wrap{ border-radius:10px; }
-      .admin-requests .ar-table,
-      .admin-requests .ar-table thead,
-      .admin-requests .ar-table tbody,
-      .admin-requests .ar-table th,
-      .admin-requests .ar-table td,
-      .admin-requests .ar-table tr{ display:block; }
-      .admin-requests .ar-table thead{ display:none; }
-      .admin-requests .ar-table tbody tr{ border-bottom:1px solid var(--border); padding:8px 12px; }
-      .admin-requests .ar-table tbody td{
-        border: none; padding:8px 0; display:grid; grid-template-columns: 130px 1fr; gap:8px;
-      }
-      .admin-requests .ar-table tbody td::before{
-        content: attr(data-label);
-        font-weight:700; color:var(--muted);
-      }
-      .admin-requests .ar-col-actions{ width:auto; text-align:left; }
+    .admin-sales-tickets h2.st-page-title{ margin:0 0 1rem; font-weight:800; letter-spacing:.2px; color:var(--text); }
+    .admin-sales-tickets .sa-container{ display:grid; gap:1rem; background:var(--bg); color:var(--text); }
+    .admin-sales-tickets .sa-card{ background:var(--surface); border:1px solid rgba(0,0,0,.06); border-radius:var(--radius); box-shadow:var(--shadow); }
+    .admin-sales-tickets .sa-card-body{ padding:1rem; }
+    .admin-sales-tickets .sa-card-header{ display:flex; align-items:center; justify-content:space-between; padding:.9rem 1rem; border-bottom:1px solid #eef2f7; }
+    .admin-sales-tickets .sa-title{ margin:0; font-size:1rem; font-weight:800; letter-spacing:.2px; }
+    .admin-sales-tickets .sa-stats{ display:grid; gap:.75rem; grid-template-columns: repeat(4, minmax(0,1fr)); }
+    .admin-sales-tickets .sa-stat{ padding:1rem; border-radius:14px; background:var(--surface-2); border:1px solid #eef2f7; box-shadow:var(--shadow-sm); }
+    .admin-sales-tickets .sa-stat .k{ font-size:.8rem; color:var(--muted); }
+    .admin-sales-tickets .sa-stat .v{ font-size:1.15rem; font-weight:800; margin-top:.2rem; font-variant-numeric:tabular-nums; }
+    .admin-sales-tickets .sa-filter .grid{ display:grid; gap:.75rem; grid-template-columns: repeat(6, minmax(0,1fr)); align-items:end; }
+    .admin-sales-tickets .sa-filter label{ display:block; font-weight:700; margin-bottom:.35rem; font-size:.9rem; color:#374151; }
+    .admin-sales-tickets .sa-input,.admin-sales-tickets .sa-select{ width:100%; border:1px solid var(--border); border-radius:12px; padding:.65rem .75rem; background:#fff; color:var(--text); box-shadow:var(--shadow-sm); }
+    .admin-sales-tickets .sa-actions{ display:flex; flex-wrap:wrap; gap:.5rem; }
+    .admin-sales-tickets .sa-btn{ appearance:none; border:1px solid transparent; border-radius:999px; padding:.7rem 1rem; font-weight:800; cursor:pointer; background: var(--primary); color:#fff; box-shadow:0 8px 18px -12px rgba(37, 99, 235, .8); text-decoration:none; display:inline-flex; align-items:center; }
+    .admin-sales-tickets .sa-btn:hover{ background:var(--primary-600); }
+    .admin-sales-tickets .sa-btn:focus-visible{ outline:3px solid var(--ring); outline-offset:2px; }
+    .admin-sales-tickets .sa-btn-ghost{ background:#fff; color:#111827; border:1px solid var(--border); box-shadow:none; }
+    .admin-sales-tickets .sa-table-wrap{ overflow:auto; border:1px solid #eef2f7; border-radius:14px; background:var(--surface); }
+    .admin-sales-tickets table.sa-table{ width:100%; border-collapse:separate; border-spacing:0; font-size:.95rem; }
+    .admin-sales-tickets .sa-table thead th{ position:sticky; top:0; z-index:1; background:#f8fafc; color:#111827; text-align:left; font-weight:800; letter-spacing:.2px; border-bottom:1px solid var(--border); padding:.75rem .75rem; }
+    .admin-sales-tickets .sa-table tbody td{ border-bottom:1px solid #f1f5f9; padding:.75rem .75rem; vertical-align:top; }
+    .admin-sales-tickets .sa-table tbody tr:nth-child(even){ background:var(--surface-2); }
+    .admin-sales-tickets .sa-table tbody tr:hover{ background:#fff; }
+    .admin-sales-tickets .sa-num{ text-align:right; font-variant-numeric:tabular-nums; }
+    .admin-sales-tickets .sa-muted{ color:var(--muted); }
+    .admin-sales-tickets .sa-badge{ display:inline-flex; align-items:center; gap:.35rem; padding:.35rem .55rem; font-size:.8rem; font-weight:800; border-radius:999px; border:1px solid transparent; text-transform:capitalize; white-space:nowrap; }
+    .admin-sales-tickets .sa-badge.pay_now{ background:#ecfeff; color:#0e7490; border-color:#a5f3fc; }
+    .admin-sales-tickets .sa-badge.pay_later{ background:#fef9c3; color:#854d0e; border-color:#fde68a; text-transform:none; }
+    .admin-sales-tickets .sa-badge.status-paid{ background:#ecfdf5; color:#065f46; border-color:#a7f3d0; }
+    .admin-sales-tickets .sa-badge.status-unpaid{ background:#fff7ed; color:#9a3412; border-color:#fed7aa; }
+    .admin-sales-tickets .sa-badge.status-cancelled{ background:#fee2e2; color:#991b1b; border-color:#fecaca; }
+    .admin-sales-tickets .sa-empty{ text-align:center; color:var(--muted); }
+    @media (max-width: 1024px){ .admin-sales-tickets .sa-stats{ grid-template-columns: repeat(2, minmax(0,1fr)); } .admin-sales-tickets .sa-filter .grid{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
+    @media (max-width: 860px){
+      .admin-sales-tickets .sa-table, .admin-sales-tickets .sa-table thead, .admin-sales-tickets .sa-table tbody, .admin-sales-tickets .sa-table th, .admin-sales-tickets .sa-table td, .admin-sales-tickets .sa-table tr{ display:block; }
+      .admin-sales-tickets .sa-table thead{ display:none; }
+      .admin-sales-tickets .sa-table tbody tr{ border-bottom:1px solid var(--border); padding:.5rem .75rem; }
+      .admin-sales-tickets .sa-table tbody td{ border:none; padding:.45rem 0; display:grid; grid-template-columns: 140px 1fr; gap:8px; }
+      .admin-sales-tickets .sa-table tbody td::before{ content: attr(data-label); font-weight:800; color:var(--muted); }
+      .admin-sales-tickets .sa-num{ text-align:left; }
     }
   </style>
 
-  <div class="ar-wrap">
-    <div class="ar-head">
-      <div>
-        <h2 class="ar-title">Pending Event Requests</h2>
-        <p class="ar-subtitle">Review and approve or reject user-submitted event requests.</p>
+  <h2 class="st-page-title">Sales (Tickets)</h2>
+
+  <div class="sa-container">
+    <div class="sa-stats">
+      <div class="sa-stat"><div class="k">Total rows</div><div class="v">{{ (int)($tot['tickets_count'] ?? 0) }}</div></div>
+      <div class="sa-stat"><div class="k">Total quantity</div><div class="v">{{ (int)($tot['qty_sum'] ?? 0) }}</div></div>
+      <div class="sa-stat"><div class="k">Gross amount</div><div class="v">{{ number_format((float)($tot['amount_sum'] ?? 0), 2) }}</div></div>
+      <div class="sa-stat"><div class="k">Paid amount</div><div class="v">{{ number_format((float)($tot['amount_paid'] ?? 0), 2) }}</div></div>
+    </div>
+
+    <div class="sa-card sa-filter">
+      <div class="sa-card-header">
+        <h3 class="sa-title">Filters</h3>
+        <div class="sa-actions">
+          <a href="{{ route('admin.sales.export', request()->query()) }}" class="sa-btn">Export CSV</a>
+        </div>
+      </div>
+      <div class="sa-card-body">
+        <form method="GET" class="grid">
+          <div>
+            <label>Status</label>
+            <select name="status" class="sa-select">
+              @php $status = request('status',''); @endphp
+              <option value="">All</option>
+              @foreach (['unpaid','paid','cancelled'] as $s)
+                <option value="{{ $s }}" {{ $status===$s?'selected':'' }}>{{ ucfirst($s) }}</option>
+              @endforeach
+            </select>
+          </div>
+
+          <div>
+            <label>Payment Option</label>
+            <select name="payment_option" class="sa-select">
+              @php $option = request('payment_option',''); @endphp
+              <option value="">All</option>
+              @foreach (['pay_now','pay_later'] as $op)
+                <option value="{{ $op }}" {{ $option===$op?'selected':'' }}>{{ str_replace('_',' ',$op) }}</option>
+              @endforeach
+            </select>
+          </div>
+
+          <div>
+            <label>Event</label>
+            <select name="event_id" class="sa-select">
+              @php $eventId = (int)request('event_id',0); @endphp
+              <option value="0">All events</option>
+              @foreach ($events as $e)
+                <option value="{{ $e->id }}" {{ $eventId===$e->id?'selected':'' }}>#{{ $e->id }} — {{ $e->title }}</option>
+              @endforeach
+            </select>
+          </div>
+
+          <div>
+            <label>Search</label>
+            <input type="text" name="q" class="sa-input" value="{{ request('q','') }}" placeholder="Ticket code, name, email">
+          </div>
+
+          <div>
+            <label>From</label>
+            <input type="date" name="from" class="sa-input" value="{{ request('from','') }}">
+          </div>
+
+          <div>
+            <label>To</label>
+            <input type="date" name="to" class="sa-input" value="{{ request('to','') }}">
+          </div>
+
+          <div>
+            <label>Limit</label>
+            <input type="number" name="limit" class="sa-input" min="10" max="2000" value="{{ (int)request('limit',200) }}">
+          </div>
+
+          <div style="grid-column: span 2;">
+            <div class="sa-actions">
+              <button type="submit" class="sa-btn">Apply Filters</button>
+              <a href="{{ route('admin.sales.index') }}" class="sa-btn sa-btn-ghost">Reset</a>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
 
-    @if($rows->isEmpty())
-      <div class="ar-empty">No pending requests.</div>
-    @else
-      <div class="ar-table-wrap" role="region" aria-label="Pending requests table">
-        <table class="ar-table">
-          <thead>
-            <tr>
-              <th class="ar-col-id">ID</th>
-              <th>Title</th>
-              <th>When</th>
-              <th>Location</th>
-              <th>Capacity</th>
-              <th>Requested By</th>
-              <th class="ar-col-actions">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach ($rows as $r)
-              <tr>
-                <td class="ar-col-id" data-label="ID">#{{ $r->id }}</td>
-                <td data-label="Title"><strong>{{ $r->title }}</strong></td>
-                <td data-label="When">
-                  <span class="ar-chip ar-chip-when">
-                    <svg class="ar-ico" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path d="M7 2v4M17 2v4M3 9h18M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5A2 2 0 0 0 3 7v12a2 2 0 0 0 2 2Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                    </svg>
-                    {{ \Carbon\Carbon::parse($r->starts_at)->format('M d, Y H:i') }}
-                    @if($r->ends_at)
-                      – {{ \Carbon\Carbon::parse($r->ends_at)->format('M d, Y H:i') }}
-                    @endif
-                  </span>
-                </td>
-                <td data-label="Location">
-                  @php $loc = $r->location ?? '—'; @endphp
-                  <span class="ar-chip ar-chip-loc">
-                    <svg class="ar-ico" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path d="M12 21s7-4.35 7-11a7 7 0 0 0-14 0c0 6.65 7 11 7 11Z" stroke="currentColor" stroke-width="1.6"/>
-                      <circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.6"/>
-                    </svg>
-                    {{ $loc }}
-                  </span>
-                </td>
-                <td data-label="Capacity">
-                  <span class="ar-chip ar-chip-cap">
-                    <svg class="ar-ico" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path d="M4 7h16M5 20h14a1 1 0 0 0 1-1v-8H4v8a1 1 0 0 0 1 1Z" stroke="currentColor" stroke-width="1.6"/>
-                    </svg>
-                    {{ $r->capacity ?? '—' }}
-                  </span>
-                </td>
-                <td data-label="Requested By">
-                  <div class="ar-creator">
-                    <strong>{{ optional($r->creator)->name ?? 'Unknown' }}</strong>
-                    <small>{{ optional($r->creator)->email ?? '' }}</small>
-                  </div>
-                </td>
-                <td class="ar-col-actions" data-label="Actions">
-                  <form action="{{ route('admin.requests.approve', $r) }}" method="POST" style="display:inline;">
-                    @csrf
-                    <button type="submit" class="ar-btn ar-btn-primary">Approve</button>
-                  </form>
-                  <form action="{{ route('admin.requests.reject', $r) }}" method="POST" style="display:inline;" onsubmit="return confirm('Reject this request?');">
-                    @csrf
-                    <button type="submit" class="ar-btn ar-btn-ghost">Reject</button>
-                  </form>
-                </td>
-              </tr>
-            @endforeach
-          </tbody>
-        </table>
+    <div class="sa-card">
+      <div class="sa-card-header">
+        <h3 class="sa-title">Results</h3>
+        <div style="color:var(--muted); font-size:.9rem;">
+          {{ (int)($tot['tickets_count'] ?? 0) }} matching row{{ ((int)($tot['tickets_count'] ?? 0) === 1 ? '' : 's') }}
+        </div>
       </div>
-    @endif
+
+      @if (empty($rows) || (is_countable($rows) && count($rows)===0))
+        <div class="sa-card-body sa-empty">
+          <h3>No tickets found</h3>
+          <p>Try adjusting your filters or date range.</p>
+        </div>
+      @else
+        <div class="sa-card-body sa-table-wrap">
+          <table class="sa-table">
+            <thead>
+              <tr>
+                <th>Ticket ID</th>
+                <th>Code</th>
+                <th>Event</th>
+                <th>Buyer</th>
+                <th>Ref / Payer</th>
+                <th>Proof</th>
+                <th class="sa-num">Qty</th>
+                <th class="sa-num">Total</th>
+                <th>Pay Opt</th>
+                <th>Status</th>
+                <th>Purchased At</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($rows as $r)
+                @php
+                  $opt = (string) $r->payment_option;
+                  $statusBadge = 'status-' . strtolower((string) $r->payment_status);
+                @endphp
+                <tr>
+                  <td data-label="Ticket ID">#{{ $r->id }}</td>
+                  <td data-label="Code">{{ $r->ticket_code }}</td>
+                  <td data-label="Event">#{{ $r->event_id }} — {{ $r->event_title }}</td>
+                  <td data-label="Buyer">
+                    {{ $r->buyer_name }}<br>
+                    <small class="sa-muted">{{ $r->buyer_email }}@if(!empty($r->buyer_phone)) • {{ $r->buyer_phone }}@endif</small>
+                  </td>
+
+                  <td data-label="Ref / Payer">
+                    <div><strong>Txn:</strong> {{ $r->payment_txn_id ?? '—' }}</div>
+                    <div><strong>Payer:</strong> {{ $r->payer_number ?? '—' }}</div>
+                  </td>
+
+                  <td data-label="Proof">
+                    @if ($r->payment_proof_path)
+                      <a class="sa-btn sa-btn-ghost" target="_blank" href="{{ asset('storage/'.$r->payment_proof_path) }}">View</a>
+                    @else
+                      —
+                    @endif
+                  </td>
+
+                  <td data-label="Qty" class="sa-num">{{ $r->quantity }}</td>
+                  <td data-label="Total" class="sa-num">{{ number_format((float) $r->total_amount, 2) }}</td>
+                  <td data-label="Pay Opt"><span class="sa-badge {{ $opt === 'pay_later' ? 'pay_later' : 'pay_now' }}">{{ str_replace('_',' ', $opt) }}</span></td>
+                  <td data-label="Status"><span class="sa-badge {{ $statusBadge }}">{{ ucfirst($r->payment_status) }}</span></td>
+                  <td data-label="Purchased At">{{ \Carbon\Carbon::parse($r->created_at)->format('M d, Y H:i') }}</td>
+
+                  <td data-label="Action">
+                    @if ($r->payment_option === 'pay_now' && $r->payment_status === 'unpaid')
+                      <form method="POST" action="{{ route('admin.sales.verify', $r->id) }}" onsubmit="return confirm('Mark as paid?')">
+                        @csrf
+                        <button class="sa-btn" type="submit">Verify Paid</button>
+                      </form>
+                    @else
+                      <span class="sa-muted">—</span>
+                    @endif
+                  </td>
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+      @endif
+    </div>
   </div>
 </div>
 @endsection

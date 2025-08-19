@@ -135,36 +135,24 @@
 
     <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="primaryNav">Menu</button>
 
-    <nav class="nav" id="primaryNav">
-      <a href="{{ route('admin.users.index') }}"
-         class="nav-link {{ request()->routeIs('admin.users.*') ? 'is-active' : '' }}">Users</a>
+<nav class="nav" id="primaryNav">
+  <a href="{{ route('admin.users.index') }}"    class="nav-link {{ request()->routeIs('admin.users.*') ? 'is-active' : '' }}">Users</a>
+  <a href="{{ route('admin.events.index') }}"   class="nav-link {{ request()->routeIs('admin.events.*') ? 'is-active' : '' }}">Events</a>
+  <a href="{{ route('admin.requests.index') }}" class="nav-link {{ request()->routeIs('admin.requests.*') ? 'is-active' : '' }}">Requests</a>
+  <a href="{{ route('admin.blogs.index') }}"    class="nav-link {{ request()->routeIs('admin.blogs.*') ? 'is-active' : '' }}">Blogs</a>
+  <a href="{{ route('admin.messages.index') }}" class="nav-link {{ request()->routeIs('admin.messages.*') ? 'is-active' : '' }}">Messages</a>
+  <a href="{{ route('admin.stats.index') }}"    class="nav-link {{ request()->routeIs('admin.stats.*') ? 'is-active' : '' }}">Stats</a>
 
-      <a href="{{ route('admin.events.index') }}"
-         class="nav-link {{ request()->routeIs('admin.events.*') ? 'is-active' : '' }}">Events</a>
+  {{-- NEW: Payment Received --}}
+  <a href="{{ route('admin.payments.index') }}" class="nav-link {{ request()->routeIs('admin.payments.*') ? 'is-active' : '' }}">Payment Received</a>
 
-      <a href="{{ route('admin.requests.index') }}"
-         class="nav-link {{ request()->routeIs('admin.requests.*') ? 'is-active' : '' }}">Requests</a>
+  <a href="{{ route('admin.sales.index') }}"    class="nav-link {{ request()->routeIs('admin.sales.index') ? 'is-active' : '' }}">Sales</a>
+  <a href="{{ route('admin.sales.events') }}"   class="nav-link {{ request()->routeIs('admin.sales.events') ? 'is-active' : '' }}">Sales by Event</a>
 
-      <a href="{{ route('admin.blogs.index') }}"
-         class="nav-link {{ request()->routeIs('admin.blogs.*') ? 'is-active' : '' }}">Blogs</a>
-        
-         <a href="{{ route('admin.messages.index') }}"
-         class="nav-link {{ request()->routeIs('admin.messages.*') ? 'is-active' : '' }}">Messages</a>
-
-      <a href="{{ route('admin.stats.index') }}"
-         class="nav-link {{ request()->routeIs('admin.stats.*') ? 'is-active' : '' }}">Stats</a>
-
-      <a href="{{ route('admin.sales.index') }}"
-         class="nav-link {{ request()->routeIs('admin.sales.index') ? 'is-active' : '' }}">Sales</a>
-
-      <a href="{{ route('admin.sales.events') }}"
-         class="nav-link {{ request()->routeIs('admin.sales.events') ? 'is-active' : '' }}">Sales by Event</a>
-
-      <form method="POST" action="{{ route('logout') }}" style="display:inline;">
-        @csrf
-        <button class="btn-logout">Logout</button>
-      </form>
-    </nav>
+  <form method="POST" action="{{ route('logout') }}" style="display:inline;"> @csrf
+    <button class="btn-logout">Logout</button>
+  </form>
+</nav>
   </div>
 </header>
 
