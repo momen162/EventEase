@@ -37,7 +37,8 @@ class EventAdminController extends Controller
         if ($r->hasFile('banner')) {
             $file = 'ev_'.time().'_'.mt_rand(1000,9999).'.'.$r->file('banner')->extension();
             $r->file('banner')->move(public_path('uploads/events'), $file);
-            $bannerPath = '/uploads/events/'.$file; // matches your legacy path
+            $bannerPath = '/uploads/events/'.$file; 
+            // matches your legacy path
         }
 
         Event::create($data + [

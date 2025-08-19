@@ -19,13 +19,30 @@
       </div>
 
       @if ($blogs->count() > 0)
+        @php
+          $feature = $blogs->first();
+          $fimg = $feature->image;
+
+          // Resolve image URL with fallbacks:
+          // 1) If it's on the public storage disk -> /storage/...
+          // 2) If it's an absolute URL (http/https) -> use as-is
+          // 3) Else assume legacy asset inside public/assets/images
+          $featureImgUrl =
+            ($fimg && \Illuminate\Support\Facades\Storage::disk('public')->exists($fimg))
+              ? \Illuminate\Support\Facades\Storage::url($fimg)
+              : ( ($fimg && preg_match('/^https?:\/\//', $fimg))
+                    ? $fimg
+                    : asset('assets/images/' . ($fimg ?: 'placeholder.jpg'))
+                );
+        @endphp
+
         {{-- Feature Post --}}
         <div class="feature-post">
-          <img src="{{ asset('assets/images/' . $blogs[0]->image) }}" alt="Feature Image">
+          <img src="{{ $featureImgUrl }}" alt="Feature Image">
           <div class="blog-content">
-            <h3>{{ $blogs[0]->title }}</h3>
-            <p class="blog-snippet">{{ $blogs[0]->short_description }}</p>
-            <a href="{{ route('blog.show', $blogs[0]->id) }}" class="read-more-btn">Read More →</a>
+            <h3>{{ $feature->title }}</h3>
+            <p class="blog-snippet">{{ $feature->short_description }}</p>
+            <a href="{{ route('blog.show', $feature->id) }}" class="read-more-btn">Read More →</a>
           </div>
         </div>
       @endif
@@ -33,8 +50,19 @@
       <h2>Our Recent Articles</h2>
       <div class="blog-list">
         @foreach ($blogs->skip(1) as $blog)
+          @php
+            $bimg = $blog->image;
+            $blogImgUrl =
+              ($bimg && \Illuminate\Support\Facades\Storage::disk('public')->exists($bimg))
+                ? \Illuminate\Support\Facades\Storage::url($bimg)
+                : ( ($bimg && preg_match('/^https?:\/\//', $bimg))
+                      ? $bimg
+                      : asset('assets/images/' . ($bimg ?: 'placeholder.jpg'))
+                  );
+          @endphp
+
           <div class="blog-card">
-            <img src="{{ asset('assets/images/' . $blog->image) }}" alt="Blog Image">
+            <img src="{{ $blogImgUrl }}" alt="Blog Image">
             <div class="blog-content">
               <h3>{{ $blog->title }}</h3>
               <p class="blog-snippet">{{ $blog->short_description }}</p>

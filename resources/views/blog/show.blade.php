@@ -9,7 +9,7 @@
 @section('content')
 <div class="blog-details modern-blog-container">
   <div class="blog-banner">
-    <img src="{{ asset('assets/images/' . $blog->image) }}" alt="Blog Banner">
+    <img src="{{ asset('storage/' . $blog->image) }}" alt="Blog Banner">
   </div>
 
   <div class="blog-full-content">
