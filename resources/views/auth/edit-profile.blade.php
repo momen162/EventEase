@@ -35,7 +35,7 @@
     <img src="{{ asset('storage/' . $user->profile_picture) }}" alt="Profile Picture" style="height: 60px;">
   @endif
 
-  <button type="submit">Update Profile</button>
+  <button type="submit">Update</button>
 </form>
 
 </section>
