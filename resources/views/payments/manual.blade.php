@@ -22,11 +22,11 @@
           </div>
           <div>
             <p class="text-sm text-gray-500">Price per ticket</p>
-            <p class="text-lg font-semibold">{{ number_format((float)$event->price, 2) }} BDT</p>
+            <p class="text-lg font-semibold">{{ number_format((float)$event->price, 2) }} USDT</p>
           </div>
           <div>
             <p class="text-sm text-gray-500">Total to pay</p>
-            <p class="text-2xl font-bold">{{ number_format((float)$checkout['total'], 2) }} BDT</p>
+            <p class="text-2xl font-bold">{{ number_format((float)$checkout['total'], 2) }} USDT</p>
           </div>
         </div>
       </div>
