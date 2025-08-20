@@ -9,10 +9,8 @@
 @section('content')
 <div class="blog-page">
 
-  {{-- Wrap content and aside together --}}
   <div class="main-content-with-sidebar">
 
-    {{-- Main blog content --}}
     <div class="main-content">
       <div class="news-banner">
         <h2>Discover Our Latest News</h2>
@@ -22,21 +20,11 @@
         @php
           $feature = $blogs->first();
           $fimg = $feature->image;
-
-          // Resolve image URL with fallbacks:
-          // 1) If it's on the public storage disk -> /storage/...
-          // 2) If it's an absolute URL (http/https) -> use as-is
-          // 3) Else assume legacy asset inside public/assets/images
-          $featureImgUrl =
-            ($fimg && \Illuminate\Support\Facades\Storage::disk('public')->exists($fimg))
-              ? \Illuminate\Support\Facades\Storage::url($fimg)
-              : ( ($fimg && preg_match('/^https?:\/\//', $fimg))
-                    ? $fimg
-                    : asset('assets/images/' . ($fimg ?: 'placeholder.jpg'))
-                );
+          $featureImgUrl = (preg_match('/^https?:\/\//', $fimg))
+            ? $fimg
+            : asset('storage/' . ($fimg ?: 'placeholder.jpg'));
         @endphp
 
-        {{-- Feature Post --}}
         <div class="feature-post">
           <img src="{{ $featureImgUrl }}" alt="Feature Image">
           <div class="blog-content">
@@ -52,13 +40,9 @@
         @foreach ($blogs->skip(1) as $blog)
           @php
             $bimg = $blog->image;
-            $blogImgUrl =
-              ($bimg && \Illuminate\Support\Facades\Storage::disk('public')->exists($bimg))
-                ? \Illuminate\Support\Facades\Storage::url($bimg)
-                : ( ($bimg && preg_match('/^https?:\/\//', $bimg))
-                      ? $bimg
-                      : asset('assets/images/' . ($bimg ?: 'placeholder.jpg'))
-                  );
+            $blogImgUrl = (preg_match('/^https?:\/\//', $bimg))
+              ? $bimg
+              : asset('storage/' . ($bimg ?: 'placeholder.jpg'));
           @endphp
 
           <div class="blog-card">
@@ -73,7 +57,6 @@
       </div>
     </div>
 
-    {{-- Aside with Calendar and Clock --}}
     <aside class="sidebar">
       <div class="clock-section">
         <h3>Current Time</h3>
@@ -86,13 +69,12 @@
       </div>
     </aside>
 
-  </div> {{-- end .main-content-with-sidebar --}}
+  </div>
 </div>
 @endsection
 
 @section('extra-js')
 <script>
-  // 📅 Generate Calendar
   function generateCalendar() {
     const calendar = document.getElementById('calendar');
     const now = new Date();
@@ -123,7 +105,6 @@
     calendar.innerHTML = html;
   }
 
-  // ⏰ Live Digital Clock
   function updateClock() {
     const now = new Date();
     const time = now.toLocaleTimeString();
