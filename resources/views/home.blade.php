@@ -15,7 +15,7 @@
     {{-- Banner Slider --}}
     <div class="slider-container">
       <div class="slider" id="slider">
-        <a href="https://eventease.com/event1" class="slide-link active" target="_blank">
+        <a href="https://eventease.laravel.cloud/event1" class="slide-link active" target="_blank">
           <img src="{{ asset('assets/images/banner1.png') }}" class="slide-img" alt="Event 1" />
         </a>
         <a href="https://eventease.laravel.cloud/event2" class="slide-link" target="_blank">
