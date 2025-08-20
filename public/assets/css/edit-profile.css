@@ -1,52 +1,146 @@
-.edit-profile-wrapper {
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 20px;
+:root{
+  --bg: #0b1020;
+  --card: #111830;
+  --muted: #9aa4bf;
+  --text: #e8ecf8;
+  --accent: #5b8cff;
+  --accent-2: #6ee7f3;
+  --ring: rgba(91,140,255,.55);
+  --border: rgba(255,255,255,.08);
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
 }
-.edit-form {
-  background: #fdfdfd;
-  border-radius: 10px;
-  padding: 25px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.07);
+
+@media (prefers-color-scheme: light){
+  :root{
+    --bg:#f3f6ff; --card:#ffffff; --muted:#5a637a; --text:#111629;
+    --accent:#3b6cff; --accent-2:#12c2e9; --ring: rgba(59,108,255,.45);
+    --border: rgba(17,22,41,.08); --shadow: 0 10px 25px rgba(17,22,41,.08);
+  }
 }
-.edit-form label {
-  display: block;
-  margin-bottom: 5px;
-  margin-top: 15px;
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background: radial-gradient(1200px 600px at 10% -10%, rgba(91,140,255,.15), transparent 60%), radial-gradient(1000px 800px at 110% 10%, rgba(18,194,233,.12), transparent 50%), var(--bg);}
+
+/* Wrapper */
+.edit-profile-wrapper{
+  padding: clamp(16px, 2.5vw, 32px);
+  display:flex; justify-content:center; align-items:flex-start;
 }
-.edit-form input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
+
+/* Card */
+.card{
+  width:min(940px, 100%);
+  background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)) , var(--card);
+  border:1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  overflow:hidden;
+  animation: pop .25s ease-out both;
 }
-.edit-form button {
-  background: #6c63ff;
+@keyframes pop{from{transform:translateY(8px); opacity:.0} to{transform:translateY(0); opacity:1}}
+
+.card__header{
+  padding: clamp(18px, 3vw, 28px) clamp(18px, 3vw, 32px);
+  border-bottom:1px solid var(--border);
+  background:
+    radial-gradient(600px 120px at 20% 0%, rgba(91,140,255,.16), transparent 70%),
+    radial-gradient(500px 140px at 80% 0%, rgba(110,231,243,.14), transparent 70%);
+}
+.card__header h2{
+  margin:0 0 6px 0;
+  font-size: clamp(22px, 2.6vw, 32px);
+  font-weight: 800;
+  letter-spacing: .2px;
+  color: var(--text);
+}
+.card__sub{
+  margin:0;
+  color: var(--muted);
+  font-size: clamp(13px, 1.4vw, 14px);
+}
+
+/* Form */
+.edit-form{
+  padding: clamp(18px, 3vw, 32px);
+  display:grid;
+  gap: clamp(16px, 2vw, 22px);
+}
+
+.grid{
+  display:grid;
+  gap: clamp(14px, 1.8vw, 18px);
+}
+@media (min-width: 720px){
+  .grid{ grid-template-columns: 1fr 1fr; }
+}
+
+/* Fields */
+.field{ display:flex; flex-direction:column; gap:10px; }
+.field label{
+  color:var(--muted);
+  font-size: 13px;
+  letter-spacing:.02em;
+}
+.field input[type="text"],
+.field input[type="email"],
+.field input[type="password"],
+.field input[type="file"]{
+  width:100%;
+  border:1px solid var(--border);
+  background: rgba(255,255,255,.02);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 12px 14px;
+  outline:none;
+  transition: border-color .2s, box-shadow .2s, background .2s, transform .04s;
+}
+.field input::placeholder{ color: color-mix(in oklab, var(--muted) 80%, var(--text)); }
+
+.field input:hover{ border-color: color-mix(in oklab, var(--border) 70%, var(--accent)); }
+.field input:focus{
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--ring);
+  background: rgba(255,255,255,.04);
+}
+
+/* File row */
+.file-row{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+.avatar-preview{
+  height:60px; width:60px; object-fit:cover; border-radius:12px;
+  border:1px solid var(--border);
+}
+
+/* Helper text */
+.hint{ color: var(--muted); font-size: 12px; }
+
+/* Actions */
+.actions{
+  display:flex; justify-content:flex-end; margin-top: 4px;
+}
+.btn-primary{
+  appearance: none;
+  border: 0;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-weight: 700;
   color: white;
-  padding: 10px 20px;
-  border: none;
-  margin-top: 10px;
   cursor: pointer;
-  border-radius: 5px;
+  background-image: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: 0 10px 18px rgba(17,22,41,.18), inset 0 0 0 1px rgba(255,255,255,.2);
+  transition: transform .08s ease, box-shadow .2s ease, filter .2s ease;
+}
+.btn-primary:hover{ filter: brightness(1.05); box-shadow: 0 14px 22px rgba(17,22,41,.22); }
+.btn-primary:active{ transform: translateY(1px) scale(.995); }
+
+/* Smaller screens */
+@media (max-width: 420px){
+  .avatar-preview{ height:52px; width:52px; }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* Subtle scrollbar for overflow forms (desktop) */
+@media (hover:hover){
+  .edit-form{ scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+  .edit-form::-webkit-scrollbar{ height: 8px; width: 8px; }
+  .edit-form::-webkit-scrollbar-thumb{ background: var(--border); border-radius: 999px; }
+}
