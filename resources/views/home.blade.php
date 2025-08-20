@@ -21,7 +21,7 @@
         <a href="https://eventease.com/event2" class="slide-link" target="_blank">
           <img src="{{ asset('assets/images/banner2.png') }}" class="slide-img" alt="Event 2" />
         </a>
-        <a href="https://eventease.com/event3" class="slide-link" target="_blank">
+        <a href="https://eventease.laravel.cloud/event3" class="slide-link" target="_blank">
           <img src="{{ asset('assets/images/banner3.png') }}" class="slide-img" alt="Event 3" />
         </a>
       </div>
