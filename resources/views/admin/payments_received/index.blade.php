@@ -54,7 +54,6 @@
               <th>Event</th>
               <th>Buyer</th>
               <th>Txn / Payer</th>
-              <th>Proof</th>
               <th class="sa-num">Qty</th>
               <th class="sa-num">Total</th>
               <th>Submitted</th>
@@ -73,13 +72,6 @@
                 <td>
                   <div><strong>Txn:</strong> {{ $r->payment_txn_id ?? '—' }}</div>
                   <div><strong>Payer:</strong> {{ $r->payer_number   ?? '—' }}</div>
-                </td>
-                <td>
-                  @if ($r->payment_proof_path)
-                    <a class="sa-btn-ghost sa-btn" target="_blank" href="{{ asset('storage/'.$r->payment_proof_path) }}">View</a>
-                  @else
-                    —
-                  @endif
                 </td>
                 <td class="sa-num">{{ (int)$r->quantity }}</td>
                 <td class="sa-num">{{ number_format((float)$r->total_amount,2) }}</td>

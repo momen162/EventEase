@@ -45,77 +45,7 @@
     </div>
   </section>
 
-  <!-- 🔹 Event Type Infinite Slider -->
-  <section class="event-type-slider" aria-label="Browse event types">
-    <div class="event-type-wrapper">
-      <button class="arrow-btn left" id="eventTypePrev" type="button" aria-label="Scroll left">←</button>
 
-      <div class="event-type-scroll" id="eventTypeScroll" tabindex="0" role="region" aria-label="Event type list">
-        <div class="event-type-track" id="eventTypeTrack">
-          <div class="event-type-item">
-            <img src="{{ asset('assets/icons/event/competitions.png') }}" alt="Competitions" loading="lazy" decoding="async">
-            <p>Competitions</p>
-          </div>
-          <div class="event-type-item">
-            <img src="{{ asset('assets/icons/event/fashion.png') }}" alt="Fashion Shows" loading="lazy" decoding="async">
-            <p>Fashion<br>Shows</p>
-          </div>
-          <div class="event-type-item">
-            <img src="{{ asset('assets/icons/event/conference.png') }}" alt="Conferences" loading="lazy" decoding="async">
-            <p>Conferences</p>
-          </div>
-          <div class="event-type-item">
-            <img src="{{ asset('assets/icons/event/seminar.png') }}" alt="Seminars" loading="lazy" decoding="async">
-            <p>Seminars</p>
-          </div>
-          <div class="event-type-item">
-            <img src="{{ asset('assets/icons/event/reunion.png') }}" alt="Reunions" loading="lazy" decoding="async">
-            <p>Reunions</p>
-          </div>
-          <div class="event-type-item">
-            <img src="{{ asset('assets/icons/event/exhibition.png') }}" alt="Exhibitions" loading="lazy" decoding="async">
-            <p>Exhibitions</p>
-          </div>
-          <div class="event-type-item">
-            <img src="{{ asset('assets/icons/event/launch.png') }}" alt="Launching" loading="lazy" decoding="async">
-            <p>Launching</p>
-          </div>
-          <div class="event-type-item">
-            <img src="{{ asset('assets/icons/event/standup.png') }}" alt="Stand-up" loading="lazy" decoding="async">
-            <p>Stand-up</p>
-          </div>
-          <div class="event-type-item">
-            <img src="{{ asset('assets/icons/event/drama.png') }}" alt="Drama" loading="lazy" decoding="async">
-            <p>Drama</p>
-          </div>
-          <div class="event-type-item">
-            <img src="{{ asset('assets/icons/event/party.png') }}" alt="Party" loading="lazy" decoding="async">
-            <p>Party</p>
-          </div>
-          <div class="event-type-item">
-            <img src="{{ asset('assets/icons/event/concert.png') }}" alt="Concerts" loading="lazy" decoding="async">
-            <p>Concerts</p>
-          </div>
-          <div class="event-type-item">
-            <img src="{{ asset('assets/icons/event/festival.png') }}" alt="Festival" loading="lazy" decoding="async">
-            <p>Festival</p>
-          </div>
-          <div class="event-type-item">
-            <img src="{{ asset('assets/icons/event/hackathon.png') }}" alt="Hackathon" loading="lazy" decoding="async">
-            <p>Hackathon</p>
-          </div>
-          <div class="event-type-item">
-            <img src="{{ asset('assets/icons/event/sports.png') }}" alt="Sports" loading="lazy" decoding="async">
-            <p>Sports</p>
-          </div>
-          <div class="event-type-item">
-            <img src="{{ asset('assets/icons/event/workshop.png') }}" alt="Workshop" loading="lazy" decoding="async">
-            <p>Workshop</p>
-          </div>
-        </div>
-      </div>
-
-      <button class="arrow-btn right" id="eventTypeNext" type="button" aria-label="Scroll right">→</button>
     </div>
   </section>
 
