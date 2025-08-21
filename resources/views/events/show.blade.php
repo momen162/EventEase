@@ -35,3 +35,28 @@
   })();
 </script>
 @endsection
+
+@section('extra-js')
+<script>
+(function () {
+    const price = {{ (float) $event->price }};
+    const qtyInput = document.getElementById('quantity');
+    const totPrev  = document.getElementById('totalPreview');
+    const discount = document.createElement('p');
+    discount.id = 'discountPreview';
+    qtyInput.parentNode.appendChild(discount);
+
+    function recalc() {
+        const q = Math.max(1, parseInt(qtyInput.value || '1', 10));
+        totPrev.textContent = (q * price).toFixed(2);
+        if(q >= 5){
+            discount.textContent = 'Discount Applied: $' + (q * price * 0.1).toFixed(2);
+        } else {
+            discount.textContent = '';
+        }
+    }
+    qtyInput.addEventListener('input', recalc);
+    recalc();
+})();
+</script>
+@endsection
